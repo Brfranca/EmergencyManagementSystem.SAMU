@@ -1,0 +1,30 @@
+﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
+using EmergencyManagementSystem.SAMU.Entities.Interfaces;
+using System;
+using System.Collections.Generic;
+
+namespace EmergencyManagementSystem.SAMU.Entities.Entities
+{
+    public class Emergency : IEntity<long>
+    {
+        public long Id { get; set; }
+        public DateTime Date { get; set; }
+        public int RequesterId { get; set; }
+        public Address Address { get; set; }
+        public EmergencyStatus EmergencyStatus { get; set; }
+        public ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
+        public ICollection<EmergencyHistory> EmergencyHistories { get; set; }
+        public ICollection<Patient> Patients { get; set; }
+        public ICollection<VehicleTeam> VehicleTeams { get; set; }
+        public ICollection<EmergencyData> EmergencyDatas { get; set; }
+
+        //public Emergency()
+        //{
+        //    this.MedicalEvaluations = new List<MedicalEvaluation>();
+        //    this.EmergencyHistories = new List<EmergencyHistory>();
+        //    this.Patients = new List<Patient>();
+        //    this.VehicleTeams = new List<VehicleTeam>();
+        //    this.EmergencyDatas = new List<EmergencyData>();
+        //}
+    }
+}
