@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyManagementSystem.SAMU.API", "EmergencyManagementSystem.SAMU.API\EmergencyManagementSystem.SAMU.API.csproj", "{89B6230A-3D8B-4769-A656-71368A7820C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmergencyManagementSystem.SAMU.BLL", "EmergencyManagementSystem.SAMU.BLL\EmergencyManagementSystem.SAMU.BLL.csproj", "{23B9234C-E9E2-44DC-A457-BCFCC6BEFC7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmergencyManagementSystem.SAMU.DAL", "EmergencyManagementSystem.SAMU.DAL\EmergencyManagementSystem.SAMU.DAL.csproj", "{DBFAC6EC-6742-4148-A230-F045296F0E3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmergencyManagementSystem.SAMU.Common", "EmergencyManagementSystem.SAMU.Common\EmergencyManagementSystem.SAMU.Common.csproj", "{B48127A4-9AD4-4255-B30E-E3A170A3CA2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmergencyManagementSystem.SAMU.Entities", "EmergencyManagementSystem.SAMU.Entities\EmergencyManagementSystem.SAMU.Entities.csproj", "{9C4CB1A0-F58B-4755-80D3-C841DB0D507B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89B6230A-3D8B-4769-A656-71368A7820C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B6230A-3D8B-4769-A656-71368A7820C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B6230A-3D8B-4769-A656-71368A7820C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B6230A-3D8B-4769-A656-71368A7820C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B9234C-E9E2-44DC-A457-BCFCC6BEFC7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B9234C-E9E2-44DC-A457-BCFCC6BEFC7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B9234C-E9E2-44DC-A457-BCFCC6BEFC7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B9234C-E9E2-44DC-A457-BCFCC6BEFC7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBFAC6EC-6742-4148-A230-F045296F0E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBFAC6EC-6742-4148-A230-F045296F0E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBFAC6EC-6742-4148-A230-F045296F0E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBFAC6EC-6742-4148-A230-F045296F0E3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B48127A4-9AD4-4255-B30E-E3A170A3CA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B48127A4-9AD4-4255-B30E-E3A170A3CA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B48127A4-9AD4-4255-B30E-E3A170A3CA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B48127A4-9AD4-4255-B30E-E3A170A3CA2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C4CB1A0-F58B-4755-80D3-C841DB0D507B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C4CB1A0-F58B-4755-80D3-C841DB0D507B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C4CB1A0-F58B-4755-80D3-C841DB0D507B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C4CB1A0-F58B-4755-80D3-C841DB0D507B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1526883B-BF7A-48AD-8D47-7C40E5630ADA}
+	EndGlobalSection
+EndGlobal
