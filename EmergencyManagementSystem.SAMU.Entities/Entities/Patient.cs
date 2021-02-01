@@ -10,6 +10,7 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public string Telephone { get; set; }
         public int Age { get; set; }
         public Gender Gender { get; set; }
-        public int EmergencyId { get; set; }
+        public virtual Emergency Emergency { get; set; }
+        public long EmergencyId { get; set; }
     }
 }
