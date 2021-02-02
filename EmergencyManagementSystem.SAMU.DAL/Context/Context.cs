@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EmergencyManagementSystem.SAMU.DAL.Mapping;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,9 @@ namespace EmergencyManagementSystem.SAMU.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new EmergencyMapping());
+            modelBuilder.ApplyConfiguration(new VehicleMapping());
+            modelBuilder.ApplyConfiguration(new VehiclePositionHistoryMapping());
 
         }
     }
