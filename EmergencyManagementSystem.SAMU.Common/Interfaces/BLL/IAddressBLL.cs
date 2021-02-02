@@ -1,10 +1,11 @@
-﻿using System;
+﻿using EmergencyManagementSystem.SAMU.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
 {
-    public class IAddressBLL : IBaseBLL<AddressModel>
+    public interface IAddressBLL : IBaseBLL<AddressModel>
     {
     }
 }

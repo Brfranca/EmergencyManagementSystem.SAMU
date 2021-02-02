@@ -1,5 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.DAL.Mapping;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,18 @@ namespace EmergencyManagementSystem.SAMU.DAL
             modelBuilder.ApplyConfiguration(new EmergencyDataMapping());
             modelBuilder.ApplyConfiguration(new VehicleTeamMapping());
 
+        }
+
+        //usar apenas para criar a migration
+        public class ContextFactory : IDesignTimeDbContextFactory<Context>
+        {
+            public Context CreateDbContext(string[] args)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<Context>();
+                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS; Initial Catalog=EMS-Common;Integrated Security=true");
+
+                return new Context(optionsBuilder.Options);
+            }
         }
     }
 }

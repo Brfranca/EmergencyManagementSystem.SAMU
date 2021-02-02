@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EmergencyManagementSystem.SAMU.BLL.Validations;
+using EmergencyManagementSystem.SAMU.Common.Filters;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
