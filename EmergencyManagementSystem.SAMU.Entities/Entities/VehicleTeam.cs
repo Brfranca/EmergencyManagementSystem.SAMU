@@ -13,7 +13,7 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public long VehicleId { get; set; }
         public virtual Emergency Emergency { get; set; }
         public long EmergencyId { get; set; }
-        public VehicleTeamStatus vehicleTeamStatus { get; set; }
+        public VehicleTeamStatus VehicleTeamStatus { get; set; }
         public string Description { get; set; }
         public ICollection<TeamMember> TeamMembers { get; set; }
         public ICollection<VehiclePositionHistory> VehiclePositionHistories { get; set; }

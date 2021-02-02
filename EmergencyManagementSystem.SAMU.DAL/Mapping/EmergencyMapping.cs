@@ -27,10 +27,26 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasMaxLength(60)
                 .IsRequired();
 
+            builder.Property(d => d.RequesterName)
+                .HasColumnName("RequesterName")
+                .HasColumnType("varchar")
+                .HasMaxLength(60)
+                .IsRequired();
+
+            builder.Property(d => d.RequesterPhone)
+                .HasColumnName("RequesterPhone")
+                .HasColumnType("varchar")
+                .HasMaxLength(11)
+                .IsRequired();
+
             builder.Property(d => d.EmergencyStatus)
                 .HasColumnName("EmergencyStatus")
                 .HasColumnType("int")
                 .IsRequired();
+
+            builder.HasOne(d => d.Address)
+                .WithMany()
+                .HasForeignKey(d => d.AddressId);
 
             builder.HasMany(d => d.EmergencyDatas)
                 .WithOne(d => d.Emergency);
@@ -46,11 +62,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 
             builder.HasMany(d => d.VehicleTeams)
                 .WithOne(d => d.Emergency);
-
-
-
-
-
         }
     }
 }
