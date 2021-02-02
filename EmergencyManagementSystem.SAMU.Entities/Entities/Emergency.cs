@@ -10,7 +10,9 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public long Id { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
-        public long RequesterId { get; set; }
+        public string RequesterName { get; set; }
+        public string RequesterPhone { get; set; }
+        public virtual Address Address { get; set; }
         public long AddressId { get; set; }
         public EmergencyStatus EmergencyStatus { get; set; }
         public ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
