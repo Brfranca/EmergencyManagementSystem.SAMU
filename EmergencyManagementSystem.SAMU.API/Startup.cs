@@ -1,10 +1,14 @@
+using EmergencyManagementSystem.SAMU.BLL.BLL;
+using EmergencyManagementSystem.SAMU.BLL.Validations;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.DAL;
+using EmergencyManagementSystem.SAMU.DAL.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
