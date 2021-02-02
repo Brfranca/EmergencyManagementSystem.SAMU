@@ -7,5 +7,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
     public class EmergencyValidation : BaseValidation<Emergency>
     {
+        public EmergencyValidation()
+        {
+
+        }
     }
 }
