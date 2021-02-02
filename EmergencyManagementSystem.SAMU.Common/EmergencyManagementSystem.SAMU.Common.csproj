@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EmergencyManagementSystem.SAMU.Entities\EmergencyManagementSystem.SAMU.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

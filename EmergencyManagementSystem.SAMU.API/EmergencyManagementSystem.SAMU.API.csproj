@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EmergencyManagementSystem.SAMU.BLL\EmergencyManagementSystem.SAMU.BLL.csproj" />
+    <ProjectReference Include="..\EmergencyManagementSystem.SAMU.Common\EmergencyManagementSystem.SAMU.Common.csproj" />
+    <ProjectReference Include="..\EmergencyManagementSystem.SAMU.DAL\EmergencyManagementSystem.SAMU.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

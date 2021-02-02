@@ -5,15 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BLL\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="FluentValidation" Version="9.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EmergencyManagementSystem.SAMU.Common\EmergencyManagementSystem.SAMU.Common.csproj" />
+    <ProjectReference Include="..\EmergencyManagementSystem.SAMU.DAL\EmergencyManagementSystem.SAMU.DAL.csproj" />
+    <ProjectReference Include="..\EmergencyManagementSystem.SAMU.Entities\EmergencyManagementSystem.SAMU.Entities.csproj" />
   </ItemGroup>
 
 </Project>

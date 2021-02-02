@@ -1,3 +1,6 @@
+using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
+using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
+using EmergencyManagementSystem.SAMU.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +35,17 @@ namespace EmergencyManagementSystem.SAMU.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EmergencyManagementSystem.SAMU.API", Version = "v1" });
             });
+
+            services.AddDbContext<Context>(options =>
+            {
+                options.UseSqlServer(
+                Configuration.GetConnectionString("Default"));
+            }, ServiceLifetime.Scoped);
+
+
+            services.AddScoped<IAddressBLL, AddressBLL>();
+            services.AddScoped<IAddressDAL, AddressDAL>();
+            services.AddScoped<AddressValidation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
