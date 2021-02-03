@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.DAL
 {
-    public interface IPatienteDAL : IBaseDAL<Patient>
+    public interface IPatientDAL : IBaseDAL<Patient>
     {
     }
 }
