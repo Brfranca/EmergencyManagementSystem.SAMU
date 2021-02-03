@@ -64,6 +64,10 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 EmergencyHistory emergencyHistory = _mapper.Map<EmergencyHistory>(model);
+                var result = _emergencyHistoryValidation.Validate(emergencyHistory);
+                if (!result.Success)
+                    return result;
+
                 _emergencyHistoryDAL.Update(emergencyHistory);
                 return _emergencyHistoryDAL.Save();
             }
