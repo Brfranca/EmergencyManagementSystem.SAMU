@@ -64,6 +64,15 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IVehiclePositionHistoryBLL, VehiclePositionHistoryBLL>();
             services.AddScoped<IVehiclePositionHistoryDAL, VehiclePositionHistoryDAL>();
             services.AddScoped<VehiclePositionHistoryValidation>();
+            services.AddScoped<IEmergencyHistoryBLL, EmergencyHistoryBLL>();
+            services.AddScoped<IEmergencyHistoryDAL, EmergencyHistoryDAL>();
+            services.AddScoped<EmergencyHistoryValidation>();
+            services.AddScoped<IPatientBLL, PatientBLL>();
+            services.AddScoped<IPatientDAL, PatientDAL>();
+            services.AddScoped<PatientValidation>();
+            services.AddScoped<IMedicalEvaluationBLL, MedicalEvaluationBLL>();
+            services.AddScoped<IMedicalEvaluationDAL, MedicalEvaluationDAL>();
+            services.AddScoped<MedicalEvaluationValidation>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
             {
@@ -81,7 +90,12 @@ namespace EmergencyManagementSystem.SAMU.API
                 cfg.CreateMap<VehicleTeamModel, VehicleTeam>();
                 cfg.CreateMap<VehiclePositionHistory, VehiclePositionHistoryModel>();
                 cfg.CreateMap<VehiclePositionHistoryModel, VehiclePositionHistory>();
-
+                cfg.CreateMap<EmergencyHistoryModel, EmergencyHistory>();
+                cfg.CreateMap<EmergencyHistory, EmergencyHistoryModel>();
+                cfg.CreateMap<PatientModel, Patient>();
+                cfg.CreateMap<Patient, PatientModel>();
+                cfg.CreateMap<MedicalEvaluationModel, MedicalEvaluation>();
+                cfg.CreateMap<MedicalEvaluation, MedicalEvaluationModel>();
 
             }).CreateMapper();
             services.AddSingleton(mapper);
