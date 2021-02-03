@@ -21,7 +21,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
             try
             {
                 Set.Add(entity);
-                return Result.BuildSucess();
+                return Result.BuildSuccess();
             }
             catch (Exception error)
             {
@@ -34,7 +34,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
             try
             {
                 Set.Update(entity);
-                return Result.BuildSucess();
+                return Result.BuildSuccess();
             }
             catch (Exception error)
             {
@@ -47,7 +47,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
             try
             {
                 Set.Remove(entity);
-                return Result.BuildSucess();
+                return Result.BuildSuccess();
             }
             catch (Exception error)
             {
@@ -61,7 +61,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
             {
                 var result = Context.SaveChanges();
                 if (result > 0)
-                    return Result.BuildSucess();
+                    return Result.BuildSuccess();
 
                 return Result.BuildError("Erro ao salvar o contexto.");
             }

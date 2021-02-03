@@ -7,9 +7,9 @@ using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 {
-    public class EmergencyDataMapping : IEntityTypeConfiguration<EmergencyData>
+    public class EmergencyRequiredVehicleMapping : IEntityTypeConfiguration<EmergencyRequiredVehicle>
     {
-        public void Configure(EntityTypeBuilder<EmergencyData> builder)
+        public void Configure(EntityTypeBuilder<EmergencyRequiredVehicle> builder)
         {
             builder.ToTable("EmergencyDatas", "dbo");
 

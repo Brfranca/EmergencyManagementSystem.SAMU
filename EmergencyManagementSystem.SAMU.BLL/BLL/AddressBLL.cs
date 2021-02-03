@@ -44,7 +44,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 Address address = _addressDAL.Find((AddressFilter)filter);
                 AddressModel addressModel = _mapper.Map<AddressModel>(address);
-                return Result<AddressModel>.BuildSucess(addressModel);
+                return Result<AddressModel>.BuildSuccess(addressModel);
             }
             catch (Exception error)
             {

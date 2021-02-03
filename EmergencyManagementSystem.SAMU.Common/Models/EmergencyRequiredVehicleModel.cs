@@ -1,12 +1,11 @@
-﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
-using EmergencyManagementSystem.SAMU.Entities.Interfaces;
+﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
+using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 
-namespace EmergencyManagementSystem.SAMU.Entities.Entities
+namespace EmergencyManagementSystem.SAMU.Common.Models
 {
-    public class EmergencyData : IEntity<long>
+    public class EmergencyRequiredVehicleModel
     {
-        public long Id { get; set; }
         public DateTime Date { get; set; }
         public VehicleType VehicleType { get; set; }
         public virtual Emergency Emergency { get; set; }

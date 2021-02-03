@@ -18,7 +18,7 @@ namespace EmergencyManagementSystem.SAMU.DAL
             modelBuilder.ApplyConfiguration(new EmergencyMapping());
             modelBuilder.ApplyConfiguration(new VehicleMapping());
             modelBuilder.ApplyConfiguration(new VehiclePositionHistoryMapping());
-            modelBuilder.ApplyConfiguration(new EmergencyDataMapping());
+            modelBuilder.ApplyConfiguration(new EmergencyRequiredVehicleMapping());
             modelBuilder.ApplyConfiguration(new VehicleTeamMapping());
 
         }

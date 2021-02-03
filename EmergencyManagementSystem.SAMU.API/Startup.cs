@@ -1,9 +1,12 @@
+using AutoMapper;
 using EmergencyManagementSystem.SAMU.BLL.BLL;
 using EmergencyManagementSystem.SAMU.BLL.Validations;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
+using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.DAL;
 using EmergencyManagementSystem.SAMU.DAL.DAL;
+using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -50,6 +53,19 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IAddressBLL, AddressBLL>();
             services.AddScoped<IAddressDAL, AddressDAL>();
             services.AddScoped<AddressValidation>();
+            services.AddScoped<IEmergencyRequiredVehicleDAL, EmergencyRequiredVehicleDAL>();
+            services.AddScoped<IEmergencyRequiredVehicleBLL, EmergencyRequiredVehicleBLL>();
+            services.AddScoped<EmergencyRequiredVehicleValidation>();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<AddressModel, Address>();
+                //cfg.CreateMap<EmergencyModel, Emergency>();
+                cfg.CreateMap<EmergencyRequiredVehicleModel, EmergencyRequiredVehicle>();
+
+
+            }).CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
