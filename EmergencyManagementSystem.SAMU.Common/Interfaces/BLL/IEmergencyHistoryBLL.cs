@@ -2,7 +2,7 @@
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
 {
-    public interface IEmergencyHistoryBLL : IBaseBLL<EmergencyHistory>
+    public interface IEmergencyHistoryBLL : IBaseBLL<EmergencyHistoryModel>
     {
     }
 }

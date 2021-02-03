@@ -56,13 +56,15 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IEmergencyRequiredVehicleDAL, EmergencyRequiredVehicleDAL>();
             services.AddScoped<IEmergencyRequiredVehicleBLL, EmergencyRequiredVehicleBLL>();
             services.AddScoped<EmergencyRequiredVehicleValidation>();
+            services.AddScoped<IEmergencyBLL, EmergencyBLL>();
+            services.AddScoped<IEmergencyDAL, EmergencyDAL>();
+            services.AddScoped<EmergencyValidation>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<AddressModel, Address>();
-                //cfg.CreateMap<EmergencyModel, Emergency>();
+                cfg.CreateMap<EmergencyModel, Emergency>();
                 cfg.CreateMap<EmergencyRequiredVehicleModel, EmergencyRequiredVehicle>();
-
 
             }).CreateMapper();
             services.AddSingleton(mapper);

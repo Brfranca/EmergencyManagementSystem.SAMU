@@ -1,8 +1,8 @@
-﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
+﻿using EmergencyManagementSystem.SAMU.Common.Models;
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
 {
-    public interface IEmergencyBLL : IBaseBLL<Emergency>
+    public interface IEmergencyBLL : IBaseBLL<EmergencyModel>
     {
     }
 }

@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.DAL.DAL
 {
-    public class AddressDAL : BaseDAL<Address>, IAddressDAL
+    public class EmergencyDAL: BaseDAL<Emergency>, IEmergencyDAL
     {
-        public AddressDAL(Context context) : base(context)
+        public EmergencyDAL(Context context) : base(context)
         {
         }
 
-        public Address Find(AddressFilter filter)
+        public Emergency Find(EmergencyFilter filter)
         {
             return Set.FirstOrDefault(d => d.Id == filter.Id);
         }
