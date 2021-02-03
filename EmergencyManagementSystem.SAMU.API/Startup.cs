@@ -9,18 +9,11 @@ using EmergencyManagementSystem.SAMU.DAL.DAL;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmergencyManagementSystem.SAMU.API
 {
@@ -59,12 +52,36 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IEmergencyBLL, EmergencyBLL>();
             services.AddScoped<IEmergencyDAL, EmergencyDAL>();
             services.AddScoped<EmergencyValidation>();
+            services.AddScoped<ITeamMemberBLL, TeamMemberBLL>();
+            services.AddScoped<ITeamMemberDAL, TeamMemberDAL>();
+            services.AddScoped<TeamMemberValidation>();
+            services.AddScoped<IVehicleBLL, VehicleBLL>();
+            services.AddScoped<IVehicleDAL, VehicleDAL>();
+            services.AddScoped<VehicleValidation>();
+            services.AddScoped<IVehicleTeamBLL, VehicleTeamBLL>();
+            services.AddScoped<IVehicleTeamDAL, VehicleTeamDAL>();
+            services.AddScoped<VehicleTeamValidation>();
+            services.AddScoped<IVehiclePositionHistoryBLL, VehiclePositionHistoryBLL>();
+            services.AddScoped<IVehiclePositionHistoryDAL, VehiclePositionHistoryDAL>();
+            services.AddScoped<VehiclePositionHistoryValidation>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<AddressModel, Address>();
+                cfg.CreateMap<Address, AddressModel>();
                 cfg.CreateMap<EmergencyModel, Emergency>();
+                cfg.CreateMap<Emergency, EmergencyModel>();
                 cfg.CreateMap<EmergencyRequiredVehicleModel, EmergencyRequiredVehicle>();
+                cfg.CreateMap<EmergencyRequiredVehicle, EmergencyRequiredVehicleModel>();
+                cfg.CreateMap<TeamMemberModel, TeamMember>();
+                cfg.CreateMap<TeamMember, TeamMemberModel>();
+                cfg.CreateMap<Vehicle, VehicleModel>();
+                cfg.CreateMap<VehicleModel, Vehicle>();
+                cfg.CreateMap<VehicleTeam, VehicleTeamModel>();
+                cfg.CreateMap<VehicleTeamModel, VehicleTeam>();
+                cfg.CreateMap<VehiclePositionHistory, VehiclePositionHistoryModel>();
+                cfg.CreateMap<VehiclePositionHistoryModel, VehiclePositionHistory>();
+
 
             }).CreateMapper();
             services.AddSingleton(mapper);

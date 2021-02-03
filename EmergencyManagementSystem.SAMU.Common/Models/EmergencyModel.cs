@@ -7,6 +7,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
 {
     public class EmergencyModel
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string RequesterName { get; set; }

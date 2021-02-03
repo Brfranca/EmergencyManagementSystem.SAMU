@@ -1,16 +1,17 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
-using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 
 namespace EmergencyManagementSystem.SAMU.Common.Models
 {
-    public class EmergencyRequiredVehicleModel
+    public class MedicalEvaluationModel
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
-        public VehicleType VehicleType { get; set; }
+        public int DoctorId { get; set; }
         public virtual Emergency Emergency { get; set; }
-        public long EmergencyId { get; set; }
-        public CodeColor CodeColor { get; set; }
+        public int EmergencyId { get; set; }
+        public string Evaluation { get; set; }
+        public virtual Patient Patient { get; set; }
+        public long PatientId { get; set; }
     }
 }

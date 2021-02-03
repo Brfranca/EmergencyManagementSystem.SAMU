@@ -6,8 +6,6 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {

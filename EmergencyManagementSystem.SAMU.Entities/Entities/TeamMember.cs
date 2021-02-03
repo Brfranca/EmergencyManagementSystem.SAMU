@@ -1,9 +1,11 @@
-﻿using System;
+﻿using EmergencyManagementSystem.SAMU.Entities.Interfaces;
+using System;
 
 namespace EmergencyManagementSystem.SAMU.Entities.Entities
 {
-    public class TeamMember
+    public class TeamMember : IEntity<long>
     {
+        public long Id { get; set; }
         public Guid EmployeeGuid { get; set; }
         public long VehicleTeamId { get; set; }
         public virtual VehicleTeam VehicleTeam { get; set; }

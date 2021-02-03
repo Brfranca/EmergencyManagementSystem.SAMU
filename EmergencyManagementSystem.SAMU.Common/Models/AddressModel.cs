@@ -6,6 +6,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
 {
     public class AddressModel
     {
+        public long Id { get; set; }
         public string CEP { get; set; }
         public string State { get; set; }
         public string City { get; set; }
