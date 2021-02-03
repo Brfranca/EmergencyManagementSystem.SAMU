@@ -24,19 +24,18 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
             builder.Property(d => d.Date)
                 .HasColumnName("Date")
                 .HasColumnType("datetime")
-                .HasMaxLength(60)
                 .IsRequired();
 
             builder.Property(d => d.RequesterName)
                 .HasColumnName("RequesterName")
                 .HasColumnType("varchar")
-                .HasMaxLength(60)
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(d => d.RequesterPhone)
                 .HasColumnName("RequesterPhone")
                 .HasColumnType("varchar")
-                .HasMaxLength(11)
+                .HasMaxLength(20)
                 .IsRequired();
 
             builder.Property(d => d.EmergencyStatus)

@@ -15,12 +15,16 @@ namespace EmergencyManagementSystem.SAMU.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new AddressMapping());
+            modelBuilder.ApplyConfiguration(new EmergencyHistoryMapping());
             modelBuilder.ApplyConfiguration(new EmergencyMapping());
+            modelBuilder.ApplyConfiguration(new EmergencyRequiredVehicleMapping());
+            modelBuilder.ApplyConfiguration(new TeamMemberMapping());
             modelBuilder.ApplyConfiguration(new VehicleMapping());
             modelBuilder.ApplyConfiguration(new VehiclePositionHistoryMapping());
-            modelBuilder.ApplyConfiguration(new EmergencyRequiredVehicleMapping());
             modelBuilder.ApplyConfiguration(new VehicleTeamMapping());
-
+            modelBuilder.ApplyConfiguration(new MedicalEvaluationMapping());
+            modelBuilder.ApplyConfiguration(new PatientMapping());
         }
 
         //usar apenas para criar a migration
