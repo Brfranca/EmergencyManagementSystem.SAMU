@@ -73,6 +73,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 Vehicle vehicle = _mapper.Map<Vehicle>(model);
+
+                var result = _vehicleValidation.Validate(vehicle);
+                if (!result.Success)
+                    return result;
+
                 _vehicleDAL.Update(vehicle);
                 return _vehicleDAL.Save();
             }

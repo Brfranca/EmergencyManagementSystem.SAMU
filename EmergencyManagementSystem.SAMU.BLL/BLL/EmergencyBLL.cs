@@ -73,6 +73,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 Emergency emergency = _mapper.Map<Emergency>(model);
+
+                Result result = _emergencyValidation.Validate(emergency);
+                if (!result.Success)
+                    return result;
+
                 _emergencyDAL.Update(emergency);
                 return _emergencyDAL.Save();
             }

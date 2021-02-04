@@ -74,6 +74,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 Address address = _mapper.Map<Address>(model);
+
+                var result = _addressValidation.Validate(address);
+                if (!result.Success)
+                    return result;
+
                 _addressDAL.Update(address);
                 return _addressDAL.Save();
             }

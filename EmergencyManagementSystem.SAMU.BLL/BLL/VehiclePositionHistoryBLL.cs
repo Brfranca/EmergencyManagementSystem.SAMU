@@ -74,6 +74,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 VehiclePositionHistory vehiclePositionHistory = _mapper.Map<VehiclePositionHistory>(model);
+
+                var result = _vehiclePositionHistoryValidation.Validate(vehiclePositionHistory);
+                if (!result.Success)
+                    return result;
+
                 _vehiclePositionHistoryDAL.Update(vehiclePositionHistory);
                 return _vehiclePositionHistoryDAL.Save();
             }

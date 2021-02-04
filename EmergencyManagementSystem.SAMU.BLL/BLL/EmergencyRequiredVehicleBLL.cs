@@ -74,6 +74,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 EmergencyRequiredVehicle emergencyRequiredVehicle = _mapper.Map<EmergencyRequiredVehicle>(model);
+
+                var result = _emergencyRequiredVehicleValidation.Validate(emergencyRequiredVehicle);
+                if (!result.Success)
+                    return result;
+
                 _emergencyRequiredVehicleDAL.Update(emergencyRequiredVehicle);
                 return _emergencyRequiredVehicleDAL.Save();
             }

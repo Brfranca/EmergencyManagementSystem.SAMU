@@ -74,6 +74,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 VehicleTeam vehicleTeam = _mapper.Map<VehicleTeam>(model);
+
+                var result = _vehicleTeamValidation.Validate(vehicleTeam);
+                if (!result.Success)
+                    return result;
+
                 _vehicleTeamDAL.Update(vehicleTeam);
                 return _vehicleTeamDAL.Save();
             }

@@ -79,6 +79,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 MedicalEvaluation medicalEvaluation = _mapper.Map<MedicalEvaluation>(model);
+
                 var result = _medicalEvaluationValidation.Validate(medicalEvaluation);
                 if (!result.Success)
                     return result;

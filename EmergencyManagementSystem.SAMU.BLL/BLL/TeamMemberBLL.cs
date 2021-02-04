@@ -73,6 +73,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 TeamMember teamMember = _mapper.Map<TeamMember>(model);
+
+                Result result = _teamMemberValidation.Validate(teamMember);
+                if (!result.Success)
+                    return result;
+
                 _teamMemberDAL.Update(teamMember);
                 return _teamMemberDAL.Save();
             }
