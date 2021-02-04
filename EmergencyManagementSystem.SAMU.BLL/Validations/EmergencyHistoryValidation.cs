@@ -10,14 +10,22 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
     {
         public EmergencyHistoryValidation()
         {
-            RuleFor(d => d.Description)
+            RuleFor(e => e.Date)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Favor informar a descrição")
+                .WithMessage("Favor informar a data.");
+
+            RuleFor(e => e.EmergencyStatus)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Favor informar o status da emergência.");
+
+            RuleFor(e => e.Description)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Favor informar a descrição.")
                 .Length(3, 60)
-                .WithMessage("A descrição deve conter entre 3 e 60 caracteres");
-
-
+                .WithMessage("A descrição deve conter entre 3 e 60 caracteres.");
         }
     }
 }
