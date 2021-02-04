@@ -2,6 +2,7 @@
 {
     public enum VehicleTeamStatus : short
     {
+        Invalido,
         Canceled,
         InProgress,
         Finalized

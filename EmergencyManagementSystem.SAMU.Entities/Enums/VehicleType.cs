@@ -2,6 +2,7 @@
 {
     public enum VehicleType : short
     {
+        Invalido,
         USB,
         USA,
         HEL,

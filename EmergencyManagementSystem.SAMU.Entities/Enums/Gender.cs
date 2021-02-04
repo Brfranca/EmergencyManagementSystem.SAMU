@@ -2,6 +2,7 @@
 {
     public enum Gender : short
     {
+        Invalido,
         Female,
         Male,
         Unknown

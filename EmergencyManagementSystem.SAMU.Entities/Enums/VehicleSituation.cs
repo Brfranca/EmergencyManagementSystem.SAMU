@@ -2,6 +2,7 @@
 {
     public enum VehicleSituation : short
     {
+        Invalido,
         Broken,
         Cleared,
         InService,

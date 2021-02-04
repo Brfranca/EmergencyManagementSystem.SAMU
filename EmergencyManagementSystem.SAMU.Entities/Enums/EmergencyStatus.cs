@@ -2,6 +2,7 @@
 {
     public enum EmergencyStatus : short
     {
+        Invalido,
         Canceled,
         Opened,
         Closed

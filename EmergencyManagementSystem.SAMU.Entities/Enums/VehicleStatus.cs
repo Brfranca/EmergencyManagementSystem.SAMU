@@ -2,6 +2,7 @@
 {
     public enum VehicleStatus : short
     {
+        Invalido,
         J6,
         J7,
         J9,
