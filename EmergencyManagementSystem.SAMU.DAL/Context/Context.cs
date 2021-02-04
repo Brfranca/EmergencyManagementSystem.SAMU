@@ -25,6 +25,7 @@ namespace EmergencyManagementSystem.SAMU.DAL
             modelBuilder.ApplyConfiguration(new VehicleTeamMapping());
             modelBuilder.ApplyConfiguration(new MedicalEvaluationMapping());
             modelBuilder.ApplyConfiguration(new PatientMapping());
+
         }
 
         //usar apenas para criar a migration
