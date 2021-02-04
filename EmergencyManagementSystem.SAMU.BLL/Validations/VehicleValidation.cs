@@ -10,13 +10,12 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
     {
         public VehicleValidation()
         {
-            RuleFor(e => e.Plaque)
+            RuleFor(e => e.VehiclePlate)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a placa.")
                 .Length(7)
                 .WithMessage("A placa deve conter 7 caracteres.");
-            //Possível erro ortográfico na designação inglesa da placa. "Plaque" deveria ser "Plate", abreviação de "Vehicle Registration Plate"
 
             RuleFor(e => e.VehicleName)
                 .NotNull()

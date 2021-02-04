@@ -36,6 +36,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
             builder.Property(d => d.Description)
                 .HasColumnName("Description")
                 .HasColumnType("varchar")
+                .HasMaxLength(150)
                 .IsRequired();
 
             builder.HasMany(d => d.TeamMembers)

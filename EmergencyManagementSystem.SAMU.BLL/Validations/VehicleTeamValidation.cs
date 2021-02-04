@@ -23,8 +23,12 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
             RuleFor(e => e.Description)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Favor informar a descrição.");
+                .WithMessage("Favor informar a descrição.")
+                .Length(5, 150)
+                .WithMessage("A descrição deve conter entre 5 e 150 caracteres.");
+
             //Faltou o limite de caracteres da descrição no mapping (a menos que seja intencional)?
+            //corrigido
         }
     }
 }
