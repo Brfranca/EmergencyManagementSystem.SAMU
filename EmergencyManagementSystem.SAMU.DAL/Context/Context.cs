@@ -33,7 +33,7 @@ namespace EmergencyManagementSystem.SAMU.DAL
             public Context CreateDbContext(string[] args)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<Context>();
-                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS; Initial Catalog=EMS-Common;Integrated Security=true");
+                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS; Initial Catalog=EMS-Samu;Integrated Security=true");
 
                 return new Context(optionsBuilder.Options);
             }
