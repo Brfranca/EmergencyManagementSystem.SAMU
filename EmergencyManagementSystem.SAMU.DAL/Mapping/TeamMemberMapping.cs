@@ -13,14 +13,17 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
         {
             builder.ToTable("TeamMembers", "dbo");
 
+            builder.HasKey(d => d.Id);
+
             builder.Property(d => d.EmployeeGuid)
                 .HasColumnName("EmployeeGuid")
                 .HasColumnType("uniqueidentifier")
                 .IsRequired();
 
             builder.HasOne(d => d.VehicleTeam)
-                .WithMany()
-                .HasForeignKey(d => d.VehicleTeamId);
+                .WithMany(d => d.TeamMembers)
+                .HasForeignKey(d => d.VehicleTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

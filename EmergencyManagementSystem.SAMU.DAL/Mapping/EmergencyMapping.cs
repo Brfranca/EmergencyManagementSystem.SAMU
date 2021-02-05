@@ -47,9 +47,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.AddressId);
 
-            builder.HasMany(d => d.EmergencyDatas)
-                .WithOne(d => d.Emergency);
-
             builder.HasMany(d => d.EmergencyHistories)
                 .WithOne(d => d.Emergency);
 
@@ -60,6 +57,9 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .WithOne(d => d.Emergency);
 
             builder.HasMany(d => d.VehicleTeams)
+                .WithOne(d => d.Emergency);
+
+            builder.HasMany(d => d.EmergencyRequiredVehicles)
                 .WithOne(d => d.Emergency);
         }
     }

@@ -21,7 +21,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasOne(d => d.Emergency)
-                .WithMany()
+                .WithMany(d => d.MedicalEvaluations)
                 .HasForeignKey(d => d.EmergencyId);
 
             builder.Property(d => d.EmployeeGuid)
@@ -36,10 +36,11 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasOne(d => d.Patient)
-                .WithMany()
-                .HasForeignKey(d => d.PatientId);
+                .WithMany(d => d.MedicalEvaluations)
+                .HasForeignKey(d => d.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-           
+
         }
     }
 }

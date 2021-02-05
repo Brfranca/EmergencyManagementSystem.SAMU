@@ -1,5 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
 using EmergencyManagementSystem.SAMU.Entities.Interfaces;
+using System.Collections.Generic;
 
 namespace EmergencyManagementSystem.SAMU.Entities.Entities
 {
@@ -12,5 +13,6 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public Gender Gender { get; set; }
         public virtual Emergency Emergency { get; set; }
         public long EmergencyId { get; set; }
+        public ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
     }
 }

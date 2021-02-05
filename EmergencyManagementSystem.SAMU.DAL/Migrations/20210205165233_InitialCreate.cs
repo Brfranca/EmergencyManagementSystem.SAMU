@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,38 +76,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmergencyDatas",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    VehicleType = table.Column<int>(type: "int", nullable: false),
-                    EmergencyId = table.Column<long>(type: "bigint", nullable: false),
-                    CodeColor = table.Column<int>(type: "int", nullable: false),
-                    EmergencyId1 = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmergencyDatas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EmergencyDatas_Emergencies_EmergencyId",
-                        column: x => x.EmergencyId,
-                        principalSchema: "dbo",
-                        principalTable: "Emergencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmergencyDatas_Emergencies_EmergencyId1",
-                        column: x => x.EmergencyId1,
-                        principalSchema: "dbo",
-                        principalTable: "Emergencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EmergencyHistories",
                 schema: "dbo",
                 columns: table => new
@@ -129,7 +97,31 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         principalSchema: "dbo",
                         principalTable: "Emergencies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmergencyRequiredVehicles",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
+                    VehicleType = table.Column<int>(type: "int", nullable: false),
+                    EmergencyId = table.Column<long>(type: "bigint", nullable: false),
+                    CodeColor = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmergencyRequiredVehicles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmergencyRequiredVehicles_Emergencies_EmergencyId",
+                        column: x => x.EmergencyId,
+                        principalSchema: "dbo",
+                        principalTable: "Emergencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,8 +135,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     Telephone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    EmergencyId = table.Column<long>(type: "bigint", nullable: false),
-                    EmergencyId1 = table.Column<long>(type: "bigint", nullable: true)
+                    EmergencyId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,13 +143,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     table.ForeignKey(
                         name: "FK_Patients_Emergencies_EmergencyId",
                         column: x => x.EmergencyId,
-                        principalSchema: "dbo",
-                        principalTable: "Emergencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Patients_Emergencies_EmergencyId1",
-                        column: x => x.EmergencyId1,
                         principalSchema: "dbo",
                         principalTable: "Emergencies",
                         principalColumn: "Id",
@@ -176,8 +160,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     VehicleId = table.Column<long>(type: "bigint", nullable: false),
                     EmergencyId = table.Column<long>(type: "bigint", nullable: false),
                     VehicleTeamStatus = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    EmergencyId1 = table.Column<long>(type: "bigint", nullable: true)
+                    Description = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,13 +172,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         principalTable: "Emergencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_VehicleTeams_Emergencies_EmergencyId1",
-                        column: x => x.EmergencyId1,
-                        principalSchema: "dbo",
-                        principalTable: "Emergencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_VehicleTeams_Vehicles_VehicleId",
                         column: x => x.VehicleId,
@@ -216,8 +192,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     EmployeeGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EmergencyId = table.Column<long>(type: "bigint", nullable: false),
                     Evaluation = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    PatientId = table.Column<long>(type: "bigint", nullable: false),
-                    EmergencyId1 = table.Column<long>(type: "bigint", nullable: true)
+                    PatientId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -230,19 +205,12 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicalEvaluations_Emergencies_EmergencyId1",
-                        column: x => x.EmergencyId1,
-                        principalSchema: "dbo",
-                        principalTable: "Emergencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_MedicalEvaluations_Patients_PatientId",
                         column: x => x.PatientId,
                         principalSchema: "dbo",
                         principalTable: "Patients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,8 +221,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VehicleTeamId = table.Column<long>(type: "bigint", nullable: false),
-                    VehicleTeamId1 = table.Column<long>(type: "bigint", nullable: true)
+                    VehicleTeamId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -265,48 +232,26 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         principalSchema: "dbo",
                         principalTable: "VehicleTeams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TeamMembers_VehicleTeams_VehicleTeamId1",
-                        column: x => x.VehicleTeamId1,
-                        principalSchema: "dbo",
-                        principalTable: "VehicleTeams",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "VehiclePositionHistory",
+                name: "VehiclePositionHistories",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime", nullable: false),
                     VehicleStatus = table.Column<int>(type: "int", nullable: false),
-                    VehicleTeamId1 = table.Column<long>(type: "bigint", nullable: true),
-                    VehicleTeamId = table.Column<long>(type: "bigint", nullable: false),
-                    EmergencyId = table.Column<long>(type: "bigint", nullable: false)
+                    VehicleTeamId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehiclePositionHistory", x => x.Id);
+                    table.PrimaryKey("PK_VehiclePositionHistories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehiclePositionHistory_Emergencies_EmergencyId",
-                        column: x => x.EmergencyId,
-                        principalSchema: "dbo",
-                        principalTable: "Emergencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_VehiclePositionHistory_VehicleTeams_VehicleTeamId",
+                        name: "FK_VehiclePositionHistories_VehicleTeams_VehicleTeamId",
                         column: x => x.VehicleTeamId,
-                        principalSchema: "dbo",
-                        principalTable: "VehicleTeams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_VehiclePositionHistory_VehicleTeams_VehicleTeamId1",
-                        column: x => x.VehicleTeamId1,
                         principalSchema: "dbo",
                         principalTable: "VehicleTeams",
                         principalColumn: "Id",
@@ -320,21 +265,15 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmergencyDatas_EmergencyId",
-                schema: "dbo",
-                table: "EmergencyDatas",
-                column: "EmergencyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmergencyDatas_EmergencyId1",
-                schema: "dbo",
-                table: "EmergencyDatas",
-                column: "EmergencyId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EmergencyHistories_EmergencyId",
                 schema: "dbo",
                 table: "EmergencyHistories",
+                column: "EmergencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmergencyRequiredVehicles_EmergencyId",
+                schema: "dbo",
+                table: "EmergencyRequiredVehicles",
                 column: "EmergencyId");
 
             migrationBuilder.CreateIndex(
@@ -342,12 +281,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                 schema: "dbo",
                 table: "MedicalEvaluations",
                 column: "EmergencyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicalEvaluations_EmergencyId1",
-                schema: "dbo",
-                table: "MedicalEvaluations",
-                column: "EmergencyId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MedicalEvaluations_PatientId",
@@ -362,49 +295,22 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                 column: "EmergencyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patients_EmergencyId1",
-                schema: "dbo",
-                table: "Patients",
-                column: "EmergencyId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TeamMembers_VehicleTeamId",
                 schema: "dbo",
                 table: "TeamMembers",
                 column: "VehicleTeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeamMembers_VehicleTeamId1",
+                name: "IX_VehiclePositionHistories_VehicleTeamId",
                 schema: "dbo",
-                table: "TeamMembers",
-                column: "VehicleTeamId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VehiclePositionHistory_EmergencyId",
-                table: "VehiclePositionHistory",
-                column: "EmergencyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VehiclePositionHistory_VehicleTeamId",
-                table: "VehiclePositionHistory",
+                table: "VehiclePositionHistories",
                 column: "VehicleTeamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VehiclePositionHistory_VehicleTeamId1",
-                table: "VehiclePositionHistory",
-                column: "VehicleTeamId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleTeams_EmergencyId",
                 schema: "dbo",
                 table: "VehicleTeams",
                 column: "EmergencyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VehicleTeams_EmergencyId1",
-                schema: "dbo",
-                table: "VehicleTeams",
-                column: "EmergencyId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleTeams_VehicleId",
@@ -416,11 +322,11 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EmergencyDatas",
+                name: "EmergencyHistories",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "EmergencyHistories",
+                name: "EmergencyRequiredVehicles",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -432,7 +338,8 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "VehiclePositionHistory");
+                name: "VehiclePositionHistories",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "Patients",
