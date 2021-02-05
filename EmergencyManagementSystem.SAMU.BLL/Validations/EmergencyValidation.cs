@@ -31,14 +31,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .Length(3, 100)
                 .WithMessage("O nome do chamador deve conter entre 3 e 100 caracteres.")
                 .Must(ContainsFullName)
-                .WithMessage("Favor inserir o nome completo do chamador.")
+                .WithMessage("Favor inserir o nome completo do solicitante.")
                 .Must(IsValidName)
                 .WithMessage("O nome do chamador não deve conter números ou caracteres especiais.");
 
             RuleFor(e => e.RequesterPhone)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Favor informar o telefone do chamador.")
+                .WithMessage("Favor informar o telefone do solicitante.")
                 .Must(IsValidPhone)
                 .WithMessage("Telefone inválido.");
 
