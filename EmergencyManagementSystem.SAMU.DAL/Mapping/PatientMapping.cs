@@ -21,12 +21,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(d => d.Telephone)
-                .HasColumnName("Telephone")
-                .HasColumnType("varchar")
-                .HasMaxLength(20)
-                .IsRequired();
-
             builder.Property(d => d.Age)
                 .HasColumnName("Age")
                 .HasColumnType("int")
