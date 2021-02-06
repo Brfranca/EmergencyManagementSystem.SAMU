@@ -11,7 +11,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
     {
         public void Configure(EntityTypeBuilder<EmergencyRequiredVehicle> builder)
         {
-            builder.ToTable("EmergencyDatas", "dbo");
+            builder.ToTable("EmergencyRequiredVehicles", "dbo");
 
             builder.HasKey(d => d.Id);
 
@@ -31,8 +31,10 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasOne(d => d.Emergency)
-                .WithMany()
-                .HasForeignKey(d => d.EmergencyId);
+                .WithMany(d => d.EmergencyRequiredVehicles)
+                .HasForeignKey(d => d.EmergencyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

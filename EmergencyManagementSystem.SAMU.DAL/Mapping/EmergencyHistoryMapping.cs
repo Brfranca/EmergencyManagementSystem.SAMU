@@ -28,7 +28,8 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 
             builder.HasOne(d => d.Emergency)
                 .WithMany()
-                .HasForeignKey(d => d.EmergencyId);
+                .HasForeignKey(d => d.EmergencyId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(d => d.EmergencyStatus)
                 .HasColumnName("EmergencyStatus")

@@ -16,6 +16,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("O CEP deve conter 8 números.");
 
             RuleFor(e => e.City)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a cidade.")
@@ -25,31 +26,34 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("O nome da cidade não deve conter números e caracteres especiais.");
 
             RuleFor(e => e.District)
-                .Length(3, 60)
-                .WithMessage("O bairro deve ter entre 3 e 60 letras.")
+                .Cascade(CascadeMode.Stop)
+                .MaximumLength(60)
+                .WithMessage("O bairro deve ter no máximo 60 letras.")
                 .Must(IsValidName)
                 .WithMessage("O nome do bairro não deve conter números e caracteres especiais.");
 
             RuleFor(e => e.Complement)
-                .Length(3, 60)
-                .WithMessage("O complemento deve ter entre 3 e 60 letras.");
+                .MaximumLength(60)
+                .WithMessage("O complemento deve ter no máximo 60 caractertes.");
 
             RuleFor(e => e.Number)
-                .Length(3, 10)
-                .WithMessage("O número deve ter entre 3 e 10 letras.");
+                .MaximumLength(10)
+                .WithMessage("O número deve ter no máximo 10 caractertes.");
 
             RuleFor(e => e.Reference)
-                .Length(3, 60)
-                .WithMessage("A referência deve ter entre 3 e 60 letras");
+                .MaximumLength(60)
+                .WithMessage("A referência deve ter no máximo 60 caractertes");
 
             RuleFor(e => e.State)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o nome do estado.")
                 .Length(2)
-                .WithMessage("O estado deve conter 2 letras.");
+                .WithMessage("O estado deve conter 2 caractertes.");
 
             RuleFor(e => e.Street)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o nome da rua.")

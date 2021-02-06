@@ -21,11 +21,11 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasOne(d => d.Emergency)
-                .WithMany()
+                .WithMany(d => d.VehicleTeams)
                 .HasForeignKey(d => d.EmergencyId);
 
             builder.HasOne(d => d.Vehicle)
-                .WithMany()
+                .WithMany(d => d.VehicleTeams)
                 .HasForeignKey(d => d.VehicleId);
 
             builder.Property(d => d.VehicleTeamStatus)
@@ -40,12 +40,14 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasMany(d => d.TeamMembers)
-                .WithOne()
-                .HasForeignKey(d => d.VehicleTeamId);
+                .WithOne(d => d.VehicleTeam)
+                .HasForeignKey(d => d.VehicleTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(d => d.VehiclePositionHistories)
-                .WithOne()
-                .HasForeignKey(d => d.VehicleTeamId);
+                .WithOne(d => d.VehicleTeam)
+                .HasForeignKey(d => d.VehicleTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }
