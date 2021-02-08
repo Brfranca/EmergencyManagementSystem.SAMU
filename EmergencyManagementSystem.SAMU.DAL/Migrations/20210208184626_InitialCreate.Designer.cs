@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmergencyManagementSystem.SAMU.DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210208183138_FourthMigration")]
-    partial class FourthMigration
+    [Migration("20210208184626_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

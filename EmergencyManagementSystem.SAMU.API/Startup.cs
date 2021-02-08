@@ -102,7 +102,7 @@ namespace EmergencyManagementSystem.SAMU.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Context context)
         {
             if (env.IsDevelopment())
             {
@@ -121,6 +121,8 @@ namespace EmergencyManagementSystem.SAMU.API
             {
                 endpoints.MapControllers();
             });
+
+            context.Database.Migrate();
         }
     }
 }
