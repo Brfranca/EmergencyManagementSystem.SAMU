@@ -13,6 +13,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public EmergencyValidation()
         {
             RuleFor(e => e.Name)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o nome.")
@@ -20,11 +21,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("O nome deve conter entre 3 e 60 caracteres.");
 
             RuleFor(e => e.Date)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.RequesterName)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o nome completo do chamador.")
@@ -36,6 +39,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("O nome do chamador não deve conter números ou caracteres especiais.");
 
             RuleFor(e => e.RequesterPhone)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o telefone do solicitante.")
@@ -43,6 +47,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Telefone inválido.");
 
             RuleFor(e => e.EmergencyStatus)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status da emergência.");

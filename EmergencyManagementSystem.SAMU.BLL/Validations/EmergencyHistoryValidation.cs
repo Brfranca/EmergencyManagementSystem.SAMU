@@ -11,16 +11,19 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public EmergencyHistoryValidation()
         {
             RuleFor(e => e.Date)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.EmergencyStatus)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status da emergência.");
 
             RuleFor(e => e.Description)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a descrição.")

@@ -44,14 +44,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .MaximumLength(60)
                 .WithMessage("A referência deve ter no máximo 60 caractertes");
 
-            RuleFor(e => e.State)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Favor informar o nome do estado.")
-                .Length(2)
-                .WithMessage("O estado deve conter 2 caractertes.");
-
             RuleFor(e => e.Street)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()

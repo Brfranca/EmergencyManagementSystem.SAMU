@@ -11,6 +11,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public PatientValidation()
         {
             RuleFor(e => e.Name)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o nome completo.")
@@ -22,11 +23,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("O nome não deve conter números ou caracteres especiais.");
 
             RuleFor(e => e.Age)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a idade.");
 
             RuleFor(e => e.Gender)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o sexo.");

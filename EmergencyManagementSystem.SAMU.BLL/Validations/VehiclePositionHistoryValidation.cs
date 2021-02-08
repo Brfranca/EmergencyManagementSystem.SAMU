@@ -11,11 +11,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public VehiclePositionHistoryValidation()
         {
             RuleFor(e => e.Date)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.VehicleStatus)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status do veículo.");

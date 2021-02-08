@@ -11,6 +11,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public TeamMemberValidation()
         {
             RuleFor(e => e.EmployeeGuid)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o identificador único universal do funcionário.");

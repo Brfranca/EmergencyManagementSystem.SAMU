@@ -11,16 +11,19 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public VehicleTeamValidation()
         {
             RuleFor(e => e.Date)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.VehicleTeamStatus)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status da equipe do veículo.");
 
             RuleFor(e => e.Description)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a descrição.")

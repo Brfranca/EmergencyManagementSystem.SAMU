@@ -47,12 +47,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasColumnType("varchar")
                 .HasMaxLength(60);
 
-            builder.Property(d => d.State)
-                .HasColumnName("State")
-                .HasColumnType("varchar")
-                .HasMaxLength(2)
-                .IsRequired();
-
             builder.Property(d => d.Street)
                 .HasColumnName("Street")
                 .HasColumnType("varchar")

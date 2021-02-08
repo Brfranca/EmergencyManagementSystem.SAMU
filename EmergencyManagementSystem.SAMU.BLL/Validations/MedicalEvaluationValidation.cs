@@ -11,11 +11,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public MedicalEvaluationValidation()
         {
             RuleFor(e => e.Date)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.Evaluation)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o diagnóstico.")
