@@ -4,6 +4,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Filters
 {
     public class VehicleFilter : FilterBase
     {
+        public int Id { get; set; }
         public string VehicleName { get; set; }
         public string VehiclePlate { get; set; }
     }

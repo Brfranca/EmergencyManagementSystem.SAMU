@@ -53,5 +53,12 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
             var result = _baseBLL.FindPaginated((IFilter)filter);
             return new PaginationModel<TModel>(result.ToListAsync().Result, new DataPagination(result.GetMetaData()));
         }
+
+        [HttpPost("Find")]
+        public Result<TModel> Find(TFilter filter)
+        {
+            var result = _baseBLL.Find((IFilter)filter);
+            return result;
+        }
     }
 }
