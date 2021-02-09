@@ -13,7 +13,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
 
         public Vehicle Find(VehicleFilter filter)
         {
-            return Set.FirstOrDefault(d => d.Id == filter.Id);
+            return Set.FirstOrDefault(d => d.VehiclePlate == filter.VehiclePlate);
         }
     }
 }

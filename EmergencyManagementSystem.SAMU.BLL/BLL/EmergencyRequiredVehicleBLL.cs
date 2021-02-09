@@ -6,20 +6,27 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class EmergencyRequiredVehicleBLL : BaseBLL<EmergencyRequiredVehicleModel>, IEmergencyRequiredVehicleBLL
+    public class EmergencyRequiredVehicleBLL : BaseBLL<EmergencyRequiredVehicleModel, EmergencyRequiredVehicle>, IEmergencyRequiredVehicleBLL
     {
         private readonly IMapper _mapper;
         private readonly IEmergencyRequiredVehicleDAL _emergencyRequiredVehicleDAL;
         private readonly EmergencyRequiredVehicleValidation _emergencyRequiredVehicleValidation;
 
-        public EmergencyRequiredVehicleBLL(IMapper mapper, IEmergencyRequiredVehicleDAL emergencyDataDAL, EmergencyRequiredVehicleValidation emergencyDataValidation)
+        public EmergencyRequiredVehicleBLL(IMapper mapper, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL, EmergencyRequiredVehicleValidation emergencyDataValidation)
+            : base(emergencyRequiredVehicleDAL)
         {
             _mapper = mapper;
-            _emergencyRequiredVehicleDAL = emergencyDataDAL;
+            _emergencyRequiredVehicleDAL = emergencyRequiredVehicleDAL;
             _emergencyRequiredVehicleValidation = emergencyDataValidation;
+        }
+
+        public override IQueryable<EmergencyRequiredVehicleModel> ApplyFilterPagination(IQueryable<EmergencyRequiredVehicle> query, IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result Delete(EmergencyRequiredVehicleModel model)
@@ -50,7 +57,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Register(EmergencyRequiredVehicleModel model)
+        public override Result<EmergencyRequiredVehicle> Register(EmergencyRequiredVehicleModel model)
         {
             try
             {
@@ -61,11 +68,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _emergencyRequiredVehicleDAL.Insert(emergencyRequiredVehicle);
-                return _emergencyRequiredVehicleDAL.Save();
+
+                var resultSave = _emergencyRequiredVehicleDAL.Save();
+                if (!resultSave.Success)
+                    return Result<EmergencyRequiredVehicle>.BuildError(resultSave.Messages);
+
+                return Result<EmergencyRequiredVehicle>.BuildSuccess(emergencyRequiredVehicle);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro no momento de registar do veículo requerido para a ocorrência.", error);
+                return Result<EmergencyRequiredVehicle>.BuildError("Erro no momento de registar do veículo requerido para a ocorrência.", error);
             }
         }
 

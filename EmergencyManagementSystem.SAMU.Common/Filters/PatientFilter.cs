@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.Common.Filters
 {
-    public class PatientFilter : IFilter
+    public class PatientFilter : FilterBase
     {
         public long Id { get; set; }
     }

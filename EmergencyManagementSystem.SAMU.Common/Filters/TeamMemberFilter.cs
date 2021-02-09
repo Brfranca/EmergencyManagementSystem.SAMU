@@ -2,7 +2,7 @@
 
 namespace EmergencyManagementSystem.SAMU.Common.Filters
 {
-    public class TeamMemberFilter : IFilter
+    public class TeamMemberFilter : FilterBase
     {
         public long Id { get; set; }
     }

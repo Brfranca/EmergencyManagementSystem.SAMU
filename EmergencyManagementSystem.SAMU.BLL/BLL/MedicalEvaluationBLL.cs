@@ -7,11 +7,12 @@ using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class MedicalEvaluationBLL : BaseBLL<MedicalEvaluationModel>, IMedicalEvaluationBLL
+    public class MedicalEvaluationBLL : BaseBLL<MedicalEvaluationModel, MedicalEvaluation>, IMedicalEvaluationBLL
     {
         private readonly IMapper _mapper;
         private readonly MedicalEvaluationValidation _medicalEvaluationValidation;
@@ -19,10 +20,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public MedicalEvaluationBLL(IMapper mapper, MedicalEvaluationValidation medicalEvaluationValidation, 
             IMedicalEvaluationDAL medicalEvaluationDAL)
+            : base(medicalEvaluationDAL)
         {
             _mapper = mapper;
             _medicalEvaluationDAL = medicalEvaluationDAL;
             _medicalEvaluationValidation = medicalEvaluationValidation;
+        }
+
+        public override IQueryable<MedicalEvaluationModel> ApplyFilterPagination(IQueryable<MedicalEvaluation> query, IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result Delete(MedicalEvaluationModel model)
@@ -55,7 +62,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Register(MedicalEvaluationModel model)
+        public override Result<MedicalEvaluation> Register(MedicalEvaluationModel model)
         {
             try
             {
@@ -65,12 +72,17 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _medicalEvaluationDAL.Insert(medicalEvaluation);
-                return _medicalEvaluationDAL.Save();
+
+                var resultSave = _medicalEvaluationDAL.Save();
+                if (!resultSave.Success)
+                    return Result<MedicalEvaluation>.BuildError(resultSave.Messages);
+
+                return Result<MedicalEvaluation>.BuildSuccess(medicalEvaluation);
             }
             catch (Exception error)
             {
 
-                return Result.BuildError("Erro no momento de registar avaliação médica.", error);
+                return Result<MedicalEvaluation>.BuildError("Erro no momento de registar avaliação médica.", error);
             }
         }
 

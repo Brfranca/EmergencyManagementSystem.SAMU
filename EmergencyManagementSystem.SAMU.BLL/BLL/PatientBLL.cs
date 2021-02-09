@@ -7,21 +7,28 @@ using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class PatientBLL : BaseBLL<PatientModel>, IPatientBLL
+    public class PatientBLL : BaseBLL<PatientModel, Patient>, IPatientBLL
     {
         private readonly IMapper _mapper;
         private readonly PatientValidation _patientValidation;
         private readonly IPatientDAL _patientDAL;
 
         public PatientBLL(IMapper mapper, PatientValidation patientValidation, IPatientDAL patientDAL)
+            : base(patientDAL)
         {
             _mapper = mapper;
             _patientValidation = patientValidation;
             _patientDAL = patientDAL;
+        }
+
+        public override IQueryable<PatientModel> ApplyFilterPagination(IQueryable<Patient> query, IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result Delete(PatientModel model)
@@ -55,7 +62,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Register(PatientModel model)
+        public override Result<Patient> Register(PatientModel model)
         {
             try
             {
@@ -66,12 +73,17 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _patientDAL.Insert(patient);
-                return _patientDAL.Save();
+
+                var resultSave = _patientDAL.Save();
+                if (!resultSave.Success)
+                    return Result<Patient>.BuildError(resultSave.Messages);
+
+                return Result<Patient>.BuildSuccess(patient);
             }
             catch (Exception error)
             {
 
-                return Result.BuildError("Erro ao registrar o paciente.", error);
+                return Result<Patient>.BuildError("Erro ao registrar o paciente.", error);
             }
         }
 

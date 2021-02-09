@@ -7,11 +7,12 @@ using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class EmergencyHistoryBLL : BaseBLL<EmergencyHistoryModel>, IEmergencyHistoryBLL
+    public class EmergencyHistoryBLL : BaseBLL<EmergencyHistoryModel, EmergencyHistory>, IEmergencyHistoryBLL
     {
 
         private readonly IMapper _mapper;
@@ -20,6 +21,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public EmergencyHistoryBLL(IEmergencyHistoryDAL emergencyHistoryDAL, 
             EmergencyHistoryValidation emergencyHistoryValidation, IMapper mapper)
+            : base(emergencyHistoryDAL)
         {
             _emergencyHistoryDAL = emergencyHistoryDAL;
             _emergencyHistoryValidation = emergencyHistoryValidation;
@@ -40,22 +42,28 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Register(EmergencyHistoryModel model)
+        public override Result<EmergencyHistory> Register(EmergencyHistoryModel model)
         {
             try
             {
                 EmergencyHistory emergencyHistory = _mapper.Map<EmergencyHistory>(model);
+
                 var result = _emergencyHistoryValidation.Validate(emergencyHistory);
                 if (!result.Success)
                     return result;
 
                 _emergencyHistoryDAL.Insert(emergencyHistory);
-                return _emergencyHistoryDAL.Save();
+
+                var resultSave = _emergencyHistoryDAL.Save();
+                if (!resultSave.Success)
+                    return Result<EmergencyHistory>.BuildError(resultSave.Messages);
+
+                return Result<EmergencyHistory>.BuildSuccess(emergencyHistory);
             }
             catch (Exception error)
             {
 
-                return Result.BuildError("Erro no momento de registar o histórico de ocorrência.", error);
+                return Result<EmergencyHistory>.BuildError("Erro no momento de registar o histórico de ocorrência.", error);
             }
         }
 
@@ -91,5 +99,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
+        public override IQueryable<EmergencyHistoryModel> ApplyFilterPagination(IQueryable<EmergencyHistory> query, IFilter filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

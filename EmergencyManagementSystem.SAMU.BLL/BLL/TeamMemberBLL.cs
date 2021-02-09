@@ -6,19 +6,26 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class TeamMemberBLL : BaseBLL<TeamMemberModel>, ITeamMemberBLL
+    public class TeamMemberBLL : BaseBLL<TeamMemberModel, TeamMember>, ITeamMemberBLL
     {
         private readonly IMapper _mapper;
         private readonly ITeamMemberDAL _teamMemberDAL;
         private readonly TeamMemberValidation _teamMemberValidation;
         public TeamMemberBLL(IMapper mapper, ITeamMemberDAL teamMemberDAL, TeamMemberValidation teamMemberValidation)
+            : base(teamMemberDAL)
         {
             _mapper = mapper;
             _teamMemberDAL = teamMemberDAL;
             _teamMemberValidation = teamMemberValidation;
+        }
+
+        public override IQueryable<TeamMemberModel> ApplyFilterPagination(IQueryable<TeamMember> query, IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result Delete(TeamMemberModel model)
@@ -49,22 +56,27 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Register(TeamMemberModel model)
+        public override Result<TeamMember> Register(TeamMemberModel model)
         {
             try
             {
                 TeamMember teamMember = _mapper.Map<TeamMember>(model);
 
-                Result result = _teamMemberValidation.Validate(teamMember);
+                var result = _teamMemberValidation.Validate(teamMember);
                 if (!result.Success)
                     return result;
 
                 _teamMemberDAL.Insert(teamMember);
-                return _teamMemberDAL.Save();
+
+                var resultSave = _teamMemberDAL.Save();
+                if (!resultSave.Success)
+                    return Result<TeamMember>.BuildError(resultSave.Messages);
+
+                return Result<TeamMember>.BuildSuccess(teamMember);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro no momento de registar do integrante do veículo.", error);
+                return Result<TeamMember>.BuildError("Erro no momento de registar do integrante do veículo.", error);
             }
         }
 

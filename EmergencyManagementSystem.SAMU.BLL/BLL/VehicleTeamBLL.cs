@@ -6,20 +6,27 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class VehicleTeamBLL : BaseBLL<VehicleTeamModel>, IVehicleTeamBLL
+    public class VehicleTeamBLL : BaseBLL<VehicleTeamModel, VehicleTeam>, IVehicleTeamBLL
     {
         private readonly IMapper _mapper;
         private readonly IVehicleTeamDAL _vehicleTeamDAL;
         private readonly VehicleTeamValidation _vehicleTeamValidation;
 
         public VehicleTeamBLL(IMapper mapper, IVehicleTeamDAL vehicleTeamDAL, VehicleTeamValidation vehicleTeamValidation)
+            : base(vehicleTeamDAL)
         {
             _mapper = mapper;
             _vehicleTeamDAL = vehicleTeamDAL;
             _vehicleTeamValidation = vehicleTeamValidation;
+        }
+
+        public override IQueryable<VehicleTeamModel> ApplyFilterPagination(IQueryable<VehicleTeam> query, IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result Delete(VehicleTeamModel model)
@@ -50,7 +57,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Register(VehicleTeamModel model)
+        public override Result<VehicleTeam> Register(VehicleTeamModel model)
         {
             try
             {
@@ -61,11 +68,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _vehicleTeamDAL.Insert(vehicleTeam);
-                return _vehicleTeamDAL.Save();
+
+                var resultSave = _vehicleTeamDAL.Save();
+                if (!resultSave.Success)
+                    return Result<VehicleTeam>.BuildError(resultSave.Messages);
+
+                return Result<VehicleTeam>.BuildSuccess(vehicleTeam);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro no momento de registar o veículo empenhado na ocorrência.", error);
+                return Result<VehicleTeam>.BuildError("Erro no momento de registar o veículo empenhado na ocorrência.", error);
             }
         }
 

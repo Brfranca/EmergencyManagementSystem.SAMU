@@ -6,19 +6,33 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class VehicleBLL : BaseBLL<VehicleModel>, IVehicleBLL
+    public class VehicleBLL : BaseBLL<VehicleModel, Vehicle>, IVehicleBLL
     {
         private readonly IMapper _mapper;
         private readonly IVehicleDAL _vehicleDAL;
         private readonly VehicleValidation _vehicleValidation;
         public VehicleBLL(IMapper mapper, IVehicleDAL vehicleDAL, VehicleValidation vehicleValidation)
+            : base(vehicleDAL)
         {
             _mapper = mapper;
             _vehicleDAL = vehicleDAL;
             _vehicleValidation = vehicleValidation;
+        }
+
+        public override IQueryable<VehicleModel> ApplyFilterPagination(IQueryable<Vehicle> query, IFilter filter)
+        {
+            var vehicleFilter = (VehicleFilter)filter;
+
+            if (!string.IsNullOrWhiteSpace(vehicleFilter.VehicleName))
+                query = query.Where(d => d.VehicleName == vehicleFilter.VehicleName);
+            if (!string.IsNullOrWhiteSpace(vehicleFilter.VehiclePlate))
+                query = query.Where(d => d.VehiclePlate == vehicleFilter.VehiclePlate);
+
+            return query.Select(d => _mapper.Map<VehicleModel>(d));
         }
 
         public override Result Delete(VehicleModel model)
@@ -49,7 +63,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Register(VehicleModel model)
+        public override Result<Vehicle> Register(VehicleModel model)
         {
             try
             {
@@ -60,11 +74,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _vehicleDAL.Insert(vehicle);
-                return _vehicleDAL.Save();
+
+                var resultSave = _vehicleDAL.Save();
+                if (!resultSave.Success)
+                    return Result<Vehicle>.BuildError(resultSave.Messages);
+
+                return Result<Vehicle>.BuildSuccess(vehicle);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro no momento de registar o veículo.", error);
+                return Result<Vehicle>.BuildError("Erro no momento de registar o veículo.", error);
             }
         }
 

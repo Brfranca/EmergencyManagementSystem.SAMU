@@ -5,28 +5,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace EmergencyManagementSystem.SAMU.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController<T> : ControllerBase where T : class
+    public class BaseController<TModel, TEntity, TFilter> : ControllerBase 
+        where TModel : class
+        where TEntity : class
+        where TFilter : class
     {
-        private readonly IBaseBLL<T> _baseBLL;
+        private readonly IBaseBLL<TModel, TEntity> _baseBLL;
 
-        public BaseController(IBaseBLL<T> baseBLL)
+        public BaseController(IBaseBLL<TModel, TEntity> baseBLL)
         {
             _baseBLL = baseBLL;
         }
 
         [HttpPost("Register")]
-        public Result Register(T model)
+        public Result Register(TModel model)
         {
             return _baseBLL.Register(model);
         }
 
         [HttpPost("Delete")]
-        public Result Delete(T model)
+        public Result Delete(TModel model)
         {
             return _baseBLL.Delete(model);
         }
@@ -38,9 +42,16 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
         }
 
         [HttpPost("Update")]
-        public Result Update(T model)
+        public Result Update(TModel model)
         {
             return _baseBLL.Update(model);
+        }
+
+        [HttpPost("FindPaginated")]
+        public PaginationModel<TModel> FindPaginated(TFilter filter)
+        {
+            var result = _baseBLL.FindPaginated((IFilter)filter);
+            return new PaginationModel<TModel>(result.ToListAsync().Result, new DataPagination(result.GetMetaData()));
         }
     }
 }

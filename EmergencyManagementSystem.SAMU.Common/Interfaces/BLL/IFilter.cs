@@ -2,5 +2,6 @@
 {
     public interface IFilter
     {
+        int CurrentPage { get; set; }
     }
 }

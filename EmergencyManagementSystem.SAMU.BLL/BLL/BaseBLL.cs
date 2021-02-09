@@ -1,13 +1,33 @@
-﻿using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
+﻿using EmergencyManagementSystem.SAMU.Common.Interfaces;
+using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Models;
+using System.Linq;
+using X.PagedList;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public abstract class BaseBLL<T> : IBaseBLL<T> where T : class
+    public abstract class BaseBLL<TModel, TEntity> : IBaseBLL<TModel, TEntity>
+        where TModel : class
+        where TEntity : class
+
     {
-        public abstract Result Register(T model);
-        public abstract Result Update(T model);
-        public abstract Result Delete(T model);
-        public abstract Result<T> Find(IFilter filter);
+        private readonly IBaseDAL<TEntity> _baseDAL;
+
+        public BaseBLL(IBaseDAL<TEntity> baseDAL)
+        {
+            _baseDAL = baseDAL;
+        }
+        public abstract Result<TEntity> Register(TModel model);
+        public abstract Result Update(TModel model);
+        public abstract Result Delete(TModel model);
+        public abstract Result<TModel> Find(IFilter filter);
+
+        public PagedList<TModel> FindPaginated(IFilter filter)
+        {
+            var modelPaginated = _baseDAL.FindPaginated(filter, ApplyFilterPagination);
+            return (PagedList<TModel>)modelPaginated;
+        }
+
+        public abstract IQueryable<TModel> ApplyFilterPagination(IQueryable<TEntity> query, IFilter filter);
     }
 }
