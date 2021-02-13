@@ -2,7 +2,7 @@
 
 namespace EmergencyManagementSystem.SAMU.Common.Filters
 {
-    public class VehicleTeamFilter : FilterBase
+    public class ServiceHistoryFilter : FilterBase
     {
         public long Id { get; set; }
     }

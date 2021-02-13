@@ -3,8 +3,8 @@ using EmergencyManagementSystem.SAMU.Entities.Entities;
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.DAL
 {
-    public interface IVehicleTeamDAL : IBaseDAL<ServiceHistory>
+    public interface IServiceHistoryDAL : IBaseDAL<ServiceHistory>
     {
-        ServiceHistory Find(VehicleTeamFilter filter);
+        ServiceHistory Find(ServiceHistoryFilter filter);
     }
 }

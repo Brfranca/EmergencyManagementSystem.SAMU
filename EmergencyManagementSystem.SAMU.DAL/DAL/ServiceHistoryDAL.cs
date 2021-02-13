@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.DAL.DAL
 {
-    public class VehicleTeamDAL : BaseDAL<ServiceHistory>, IVehicleTeamDAL
+    public class ServiceHistoryDAL : BaseDAL<ServiceHistory>, IServiceHistoryDAL
     {
-        public VehicleTeamDAL(Context context) : base(context)
+        public ServiceHistoryDAL(Context context) : base(context)
         {
         }
 
-        public ServiceHistory Find(VehicleTeamFilter filter)
+        public ServiceHistory Find(ServiceHistoryFilter filter)
         {
             return Set.FirstOrDefault(d => d.Id == filter.Id);
         }

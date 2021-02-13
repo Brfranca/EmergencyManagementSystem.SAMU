@@ -20,9 +20,9 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasColumnType("uniqueidentifier")
                 .IsRequired();
 
-            builder.HasOne(d => d.VehicleTeam)
+            builder.HasOne(d => d.ServiceHistory)
                 .WithMany(d => d.TeamMembers)
-                .HasForeignKey(d => d.VehicleTeamId)
+                .HasForeignKey(d => d.ServiceHistoryId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

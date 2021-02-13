@@ -56,7 +56,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
             builder.HasMany(d => d.Patients)
                 .WithOne(d => d.Emergency);
 
-            builder.HasMany(d => d.VehicleTeams)
+            builder.HasMany(d => d.ServiceHistories)
                 .WithOne(d => d.Emergency);
 
             builder.HasMany(d => d.EmergencyRequiredVehicles)

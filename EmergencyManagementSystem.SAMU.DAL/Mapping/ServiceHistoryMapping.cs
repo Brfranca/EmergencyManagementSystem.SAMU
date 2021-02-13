@@ -1,9 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 {
@@ -21,11 +18,11 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasOne(d => d.Emergency)
-                .WithMany(d => d.VehicleTeams)
+                .WithMany(d => d.ServiceHistories)
                 .HasForeignKey(d => d.EmergencyId);
 
             builder.HasOne(d => d.Vehicle)
-                .WithMany(d => d.VehicleTeams)
+                .WithMany(d => d.ServiceHistories)
                 .HasForeignKey(d => d.VehicleId);
 
             builder.Property(d => d.ServiceHistoryStatus)
@@ -40,13 +37,13 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasMany(d => d.TeamMembers)
-                .WithOne(d => d.VehicleTeam)
-                .HasForeignKey(d => d.VehicleTeamId)
+                .WithOne(d => d.ServiceHistory)
+                .HasForeignKey(d => d.ServiceHistoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(d => d.VehiclePositionHistories)
-                .WithOne(d => d.VehicleTeam)
-                .HasForeignKey(d => d.VehicleTeamId)
+                .WithOne(d => d.ServiceHistory)
+                .HasForeignKey(d => d.ServiceHistoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

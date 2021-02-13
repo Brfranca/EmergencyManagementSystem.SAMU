@@ -12,6 +12,6 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public int Year { get; set; }
         public VehicleType VehicleType { get; set; }
         public VehicleSituation VehicleSituation { get; set; }
-        public ICollection<ServiceHistory> VehicleTeams { get; set; }
+        public ICollection<ServiceHistory> ServiceHistories { get; set; }
     }
 }

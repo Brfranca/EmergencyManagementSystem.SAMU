@@ -1,14 +1,11 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
-    public class VehicleTeamValidation : BaseValidation<ServiceHistory>
+    public class ServiceHistoryValidation : BaseValidation<ServiceHistory>
     {
-        public VehicleTeamValidation()
+        public ServiceHistoryValidation()
         {
             RuleFor(e => e.Date)
                 .Cascade(CascadeMode.Stop)
@@ -16,7 +13,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
-            RuleFor(e => e.VehicleTeamStatus)
+            RuleFor(e => e.ServiceHistoryStatus)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()

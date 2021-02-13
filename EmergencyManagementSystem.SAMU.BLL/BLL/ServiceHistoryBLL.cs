@@ -10,13 +10,13 @@ using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class VehicleTeamBLL : BaseBLL<ServiceHistoryModel, ServiceHistory>, IVehicleTeamBLL
+    public class ServiceHistoryBLL : BaseBLL<ServiceHistoryModel, ServiceHistory>, IServiceHistoryBLL
     {
         private readonly IMapper _mapper;
-        private readonly IVehicleTeamDAL _vehicleTeamDAL;
-        private readonly VehicleTeamValidation _vehicleTeamValidation;
+        private readonly IServiceHistoryDAL _vehicleTeamDAL;
+        private readonly ServiceHistoryValidation _vehicleTeamValidation;
 
-        public VehicleTeamBLL(IMapper mapper, IVehicleTeamDAL vehicleTeamDAL, VehicleTeamValidation vehicleTeamValidation)
+        public ServiceHistoryBLL(IMapper mapper, IServiceHistoryDAL vehicleTeamDAL, ServiceHistoryValidation vehicleTeamValidation)
             : base(vehicleTeamDAL)
         {
             _mapper = mapper;
@@ -47,7 +47,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
-                ServiceHistory vehicleTeam = _vehicleTeamDAL.Find((VehicleTeamFilter)filter);
+                ServiceHistory vehicleTeam = _vehicleTeamDAL.Find((ServiceHistoryFilter)filter);
                 ServiceHistoryModel vehicleTeamModel = _mapper.Map<ServiceHistoryModel>(vehicleTeam);
                 return Result<ServiceHistoryModel>.BuildSuccess(vehicleTeamModel);
             }

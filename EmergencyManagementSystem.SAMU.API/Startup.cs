@@ -58,9 +58,9 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IVehicleBLL, VehicleBLL>();
             services.AddScoped<IVehicleDAL, VehicleDAL>();
             services.AddScoped<VehicleValidation>();
-            services.AddScoped<IVehicleTeamBLL, VehicleTeamBLL>();
-            services.AddScoped<IVehicleTeamDAL, VehicleTeamDAL>();
-            services.AddScoped<VehicleTeamValidation>();
+            services.AddScoped<IServiceHistoryBLL, ServiceHistoryBLL>();
+            services.AddScoped<IServiceHistoryDAL, ServiceHistoryDAL>();
+            services.AddScoped<ServiceHistoryValidation>();
             services.AddScoped<IVehiclePositionHistoryBLL, VehiclePositionHistoryBLL>();
             services.AddScoped<IVehiclePositionHistoryDAL, VehiclePositionHistoryDAL>();
             services.AddScoped<VehiclePositionHistoryValidation>();
