@@ -8,9 +8,9 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public DateTime Date { get; set; }
         public Guid EmployeeGuid { get; set; }
         public EmergencyModel EmergencyModel { get; set; }
-        public int EmergencyModelId { get; set; }
+        public int EmergencyId { get; set; }
         public string Evaluation { get; set; }
         public PatientModel PatientModel { get; set; }
-        public long PatientModelId { get; set; }
+        public long PatientId { get; set; }
     }
 }

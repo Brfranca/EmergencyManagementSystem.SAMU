@@ -13,7 +13,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public string RequesterName { get; set; }
         public string RequesterPhone { get; set; }
         public AddressModel AddressModel { get; set; }
-        public long AddressModelId { get; set; }
+        public long AddressId { get; set; }
         public EmergencyStatus EmergencyStatus { get; set; }
         public ICollection<MedicalEvaluationModel> MedicalEvaluationModels { get; set; }
         public ICollection<EmergencyHistoryModel> EmergencyHistoryModels { get; set; }

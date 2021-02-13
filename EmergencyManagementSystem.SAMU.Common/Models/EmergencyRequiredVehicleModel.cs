@@ -9,7 +9,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public DateTime Date { get; set; }
         public VehicleType VehicleType { get; set; }
         public virtual EmergencyModel EmergencyModel { get; set; }
-        public long EmergencyModelId { get; set; }
+        public long EmergencyId { get; set; }
         public CodeColor CodeColor { get; set; }
     }
 }
