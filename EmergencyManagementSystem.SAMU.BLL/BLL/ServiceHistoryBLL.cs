@@ -13,15 +13,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
     public class ServiceHistoryBLL : BaseBLL<ServiceHistoryModel, ServiceHistory>, IServiceHistoryBLL
     {
         private readonly IMapper _mapper;
-        private readonly IServiceHistoryDAL _vehicleTeamDAL;
-        private readonly ServiceHistoryValidation _vehicleTeamValidation;
+        private readonly IServiceHistoryDAL _serviceHistoryDAL;
+        private readonly ServiceHistoryValidation _serviceHistoryValidation;
 
-        public ServiceHistoryBLL(IMapper mapper, IServiceHistoryDAL vehicleTeamDAL, ServiceHistoryValidation vehicleTeamValidation)
-            : base(vehicleTeamDAL)
+        public ServiceHistoryBLL(IMapper mapper, IServiceHistoryDAL serviceHistoryDAL, ServiceHistoryValidation serviceHistoryValidation)
+            : base(serviceHistoryDAL)
         {
             _mapper = mapper;
-            _vehicleTeamDAL = vehicleTeamDAL;
-            _vehicleTeamValidation = vehicleTeamValidation;
+            _serviceHistoryDAL = serviceHistoryDAL;
+            _serviceHistoryValidation = serviceHistoryValidation;
         }
 
         public override IQueryable<ServiceHistoryModel> ApplyFilterPagination(IQueryable<ServiceHistory> query, IFilter filter)
@@ -33,9 +33,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
-                ServiceHistory vehicleTeam = _mapper.Map<ServiceHistory>(model);
-                _vehicleTeamDAL.Delete(vehicleTeam);
-                return _vehicleTeamDAL.Save();
+                ServiceHistory serviceHistory = _mapper.Map<ServiceHistory>(model);
+                _serviceHistoryDAL.Delete(serviceHistory);
+                return _serviceHistoryDAL.Save();
             }
             catch (Exception error)
             {
@@ -47,9 +47,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
-                ServiceHistory vehicleTeam = _vehicleTeamDAL.Find((ServiceHistoryFilter)filter);
-                ServiceHistoryModel vehicleTeamModel = _mapper.Map<ServiceHistoryModel>(vehicleTeam);
-                return Result<ServiceHistoryModel>.BuildSuccess(vehicleTeamModel);
+                ServiceHistory serviceHistory = _serviceHistoryDAL.Find((ServiceHistoryFilter)filter);
+                ServiceHistoryModel serviceHistoryModel = _mapper.Map<ServiceHistoryModel>(serviceHistory);
+                return Result<ServiceHistoryModel>.BuildSuccess(serviceHistoryModel);
             }
             catch (Exception error)
             {
@@ -61,19 +61,19 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
-                ServiceHistory vehicleTeam = _mapper.Map<ServiceHistory>(model);
+                ServiceHistory serviceHistory = _mapper.Map<ServiceHistory>(model);
 
-                var result = _vehicleTeamValidation.Validate(vehicleTeam);
+                var result = _serviceHistoryValidation.Validate(serviceHistory);
                 if (!result.Success)
                     return result;
 
-                _vehicleTeamDAL.Insert(vehicleTeam);
+                _serviceHistoryDAL.Insert(serviceHistory);
 
-                var resultSave = _vehicleTeamDAL.Save();
+                var resultSave = _serviceHistoryDAL.Save();
                 if (!resultSave.Success)
                     return Result<ServiceHistory>.BuildError(resultSave.Messages);
 
-                return Result<ServiceHistory>.BuildSuccess(vehicleTeam);
+                return Result<ServiceHistory>.BuildSuccess(serviceHistory);
             }
             catch (Exception error)
             {
@@ -85,14 +85,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
-                ServiceHistory vehicleTeam = _mapper.Map<ServiceHistory>(model);
+                ServiceHistory serviceHistory = _mapper.Map<ServiceHistory>(model);
 
-                var result = _vehicleTeamValidation.Validate(vehicleTeam);
+                var result = _serviceHistoryValidation.Validate(serviceHistory);
                 if (!result.Success)
                     return result;
 
-                _vehicleTeamDAL.Update(vehicleTeam);
-                return _vehicleTeamDAL.Save();
+                _serviceHistoryDAL.Update(serviceHistory);
+                return _serviceHistoryDAL.Save();
             }
             catch (Exception error)
             {
