@@ -35,17 +35,6 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasColumnType("varchar")
                 .HasMaxLength(150)
                 .IsRequired();
-
-            builder.HasMany(d => d.TeamMembers)
-                .WithOne(d => d.ServiceHistory)
-                .HasForeignKey(d => d.ServiceHistoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(d => d.VehiclePositionHistories)
-                .WithOne(d => d.ServiceHistory)
-                .HasForeignKey(d => d.ServiceHistoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

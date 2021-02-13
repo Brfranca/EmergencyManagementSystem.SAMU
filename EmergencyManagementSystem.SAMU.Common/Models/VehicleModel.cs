@@ -9,6 +9,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public string VehicleName { get; set; }
         public int Year { get; set; }
         public VehicleType VehicleType { get; set; }
-        public VehicleSituation VehicleSituation { get; set; }
+        public VehicleStatus VehicleStatus { get; set; }
     }
 }

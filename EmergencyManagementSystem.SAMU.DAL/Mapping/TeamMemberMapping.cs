@@ -1,9 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 {
@@ -15,15 +12,15 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 
             builder.HasKey(d => d.Id);
 
-            builder.Property(d => d.EmployeeGuid)
-                .HasColumnName("EmployeeGuid")
-                .HasColumnType("uniqueidentifier")
+            builder.HasOne(e => e.Member)
+                .WithMany()
+                .HasForeignKey(e => e.MemberId)
                 .IsRequired();
 
-            builder.HasOne(d => d.ServiceHistory)
-                .WithMany(d => d.TeamMembers)
-                .HasForeignKey(d => d.ServiceHistoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(e => e.ServiceHistory)
+                .WithMany(e => e.TeamMembers)
+                .HasForeignKey(e => e.ServiceHistoryId)
+                .IsRequired();
         }
     }
 }

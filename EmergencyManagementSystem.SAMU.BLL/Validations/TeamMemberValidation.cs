@@ -1,8 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
@@ -10,12 +7,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
     {
         public TeamMemberValidation()
         {
-            RuleFor(e => e.EmployeeGuid)
+            RuleFor(e => e.Member)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Favor informar o identificador único universal do funcionário.");
-            //Não tenho certeza do que validar aqui
+                .WithMessage("Favor informar o membro da equipe.");
+
+            RuleFor(e => e.ServiceHistory)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .WithMessage("Favor informar o histórico de atendimento.");
         }
     }
 }

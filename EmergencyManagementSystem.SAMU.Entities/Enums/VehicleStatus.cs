@@ -1,6 +1,6 @@
 ﻿namespace EmergencyManagementSystem.SAMU.Entities.Enums
 {
-    public enum VehicleSituation : short
+    public enum VehicleStatus : short
     {
         Invalido,
         Broken,

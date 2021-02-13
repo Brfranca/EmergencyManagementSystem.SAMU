@@ -1,9 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 {
@@ -27,8 +24,8 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasMaxLength(40)
                 .IsRequired();
 
-            builder.Property(d => d.VehicleSituation)
-                .HasColumnName("VehicleSituation")
+            builder.Property(d => d.VehicleStatus)
+                .HasColumnName("VehicleStatus")
                 .HasColumnType("int")
                 .IsRequired();
 

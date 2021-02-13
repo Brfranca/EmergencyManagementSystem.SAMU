@@ -38,7 +38,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar o tipo de veículo.");
 
-            RuleFor(e => e.VehicleSituation)
+            RuleFor(e => e.VehicleStatus)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()

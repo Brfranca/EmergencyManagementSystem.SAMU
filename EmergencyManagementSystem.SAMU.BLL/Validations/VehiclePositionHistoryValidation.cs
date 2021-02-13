@@ -1,8 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
