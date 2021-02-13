@@ -8,7 +8,7 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
-        public VehicleStatus VehicleStatus { get; set; }
+        public VehiclePosition VehiclePosition { get; set; }
         public virtual ServiceHistory ServiceHistory { get; set; }
         public long ServiceHistoryId { get; set; }
     }

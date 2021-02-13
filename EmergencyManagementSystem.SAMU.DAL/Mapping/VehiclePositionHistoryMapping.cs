@@ -20,8 +20,8 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasColumnType("datetime")
                 .IsRequired();
 
-            builder.Property(d => d.VehicleStatus)
-                .HasColumnName("VehicleStatus")
+            builder.Property(d => d.VehiclePosition)
+                .HasColumnName("VehiclePosition")
                 .HasColumnType("int")
                 .IsRequired();
 

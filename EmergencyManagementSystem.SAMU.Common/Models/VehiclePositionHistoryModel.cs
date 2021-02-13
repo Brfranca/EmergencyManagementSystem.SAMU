@@ -7,7 +7,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
-        public VehicleStatus VehicleStatus { get; set; }
+        public VehiclePosition VehiclePosition { get; set; }
         public ServiceHistoryModel ServiceHistoryModel { get; set; }
         public long ServiceHistoryModelId { get; set; }
         public EmergencyModel EmergencyModel { get; set; }

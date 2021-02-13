@@ -16,7 +16,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
-            RuleFor(e => e.VehicleStatus)
+            RuleFor(e => e.VehiclePosition)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
