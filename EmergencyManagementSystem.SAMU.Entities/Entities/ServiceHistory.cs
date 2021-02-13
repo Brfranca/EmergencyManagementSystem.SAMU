@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EmergencyManagementSystem.SAMU.Entities.Entities
 {
-    public class VehicleTeam : IEntity<long>
+    public class ServiceHistory : IEntity<long>
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
@@ -13,15 +13,10 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public long VehicleId { get; set; }
         public virtual Emergency Emergency { get; set; }
         public long EmergencyId { get; set; }
-        public VehicleTeamStatus VehicleTeamStatus { get; set; }
+        public ServiceHistoryStatus ServiceHistoryStatus { get; set; }
         public string Description { get; set; }
         public ICollection<TeamMember> TeamMembers { get; set; }
         public ICollection<VehiclePositionHistory> VehiclePositionHistories { get; set; }
 
-        //public VehicleTeam()
-        //{
-        //    this.TeamMembers = new List<TeamMember>();
-        //    this.VehiclePositionHistories = new List<VehiclePositionHistory>();
-        //}
     }
 }

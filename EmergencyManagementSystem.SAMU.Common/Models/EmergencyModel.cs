@@ -12,13 +12,13 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public DateTime Date { get; set; }
         public string RequesterName { get; set; }
         public string RequesterPhone { get; set; }
-        public virtual Address Address { get; set; }
-        public long AddressId { get; set; }
+        public AddressModel AddressModel { get; set; }
+        public long AddressModelId { get; set; }
         public EmergencyStatus EmergencyStatus { get; set; }
-        public ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
-        public ICollection<EmergencyHistory> EmergencyHistories { get; set; }
-        public ICollection<Patient> Patients { get; set; }
-        public ICollection<VehicleTeam> VehicleTeams { get; set; }
-        public ICollection<EmergencyRequiredVehicle> EmergencyDatas { get; set; }
+        public ICollection<MedicalEvaluationModel> MedicalEvaluationModels { get; set; }
+        public ICollection<EmergencyHistoryModel> EmergencyHistoryModels { get; set; }
+        public ICollection<PatientModel> PatientModels { get; set; }
+        public ICollection<ServiceHistoryModel> ServiceHistoryModels { get; set; }
+        public ICollection<EmergencyRequiredVehicleModel> EmergencyRequiredVehicleModels { get; set; }
     }
 }

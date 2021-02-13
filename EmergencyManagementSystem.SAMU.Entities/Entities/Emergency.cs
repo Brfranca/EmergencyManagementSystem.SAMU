@@ -19,7 +19,7 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
         public ICollection<EmergencyHistory> EmergencyHistories { get; set; }
         public ICollection<Patient> Patients { get; set; }
-        public ICollection<VehicleTeam> VehicleTeams { get; set; }
+        public ICollection<ServiceHistory> VehicleTeams { get; set; }
 
         //public Emergency()
         //{

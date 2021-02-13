@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
-    public class VehicleTeamValidation : BaseValidation<VehicleTeam>
+    public class VehicleTeamValidation : BaseValidation<ServiceHistory>
     {
         public VehicleTeamValidation()
         {

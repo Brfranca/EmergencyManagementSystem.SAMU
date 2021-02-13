@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class VehicleTeamBLL : BaseBLL<VehicleTeamModel, VehicleTeam>, IVehicleTeamBLL
+    public class VehicleTeamBLL : BaseBLL<ServiceHistoryModel, ServiceHistory>, IVehicleTeamBLL
     {
         private readonly IMapper _mapper;
         private readonly IVehicleTeamDAL _vehicleTeamDAL;
@@ -24,16 +24,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             _vehicleTeamValidation = vehicleTeamValidation;
         }
 
-        public override IQueryable<VehicleTeamModel> ApplyFilterPagination(IQueryable<VehicleTeam> query, IFilter filter)
+        public override IQueryable<ServiceHistoryModel> ApplyFilterPagination(IQueryable<ServiceHistory> query, IFilter filter)
         {
             throw new NotImplementedException();
         }
 
-        public override Result Delete(VehicleTeamModel model)
+        public override Result Delete(ServiceHistoryModel model)
         {
             try
             {
-                VehicleTeam vehicleTeam = _mapper.Map<VehicleTeam>(model);
+                ServiceHistory vehicleTeam = _mapper.Map<ServiceHistory>(model);
                 _vehicleTeamDAL.Delete(vehicleTeam);
                 return _vehicleTeamDAL.Save();
             }
@@ -43,25 +43,25 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result<VehicleTeamModel> Find(IFilter filter)
+        public override Result<ServiceHistoryModel> Find(IFilter filter)
         {
             try
             {
-                VehicleTeam vehicleTeam = _vehicleTeamDAL.Find((VehicleTeamFilter)filter);
-                VehicleTeamModel vehicleTeamModel = _mapper.Map<VehicleTeamModel>(vehicleTeam);
-                return Result<VehicleTeamModel>.BuildSuccess(vehicleTeamModel);
+                ServiceHistory vehicleTeam = _vehicleTeamDAL.Find((VehicleTeamFilter)filter);
+                ServiceHistoryModel vehicleTeamModel = _mapper.Map<ServiceHistoryModel>(vehicleTeam);
+                return Result<ServiceHistoryModel>.BuildSuccess(vehicleTeamModel);
             }
             catch (Exception error)
             {
-                return Result<VehicleTeamModel>.BuildError("Erro ao localizar o veículo empenhado na ocorrência.", error);
+                return Result<ServiceHistoryModel>.BuildError("Erro ao localizar o veículo empenhado na ocorrência.", error);
             }
         }
 
-        public override Result<VehicleTeam> Register(VehicleTeamModel model)
+        public override Result<ServiceHistory> Register(ServiceHistoryModel model)
         {
             try
             {
-                VehicleTeam vehicleTeam = _mapper.Map<VehicleTeam>(model);
+                ServiceHistory vehicleTeam = _mapper.Map<ServiceHistory>(model);
 
                 var result = _vehicleTeamValidation.Validate(vehicleTeam);
                 if (!result.Success)
@@ -71,21 +71,21 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
                 var resultSave = _vehicleTeamDAL.Save();
                 if (!resultSave.Success)
-                    return Result<VehicleTeam>.BuildError(resultSave.Messages);
+                    return Result<ServiceHistory>.BuildError(resultSave.Messages);
 
-                return Result<VehicleTeam>.BuildSuccess(vehicleTeam);
+                return Result<ServiceHistory>.BuildSuccess(vehicleTeam);
             }
             catch (Exception error)
             {
-                return Result<VehicleTeam>.BuildError("Erro no momento de registar o veículo empenhado na ocorrência.", error);
+                return Result<ServiceHistory>.BuildError("Erro no momento de registar o veículo empenhado na ocorrência.", error);
             }
         }
 
-        public override Result Update(VehicleTeamModel model)
+        public override Result Update(ServiceHistoryModel model)
         {
             try
             {
-                VehicleTeam vehicleTeam = _mapper.Map<VehicleTeam>(model);
+                ServiceHistory vehicleTeam = _mapper.Map<ServiceHistory>(model);
 
                 var result = _vehicleTeamValidation.Validate(vehicleTeam);
                 if (!result.Success)

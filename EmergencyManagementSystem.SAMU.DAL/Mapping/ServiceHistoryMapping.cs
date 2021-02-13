@@ -7,11 +7,11 @@ using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 {
-    public class VehicleTeamMapping : IEntityTypeConfiguration<VehicleTeam>
+    public class ServiceHistoryMapping : IEntityTypeConfiguration<ServiceHistory>
     {
-        public void Configure(EntityTypeBuilder<VehicleTeam> builder)
+        public void Configure(EntityTypeBuilder<ServiceHistory> builder)
         {
-            builder.ToTable("VehicleTeams", "dbo");
+            builder.ToTable("ServiceHistories", "dbo");
 
             builder.HasKey(d => d.Id);
 
@@ -28,8 +28,8 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .WithMany(d => d.VehicleTeams)
                 .HasForeignKey(d => d.VehicleId);
 
-            builder.Property(d => d.VehicleTeamStatus)
-                .HasColumnName("VehicleTeamStatus")
+            builder.Property(d => d.ServiceHistoryStatus)
+                .HasColumnName("ServiceHistoryStatus")
                 .HasColumnType("int")
                 .IsRequired();
 

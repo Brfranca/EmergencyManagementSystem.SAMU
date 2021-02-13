@@ -1,8 +1,8 @@
 ﻿namespace EmergencyManagementSystem.SAMU.Entities.Enums
 {
-    public enum VehicleTeamStatus : short
+    public enum ServiceHistoryStatus : short
     {
-        Invalido,
+        Invalid,
         Canceled,
         InProgress,
         Finalized

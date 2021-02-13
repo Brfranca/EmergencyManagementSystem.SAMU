@@ -12,7 +12,7 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VehicleTeamController : BaseController<VehicleTeamModel, VehicleTeam, VehicleTeamFilter>
+    public class VehicleTeamController : BaseController<ServiceHistoryModel, ServiceHistory, VehicleTeamFilter>
     {
         public VehicleTeamController(IVehicleTeamBLL vehicleTeamBLL) : base(vehicleTeamBLL)
         {

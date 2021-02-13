@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EmergencyManagementSystem.SAMU.Common.Models
+﻿namespace EmergencyManagementSystem.SAMU.Common.Models
 {
     public class AddressModel
     {

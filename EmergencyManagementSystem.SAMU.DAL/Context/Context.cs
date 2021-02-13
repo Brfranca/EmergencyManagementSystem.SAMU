@@ -22,7 +22,7 @@ namespace EmergencyManagementSystem.SAMU.DAL
             modelBuilder.ApplyConfiguration(new TeamMemberMapping());
             modelBuilder.ApplyConfiguration(new VehicleMapping());
             modelBuilder.ApplyConfiguration(new VehiclePositionHistoryMapping());
-            modelBuilder.ApplyConfiguration(new VehicleTeamMapping());
+            modelBuilder.ApplyConfiguration(new ServiceHistoryMapping());
             modelBuilder.ApplyConfiguration(new MedicalEvaluationMapping());
             modelBuilder.ApplyConfiguration(new PatientMapping());
 

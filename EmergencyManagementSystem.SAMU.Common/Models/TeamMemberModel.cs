@@ -1,5 +1,4 @@
-﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
-using System;
+﻿using System;
 
 namespace EmergencyManagementSystem.SAMU.Common.Models
 {
@@ -7,7 +6,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
     {
         public long Id { get; set; }
         public Guid EmployeeGuid { get; set; }
-        public long VehicleTeamId { get; set; }
-        public virtual VehicleTeam VehicleTeam { get; set; }
+        public long ServiceHistoryModelId { get; set; }
+        public ServiceHistoryModel ServiceHistoryModel { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using EmergencyManagementSystem.SAMU.Entities.Entities;
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
 {
-    public interface IVehicleTeamBLL : IBaseBLL<VehicleTeamModel, VehicleTeam>
+    public interface IVehicleTeamBLL : IBaseBLL<ServiceHistoryModel, ServiceHistory>
     {
     }
 }

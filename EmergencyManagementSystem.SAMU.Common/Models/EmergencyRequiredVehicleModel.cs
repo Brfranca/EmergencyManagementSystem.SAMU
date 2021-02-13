@@ -1,5 +1,4 @@
-﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
-using EmergencyManagementSystem.SAMU.Entities.Enums;
+﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 
 namespace EmergencyManagementSystem.SAMU.Common.Models
@@ -9,8 +8,8 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public long Id { get; set; }
         public DateTime Date { get; set; }
         public VehicleType VehicleType { get; set; }
-        public virtual Emergency Emergency { get; set; }
-        public long EmergencyId { get; set; }
+        public virtual EmergencyModel EmergencyModel { get; set; }
+        public long EmergencyModelId { get; set; }
         public CodeColor CodeColor { get; set; }
     }
 }
