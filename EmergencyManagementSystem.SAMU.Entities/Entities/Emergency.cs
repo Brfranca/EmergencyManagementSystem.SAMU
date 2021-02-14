@@ -15,11 +15,11 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public virtual Address Address { get; set; }
         public long AddressId { get; set; }
         public EmergencyStatus EmergencyStatus { get; set; }
-        public ICollection<EmergencyRequiredVehicle> EmergencyRequiredVehicles { get; set; }
-        public ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
-        public ICollection<EmergencyHistory> EmergencyHistories { get; set; }
-        public ICollection<Patient> Patients { get; set; }
-        public ICollection<ServiceHistory> ServiceHistories { get; set; }
+        public virtual ICollection<EmergencyRequiredVehicle> EmergencyRequiredVehicles { get; set; }
+        public virtual ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
+        public virtual ICollection<EmergencyHistory> EmergencyHistories { get; set; }
+        public virtual ICollection<Patient> Patients { get; set; }
+        public virtual ICollection<ServiceHistory> ServiceHistories { get; set; }
 
     }
 }

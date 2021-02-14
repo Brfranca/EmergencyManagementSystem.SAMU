@@ -1,8 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
@@ -43,6 +40,22 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a situação do veículo.");
+
+            RuleFor(e => e.OperationCity)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("Favor informar a cidade em que o veículo vai atuar.")
+                .Length(3, 40)
+                .WithMessage("O nome da cidade deve conter entre 3 e 40 caracteres.");
+            
+            RuleFor(e => e.Codename)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("Favor informar o codinome do veículo.")
+                .Length(3, 20)
+                .WithMessage("O codinome deve conter entre 3 e 20 caracteres.");
         }
     }
 }

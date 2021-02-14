@@ -15,8 +15,8 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public long EmergencyId { get; set; }
         public ServiceHistoryStatus ServiceHistoryStatus { get; set; }
         public string Description { get; set; }
-        public ICollection<TeamMember> TeamMembers { get; set; }
-        public ICollection<VehiclePositionHistory> VehiclePositionHistories { get; set; }
+        public virtual ICollection<TeamMember> TeamMembers { get; set; }
+        public virtual ICollection<VehiclePositionHistory> VehiclePositionHistories { get; set; }
 
     }
 }

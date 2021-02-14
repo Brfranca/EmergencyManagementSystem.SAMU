@@ -11,6 +11,6 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public Guid EmployeeGuid { get; set; }
         public EmployeeStatus EmployeeStatus { get; set; }
         public long VehicleId { get; set; }
-        public Vehicle Vehicle { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
     }
 }

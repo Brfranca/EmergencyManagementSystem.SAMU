@@ -211,6 +211,39 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     b.ToTable("MedicalEvaluations", "dbo");
                 });
 
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Member", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<Guid>("EmployeeGuid")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("EmployeeGuid");
+
+                    b.Property<int>("EmployeeStatus")
+                        .HasColumnType("int")
+                        .HasColumnName("EmployeeStatus");
+
+                    b.Property<DateTime?>("FinishedWork")
+                        .HasColumnType("datetime")
+                        .HasColumnName("FinishedWork");
+
+                    b.Property<DateTime>("StartedWork")
+                        .HasColumnType("datetime")
+                        .HasColumnName("StartedWork");
+
+                    b.Property<long>("VehicleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("Members", "dbo");
+                });
+
             modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Patient", b =>
                 {
                     b.Property<long>("Id")
@@ -242,6 +275,42 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     b.ToTable("Patients", "dbo");
                 });
 
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.ServiceHistory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime")
+                        .HasColumnName("Date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("Description");
+
+                    b.Property<long>("EmergencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ServiceHistoryStatus")
+                        .HasColumnType("int")
+                        .HasColumnName("ServiceHistoryStatus");
+
+                    b.Property<long>("VehicleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmergencyId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("ServiceHistories", "dbo");
+                });
+
             modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.TeamMember", b =>
                 {
                     b.Property<long>("Id")
@@ -249,16 +318,17 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<Guid>("EmployeeGuid")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("EmployeeGuid");
+                    b.Property<long>("MemberId")
+                        .HasColumnType("bigint");
 
-                    b.Property<long>("VehicleTeamId")
+                    b.Property<long>("ServiceHistoryId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleTeamId");
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("ServiceHistoryId");
 
                     b.ToTable("TeamMembers", "dbo");
                 });
@@ -269,6 +339,18 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Codename")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("varchar");
+
+                    b.Property<string>("OperationCity")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("OperationCity");
 
                     b.Property<string>("VehicleName")
                         .IsRequired()
@@ -282,9 +364,9 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         .HasColumnType("varchar(7)")
                         .HasColumnName("VehiclePlate");
 
-                    b.Property<int>("VehicleSituation")
+                    b.Property<int>("VehicleStatus")
                         .HasColumnType("int")
-                        .HasColumnName("VehicleSituation");
+                        .HasColumnName("VehicleStatus");
 
                     b.Property<int>("VehicleType")
                         .HasColumnType("int")
@@ -310,54 +392,18 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("Date");
 
-                    b.Property<int>("VehicleStatus")
-                        .HasColumnType("int")
-                        .HasColumnName("VehicleStatus");
-
-                    b.Property<long>("VehicleTeamId")
+                    b.Property<long>("ServiceHistoryId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("VehiclePosition")
+                        .HasColumnType("int")
+                        .HasColumnName("VehiclePosition");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleTeamId");
+                    b.HasIndex("ServiceHistoryId");
 
                     b.ToTable("VehiclePositionHistories", "dbo");
-                });
-
-            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.VehicleTeam", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Date");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)")
-                        .HasColumnName("Description");
-
-                    b.Property<long>("EmergencyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("VehicleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("VehicleTeamStatus")
-                        .HasColumnType("int")
-                        .HasColumnName("VehicleTeamStatus");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmergencyId");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("VehicleTeams", "dbo");
                 });
 
             modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Emergency", b =>
@@ -412,6 +458,17 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Member", b =>
+                {
+                    b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
+                });
+
             modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Patient", b =>
                 {
                     b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.Emergency", "Emergency")
@@ -423,38 +480,16 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     b.Navigation("Emergency");
                 });
 
-            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.TeamMember", b =>
-                {
-                    b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.VehicleTeam", "VehicleTeam")
-                        .WithMany("TeamMembers")
-                        .HasForeignKey("VehicleTeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("VehicleTeam");
-                });
-
-            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.VehiclePositionHistory", b =>
-                {
-                    b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.VehicleTeam", "VehicleTeam")
-                        .WithMany("VehiclePositionHistories")
-                        .HasForeignKey("VehicleTeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("VehicleTeam");
-                });
-
-            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.VehicleTeam", b =>
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.ServiceHistory", b =>
                 {
                     b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.Emergency", "Emergency")
-                        .WithMany("VehicleTeams")
+                        .WithMany("ServiceHistories")
                         .HasForeignKey("EmergencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.Vehicle", "Vehicle")
-                        .WithMany("VehicleTeams")
+                        .WithMany("ServiceHistories")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -462,6 +497,36 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     b.Navigation("Emergency");
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.TeamMember", b =>
+                {
+                    b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.ServiceHistory", "ServiceHistory")
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("ServiceHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("ServiceHistory");
+                });
+
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.VehiclePositionHistory", b =>
+                {
+                    b.HasOne("EmergencyManagementSystem.SAMU.Entities.Entities.ServiceHistory", "ServiceHistory")
+                        .WithMany("VehiclePositionHistories")
+                        .HasForeignKey("ServiceHistoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ServiceHistory");
                 });
 
             modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Emergency", b =>
@@ -474,7 +539,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
 
                     b.Navigation("Patients");
 
-                    b.Navigation("VehicleTeams");
+                    b.Navigation("ServiceHistories");
                 });
 
             modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Patient", b =>
@@ -482,16 +547,16 @@ namespace EmergencyManagementSystem.SAMU.DAL.Migrations
                     b.Navigation("MedicalEvaluations");
                 });
 
-            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Vehicle", b =>
-                {
-                    b.Navigation("VehicleTeams");
-                });
-
-            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.VehicleTeam", b =>
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.ServiceHistory", b =>
                 {
                     b.Navigation("TeamMembers");
 
                     b.Navigation("VehiclePositionHistories");
+                });
+
+            modelBuilder.Entity("EmergencyManagementSystem.SAMU.Entities.Entities.Vehicle", b =>
+                {
+                    b.Navigation("ServiceHistories");
                 });
 #pragma warning restore 612, 618
         }

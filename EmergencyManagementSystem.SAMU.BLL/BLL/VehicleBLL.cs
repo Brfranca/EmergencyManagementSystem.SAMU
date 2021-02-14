@@ -28,9 +28,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             var vehicleFilter = (VehicleFilter)filter;
 
             if (!string.IsNullOrWhiteSpace(vehicleFilter.VehicleName))
-                query = query.Where(d => d.VehicleName == vehicleFilter.VehicleName);
+                query = query.Where(d => d.VehicleName.Contains(vehicleFilter.VehicleName));
             if (!string.IsNullOrWhiteSpace(vehicleFilter.VehiclePlate))
-                query = query.Where(d => d.VehiclePlate == vehicleFilter.VehiclePlate);
+                query = query.Where(d => d.VehiclePlate.Contains(vehicleFilter.VehiclePlate));
+            if (!string.IsNullOrWhiteSpace(vehicleFilter.Codename))
+                query = query.Where(d => d.Codename.Contains(vehicleFilter.Codename)); 
+            if (!string.IsNullOrWhiteSpace(vehicleFilter.OperationCity))
+                query = query.Where(d => d.OperationCity.Contains(vehicleFilter.OperationCity));
 
             return query.Select(d => _mapper.Map<VehicleModel>(d));
         }

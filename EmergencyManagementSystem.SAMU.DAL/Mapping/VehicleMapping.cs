@@ -38,6 +38,18 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasColumnName("Year")
                 .HasColumnType("int")
                 .IsRequired();
+
+            builder.Property(d => d.Codename)
+                .HasColumnName("Codename")
+                .HasColumnName("varchar")
+                .HasMaxLength(20)
+                .IsRequired();
+
+            builder.Property(d => d.OperationCity)
+                .HasColumnName("OperationCity")
+                .HasColumnType("varchar")
+                .HasMaxLength(40)
+                .IsRequired();
         }
     }
 }
