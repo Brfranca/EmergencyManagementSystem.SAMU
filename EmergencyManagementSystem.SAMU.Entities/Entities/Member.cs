@@ -1,9 +1,10 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
+using EmergencyManagementSystem.SAMU.Entities.Interfaces;
 using System;
 
 namespace EmergencyManagementSystem.SAMU.Entities.Entities
 {
-    public class Member
+    public class Member : IEntity<long>
     {
         public long Id { get; set; }
         public DateTime StartedWork { get; set; }
