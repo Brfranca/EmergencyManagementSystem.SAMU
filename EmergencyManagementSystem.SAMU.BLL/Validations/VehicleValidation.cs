@@ -39,7 +39,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Favor informar a situação do veículo.");
+                .WithMessage("Favor informar a status do veículo.");
 
             RuleFor(e => e.OperationCity)
                 .Cascade(CascadeMode.Stop)
@@ -54,8 +54,8 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("Favor informar o codinome do veículo.")
-                .Length(3, 20)
-                .WithMessage("O codinome deve conter entre 3 e 20 caracteres.");
+                .Length(3, 10)
+                .WithMessage("O codinome deve conter entre 3 e 10 caracteres.");
         }
     }
 }
