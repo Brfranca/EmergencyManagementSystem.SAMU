@@ -14,8 +14,16 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
     [ApiController]
     public class EmergencyController : BaseController<EmergencyModel, Emergency, EmergencyFilter>
     {
+        readonly IEmergencyBLL _emergencyBLL;
         public EmergencyController(IEmergencyBLL emergencyBLL) : base(emergencyBLL)
         {
+            _emergencyBLL = emergencyBLL;
+        }
+
+        [HttpPost("SimpleRegister")]
+        public Result SimpleRegister(EmergencyModel model)
+        {
+            return _emergencyBLL.SimpleRegister(model);
         }
     }
 }

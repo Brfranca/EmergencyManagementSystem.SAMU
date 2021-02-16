@@ -81,6 +81,22 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
+        public Result SimpleRegister(EmergencyModel model)
+        {
+            Emergency emergency = _mapper.Map<Emergency>(model);
+
+            if (string.IsNullOrWhiteSpace(emergency.RequesterPhone))
+                return Result.BuildError("Número do solicitante é obrigatório.");
+
+            _emergencyDAL.Insert(emergency);
+
+            var resultSave = _emergencyDAL.Save();
+            if (!resultSave.Success)
+                return Result<Emergency>.BuildError(resultSave.Messages);
+
+            return Result<Emergency>.BuildSuccess(emergency);
+        }
+
         public override Result Update(EmergencyModel model)
         {
             try

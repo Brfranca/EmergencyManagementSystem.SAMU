@@ -5,5 +5,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
 {
     public interface IEmergencyBLL : IBaseBLL<EmergencyModel, Emergency>
     {
+        Result SimpleRegister(EmergencyModel model);
     }
 }

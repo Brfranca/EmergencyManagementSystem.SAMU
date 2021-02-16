@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmergencyManagementSystem.SAMU.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -42,6 +43,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public static Result<T> BuildSuccess(T model, string message = "")
             => new Result<T>
             {
+                Id = ((IEntity<long>)model).Id,
                 Model = model,
                 Success = true,
                 Messages = new List<string> { message }
@@ -51,6 +53,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
     {
         public bool Success { get; protected set; }
         public List<string> Messages { get; protected set; }
+        public long Id { get; set; }
 
         public static Result BuildError(string message)
             => new Result
@@ -78,9 +81,10 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
                 }
             };
 
-        public static Result BuildSuccess(string message = "")
+        public static Result BuildSuccess(string message = "", long idGerado = 0)
             => new Result
             {
+                Id = idGerado,
                 Success = true,
                 Messages = new List<string> { message }
             };
