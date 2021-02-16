@@ -50,6 +50,11 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasColumnType("varchar")
                 .HasMaxLength(40)
                 .IsRequired();
+
+            builder.Property(d => d.Active)
+                .HasColumnName("Active")
+                .HasColumnType("smallint")
+                .IsRequired();
         }
     }
 }

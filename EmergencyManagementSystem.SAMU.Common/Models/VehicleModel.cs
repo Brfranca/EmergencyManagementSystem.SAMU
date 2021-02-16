@@ -12,5 +12,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public int Year { get; set; }
         public VehicleType VehicleType { get; set; }
         public VehicleStatus VehicleStatus { get; set; }
+        public Active Active { get; set; }
     }
 }

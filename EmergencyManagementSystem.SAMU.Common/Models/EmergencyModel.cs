@@ -1,5 +1,4 @@
-﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
-using EmergencyManagementSystem.SAMU.Entities.Enums;
+﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 using System.Collections.Generic;
 
