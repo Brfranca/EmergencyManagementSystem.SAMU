@@ -40,10 +40,10 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
                 }
             };
 
-        public static Result<T> BuildSuccess(T model, string message = "")
+        public static Result<T> BuildSuccess(T model, string message = "", long idGerado = 0)
             => new Result<T>
             {
-                Id = ((IEntity<long>)model).Id,
+                Id = idGerado,
                 Model = model,
                 Success = true,
                 Messages = new List<string> { message }

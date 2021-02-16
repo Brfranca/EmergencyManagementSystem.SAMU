@@ -15,8 +15,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
             builder.Property(d => d.VehiclePlate)
                 .HasColumnName("VehiclePlate")
                 .HasColumnType("varchar")
-                .HasMaxLength(7)
-                .IsRequired();
+                .HasMaxLength(7);
 
             builder.Property(d => d.VehicleName)
                 .HasColumnName("VehicleName")
