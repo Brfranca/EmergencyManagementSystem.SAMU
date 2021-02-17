@@ -94,7 +94,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             if (!resultSave.Success)
                 return Result<Emergency>.BuildError(resultSave.Messages);
 
-            return Result<Emergency>.BuildSuccess(emergency);
+            return Result<Emergency>.BuildSuccess(emergency, idGerado: emergency.Id);
         }
 
         public override Result Update(EmergencyModel model)
