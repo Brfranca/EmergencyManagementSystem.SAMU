@@ -5,6 +5,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         public override IQueryable<MemberModel> ApplyFilterPagination(IQueryable<Member> query, IFilter filter)
         {
             var memberFilter = (MemberFilter)filter;
+            if (memberFilter.VehicleId > 0)
+                query = query.Where(d => d.VehicleId == memberFilter.VehicleId);
 
             return query.Select(d => _mapper.Map<MemberModel>(d));
         }
