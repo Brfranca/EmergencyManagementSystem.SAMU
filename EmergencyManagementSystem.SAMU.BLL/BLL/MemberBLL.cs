@@ -18,12 +18,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IMapper _mapper;
         private readonly IMemberDAL _memberDAL;
         private readonly MemberValidation _memberValidation;
+        private readonly IVehicleBLL _vehicleBLL;
 
-        public MemberBLL(IMapper mapper, IMemberDAL memberDAL, MemberValidation memberValidation) : base(memberDAL)
+        public MemberBLL(IMapper mapper, IMemberDAL memberDAL, MemberValidation memberValidation, IVehicleBLL vehicleBLL) : base(memberDAL)
         {
             _mapper = mapper;
             _memberDAL = memberDAL;
             _memberValidation = memberValidation;
+            _vehicleBLL = vehicleBLL;
         }
         public override IQueryable<MemberModel> ApplyFilterPagination(IQueryable<Member> query, IFilter filter)
         {

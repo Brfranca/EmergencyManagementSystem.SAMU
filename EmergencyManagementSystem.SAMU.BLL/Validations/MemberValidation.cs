@@ -20,10 +20,10 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                     .NotEmpty()
                     .WithMessage("Favor informar a data e hora do início do plantão do funcionário.");
 
-            RuleFor(e => e.Vehicle)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Favor informar o veículo.");
+            //RuleFor(e => e.Vehicle)
+            //    .NotEmpty()
+            //    .NotNull()
+            //    .WithMessage("Favor informar o veículo.");
         }
     }
 }
