@@ -100,8 +100,8 @@ namespace EmergencyManagementSystem.SAMU.API
                 cfg.CreateMap<Patient, PatientModel>();
                 cfg.CreateMap<MedicalEvaluationModel, MedicalEvaluation>();
                 cfg.CreateMap<MedicalEvaluation, MedicalEvaluationModel>();
-                cfg.CreateMap<Member, MemberModel>().ForMember(a => a.VehicleModel, b => b.MapFrom(c => c.Vehicle));
-                cfg.CreateMap<MemberModel, Member>().ForMember(a => a.Vehicle, b => b.MapFrom(c => c.VehicleModel));
+                cfg.CreateMap<Member, MemberModel>();//.ForMember(a => a.VehicleModel, b => b.MapFrom(c => c.Vehicle));
+                cfg.CreateMap<MemberModel, Member>();//.ForMember(a => a.Vehicle, b => b.MapFrom(c => c.VehicleModel));
             }).CreateMapper();
             services.AddSingleton(mapper);
         }
