@@ -33,16 +33,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar o sexo.");
         }
 
-        private bool ContainsFullName(string fullName)
-        {
-            var names = fullName.Split(' ').Where(d => !string.IsNullOrWhiteSpace(d)).ToList();
-            if (names.Count <= 1)
-            {
-                return false;
-            }
-            return true;
-        }
-
         private bool IsValidName(string Name)
         {
             return Regex.IsMatch(Name, @"^[\p{L} \.\-]+$");
