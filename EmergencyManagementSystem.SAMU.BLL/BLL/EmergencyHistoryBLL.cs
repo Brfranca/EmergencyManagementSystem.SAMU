@@ -62,7 +62,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 if (!resultSave.Success)
                     return Result<EmergencyHistory>.BuildError(resultSave.Messages);
 
-                return Result<EmergencyHistory>.BuildSuccess(emergencyHistory);
+                return Result<EmergencyHistory>.BuildSuccess(null);
             }
             catch (Exception error)
             {
