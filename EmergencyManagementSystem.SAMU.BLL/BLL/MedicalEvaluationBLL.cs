@@ -18,7 +18,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly MedicalEvaluationValidation _medicalEvaluationValidation;
         private readonly IMedicalEvaluationDAL _medicalEvaluationDAL;
 
-        public MedicalEvaluationBLL(IMapper mapper, MedicalEvaluationValidation medicalEvaluationValidation, 
+        public MedicalEvaluationBLL(IMapper mapper, MedicalEvaluationValidation medicalEvaluationValidation,
             IMedicalEvaluationDAL medicalEvaluationDAL)
             : base(medicalEvaluationDAL)
         {
@@ -91,7 +91,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(MedicalEvaluationModel model)
+        public override Result<MedicalEvaluation> Update(MedicalEvaluationModel model)
         {
             try
             {
@@ -102,11 +102,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _medicalEvaluationDAL.Update(medicalEvaluation);
-                return _medicalEvaluationDAL.Save();
+                var resultSave = _medicalEvaluationDAL.Save();
+                if (!resultSave.Success)
+                    return Result<MedicalEvaluation>.BuildError(resultSave.Messages);
+
+                return Result<MedicalEvaluation>.BuildSuccess(medicalEvaluation);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro da avaliação médica.", error);
+                return Result<MedicalEvaluation>.BuildError("Erro ao alterar o registro da avaliação médica.", error);
             }
         }
     }

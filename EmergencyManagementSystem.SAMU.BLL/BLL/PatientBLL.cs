@@ -86,7 +86,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(PatientModel model)
+        public override Result<Patient> Update(PatientModel model)
         {
             try
             {
@@ -96,11 +96,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 if (!result.Success)
                     return result;
 
-                return _patientDAL.Update(patient);
+                var resultSave = _patientDAL.Update(patient);
+                if (!resultSave.Success)
+                    return Result<Patient>.BuildError(resultSave.Messages);
+
+                return Result<Patient>.BuildSuccess(patient);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro do paciente", error);
+                return Result<Patient>.BuildError("Erro ao alterar o registro do paciente", error);
             }
         }
     }

@@ -87,7 +87,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(ServiceHistoryModel model)
+        public override Result<ServiceHistory> Update(ServiceHistoryModel model)
         {
             try
             {
@@ -98,11 +98,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _serviceHistoryDAL.Update(serviceHistory);
-                return _serviceHistoryDAL.Save();
+                var resultSave = _serviceHistoryDAL.Save();
+                if (!resultSave.Success)
+                    return Result<ServiceHistory>.BuildError(resultSave.Messages);
+
+                return Result<ServiceHistory>.BuildSuccess(serviceHistory);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro do veículo empenhado na ocorrência.", error);
+                return Result<ServiceHistory>.BuildError("Erro ao alterar o registro do veículo empenhado na ocorrência.", error);
             }
         }
     }

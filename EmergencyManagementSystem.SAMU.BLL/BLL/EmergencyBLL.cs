@@ -18,10 +18,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly EmergencyValidation _emergencyValidation;
         private readonly IPatientBLL _patientBLL;
         private readonly IAddressBLL _addressBLL;
+        private readonly AddressValidation _addressValidation;
+        private readonly PatientValidation _patientValidation;
         public EmergencyBLL(IMapper mapper, IEmergencyDAL emergencyDAL,
-            EmergencyValidation emergencyValidation, IPatientBLL patientBLL, IAddressBLL addressBLL)
+            EmergencyValidation emergencyValidation, IPatientBLL patientBLL,
+            IAddressBLL addressBLL, AddressValidation addressValidation, PatientValidation patientValidation)
             : base(emergencyDAL)
         {
+            _addressValidation = addressValidation;
+            _patientValidation = patientValidation;
             _addressBLL = addressBLL;
             _patientBLL = patientBLL;
             _mapper = mapper;
@@ -137,7 +142,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             return Result.BuildSuccess(idGerado: emergency.Id);
         }
 
-        public override Result Update(EmergencyModel model)
+        public override Result<Emergency> Update(EmergencyModel model)
         {
             try
             {
@@ -154,28 +159,51 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     EmployeeGuid = model.EmployeeGuid
                 });
 
-                var resultAddress = _addressBLL.Register(model.AddressModel);
-                if (!resultAddress.Success)
-                    return Result.BuildError(resultAddress.Messages);
-                emergency.Address = resultAddress.Model;
-
-                foreach (var patient in model.Patients)
+                if ((model?.AddressModel?.Id ?? 0) == 0)
                 {
-                    var resultPatient = _patientBLL.Register(patient);
-                    if (!resultPatient.Success)
-                        return Result<Emergency>.BuildError(resultPatient.Messages);
+                    var resultAddress = _addressBLL.Register(model.AddressModel);
+                    if (!resultAddress.Success)
+                        return Result<Emergency>.BuildError(resultAddress.Messages);
+                    emergency.Address = resultAddress.Model;
+                }
+                else
+                {
+                    var resultAddress = _addressValidation.Validate(emergency.Address);
+                    if (!resultAddress.Success)
+                        return Result<Emergency>.BuildError(resultAddress.Messages);
                 }
 
-                Result result = _emergencyValidation.Validate(emergency);
+                foreach (var patientModel in model.Patients)
+                {
+                    if ((patientModel?.Id ?? 0) == 0)
+                    {
+                        var resultPatient = _patientBLL.Register(patientModel);
+                        if (!resultPatient.Success)
+                            return Result<Emergency>.BuildError(resultPatient.Messages);
+                    }
+                    else
+                    {
+                        var patient = emergency.Patients.FirstOrDefault(d => d.Id == patientModel.Id);
+                        var resultPatient = _patientValidation.Validate(patient);
+                        if (!resultPatient.Success)
+                            return Result<Emergency>.BuildError(resultPatient.Messages);
+                    }
+                }
+
+                var result = _emergencyValidation.Validate(emergency);
                 if (!result.Success)
                     return result;
 
                 _emergencyDAL.Update(emergency);
-                return _emergencyDAL.Save();
+                var resultSave = _emergencyDAL.Save();
+                if (!resultSave.Success)
+                    return Result<Emergency>.BuildError(resultSave.Messages);
+
+                return Result<Emergency>.BuildSuccess(null);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro da ocorrência.", error);
+                return Result<Emergency>.BuildError("Erro ao alterar o registro da ocorrência.", error);
             }
         }
     }

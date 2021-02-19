@@ -9,7 +9,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
         where TEntity : class
     {
         Result<TEntity> Register(TModel model);
-        Result Update(TModel model);
+        Result<TEntity> Update(TModel model);
         Result Delete(TModel model);
         Result<TModel> Find(IFilter filter);
         PagedList<TModel> FindPaginated(IFilter filter);

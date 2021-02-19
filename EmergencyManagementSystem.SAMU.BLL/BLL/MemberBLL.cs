@@ -93,7 +93,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(MemberModel model)
+        public override Result<Member> Update(MemberModel model)
         {
             try
             {
@@ -104,11 +104,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _memberDAL.Update(member);
-                return _memberDAL.Save();
+                var resultSave = _memberDAL.Save();
+                if (!resultSave.Success)
+                    return Result<Member>.BuildError(resultSave.Messages);
+
+                return Result<Member>.BuildSuccess(member);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro do membro.", error);
+                return Result<Member>.BuildError("Erro ao alterar o registro do membro.", error);
             }
         }
     }

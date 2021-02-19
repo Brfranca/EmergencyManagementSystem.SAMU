@@ -87,7 +87,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(EmergencyRequiredVehicleModel model)
+        public override Result<EmergencyRequiredVehicle> Update(EmergencyRequiredVehicleModel model)
         {
             try
             {
@@ -98,11 +98,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _emergencyRequiredVehicleDAL.Update(emergencyRequiredVehicle);
-                return _emergencyRequiredVehicleDAL.Save();
+                var resultSave = _emergencyRequiredVehicleDAL.Save();
+                if (!resultSave.Success)
+                    return Result<EmergencyRequiredVehicle>.BuildError(resultSave.Messages);
+
+                return Result<EmergencyRequiredVehicle>.BuildSuccess(emergencyRequiredVehicle);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro do veículo requerido para a ocorrência.", error);
+                return Result<EmergencyRequiredVehicle>.BuildError("Erro ao alterar o registro do veículo requerido para a ocorrência.", error);
             }
         }
     }

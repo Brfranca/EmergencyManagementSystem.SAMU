@@ -87,7 +87,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(VehiclePositionHistoryModel model)
+        public override Result<VehiclePositionHistory> Update(VehiclePositionHistoryModel model)
         {
             try
             {
@@ -98,11 +98,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _vehiclePositionHistoryDAL.Update(vehiclePositionHistory);
-                return _vehiclePositionHistoryDAL.Save();
+                var resulSave = _vehiclePositionHistoryDAL.Save();
+                if (!resulSave.Success)
+                    return Result<VehiclePositionHistory>.BuildError(resulSave.Messages);
+
+                return Result<VehiclePositionHistory>.BuildSuccess(vehiclePositionHistory);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro da posição do veículo.", error);
+                return Result<VehiclePositionHistory>.BuildError("Erro ao alterar o registro da posição do veículo.", error);
             }
         }
     }

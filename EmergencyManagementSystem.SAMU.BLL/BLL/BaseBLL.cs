@@ -19,7 +19,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             _baseDAL = baseDAL;
         }
         public abstract Result<TEntity> Register(TModel model);
-        public abstract Result Update(TModel model);
+        public abstract Result<TEntity> Update(TModel model);
         public abstract Result Delete(TModel model);
         public abstract Result<TModel> Find(IFilter filter);
 

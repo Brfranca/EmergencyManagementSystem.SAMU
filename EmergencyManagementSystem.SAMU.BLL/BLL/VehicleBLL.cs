@@ -33,7 +33,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             if (!string.IsNullOrWhiteSpace(vehicleFilter.VehiclePlate))
                 query = query.Where(d => d.VehiclePlate.Contains(vehicleFilter.VehiclePlate));
             if (!string.IsNullOrWhiteSpace(vehicleFilter.Codename))
-                query = query.Where(d => d.Codename.Contains(vehicleFilter.Codename)); 
+                query = query.Where(d => d.Codename.Contains(vehicleFilter.Codename));
             if (!string.IsNullOrWhiteSpace(vehicleFilter.OperationCity))
                 query = query.Where(d => d.OperationCity.Contains(vehicleFilter.OperationCity));
 
@@ -97,7 +97,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(VehicleModel model)
+        public override Result<Vehicle> Update(VehicleModel model)
         {
             try
             {
@@ -108,11 +108,15 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _vehicleDAL.Update(vehicle);
-                return _vehicleDAL.Save();
+                var resultSave = _vehicleDAL.Save();
+                if (!resultSave.Success)
+                    return Result<Vehicle>.BuildError(resultSave.Messages);
+
+                return Result<Vehicle>.BuildSuccess(vehicle);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro do veículo.", error);
+                return Result<Vehicle>.BuildError("Erro ao alterar o registro do veículo.", error);
             }
         }
     }

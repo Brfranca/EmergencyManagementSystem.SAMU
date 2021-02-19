@@ -86,22 +86,26 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(TeamMemberModel model)
+        public override Result<TeamMember> Update(TeamMemberModel model)
         {
             try
             {
                 TeamMember teamMember = _mapper.Map<TeamMember>(model);
 
-                Result result = _teamMemberValidation.Validate(teamMember);
+                var result = _teamMemberValidation.Validate(teamMember);
                 if (!result.Success)
                     return result;
 
                 _teamMemberDAL.Update(teamMember);
-                return _teamMemberDAL.Save();
+                var resultSave = _teamMemberDAL.Save();
+                if (!resultSave.Success)
+                    return Result<TeamMember>.BuildError(resultSave.Messages);
+
+                return Result<TeamMember>.BuildSuccess(teamMember);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro do integrante do veículo.", error);
+                return Result<TeamMember>.BuildError("Erro ao alterar o registro do integrante do veículo.", error);
             }
         }
     }

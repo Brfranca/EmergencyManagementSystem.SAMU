@@ -19,7 +19,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IEmergencyHistoryDAL _emergencyHistoryDAL;
         private readonly EmergencyHistoryValidation _emergencyHistoryValidation;
 
-        public EmergencyHistoryBLL(IEmergencyHistoryDAL emergencyHistoryDAL, 
+        public EmergencyHistoryBLL(IEmergencyHistoryDAL emergencyHistoryDAL,
             EmergencyHistoryValidation emergencyHistoryValidation, IMapper mapper)
             : base(emergencyHistoryDAL)
         {
@@ -67,7 +67,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result Update(EmergencyHistoryModel model)
+        public override Result<EmergencyHistory> Update(EmergencyHistoryModel model)
         {
             try
             {
@@ -77,11 +77,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _emergencyHistoryDAL.Update(emergencyHistory);
-                return _emergencyHistoryDAL.Save();
+                var resultSave = _emergencyHistoryDAL.Save();
+                if (!resultSave.Success)
+                    return Result<EmergencyHistory>.BuildError(resultSave.Messages);
+                return Result<EmergencyHistory>.BuildSuccess(emergencyHistory);
             }
             catch (Exception error)
             {
-                return Result.BuildError("Erro ao alterar o registro do histórico da ocorrência.", error);
+                return Result<EmergencyHistory>.BuildError("Erro ao alterar o registro do histórico da ocorrência.", error);
             }
         }
 
