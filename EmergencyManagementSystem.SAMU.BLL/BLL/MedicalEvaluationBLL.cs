@@ -64,7 +64,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public override Result<List<MedicalEvaluationModel>> FindAll(IFilter filter)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<MedicalEvaluation> medicalEvaluations = _medicalEvaluationDAL.FindAll((MedicalEvaluationFilter)filter);
+                List<MedicalEvaluationModel> medicalEvaluationModels = _mapper.Map<List<MedicalEvaluationModel>>(medicalEvaluations);
+                return Result<List<MedicalEvaluationModel>>.BuildSuccess(medicalEvaluationModels);
+            }
+            catch (Exception error)
+            {
+                return Result<List<MedicalEvaluationModel>>.BuildError("Erro ao localizar ao localizar os registros das avaliações médicas.", error);
+            }
         }
 
         public override Result<MedicalEvaluation> Register(MedicalEvaluationModel model)
