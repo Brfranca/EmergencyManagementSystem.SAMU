@@ -6,6 +6,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
@@ -15,9 +16,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IMapper _mapper;
         private readonly IEmergencyDAL _emergencyDAL;
         private readonly EmergencyValidation _emergencyValidation;
-        public EmergencyBLL(IMapper mapper, IEmergencyDAL emergencyDAL, EmergencyValidation emergencyValidation)
+        private readonly IPatientBLL _patientBLL;
+        private readonly IAddressBLL _addressBLL;
+        public EmergencyBLL(IMapper mapper, IEmergencyDAL emergencyDAL,
+            EmergencyValidation emergencyValidation, IPatientBLL patientBLL, IAddressBLL addressBLL)
             : base(emergencyDAL)
         {
+            _addressBLL = addressBLL;
+            _patientBLL = patientBLL;
             _mapper = mapper;
             _emergencyDAL = emergencyDAL;
             _emergencyValidation = emergencyValidation;
@@ -56,11 +62,32 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
+        public override Result<List<EmergencyModel>> FindAll(IFilter filter)
+        {
+            try
+            {
+                List<Emergency> emergencies = _emergencyDAL.FindAll((EmergencyFilter)filter);
+                List<EmergencyModel> emergenciesModel = _mapper.Map<List<EmergencyModel>>(emergencies);
+                return Result<List<EmergencyModel>>.BuildSuccess(emergenciesModel);
+            }
+            catch (Exception error)
+            {
+                return Result<List<EmergencyModel>>.BuildError("Erro ao localizar o registro da emergência.", error);
+            }
+        }
+
         public override Result<Emergency> Register(EmergencyModel model)
         {
             try
             {
                 Emergency emergency = _mapper.Map<Emergency>(model);
+
+                foreach (var patient in model.Patients)
+                {
+                    var resultPatient = _patientBLL.Register(patient);
+                    if (!resultPatient.Success)
+                        return Result<Emergency>.BuildError(resultPatient.Messages);
+                }
 
                 var result = _emergencyValidation.Validate(emergency);
                 if (!result.Success)
@@ -84,6 +111,19 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         public Result SimpleRegister(EmergencyModel model)
         {
             Emergency emergency = _mapper.Map<Emergency>(model);
+            emergency.Address = null;
+            emergency.AddressId = 0;
+            if (emergency.EmergencyHistories == null)
+                emergency.EmergencyHistories = new List<EmergencyHistory>();
+
+            emergency.EmergencyHistories.Add(new EmergencyHistory
+            {
+                Date = DateTime.Now,
+                Description = "Ocorrência Aberta",
+                Emergency = emergency,
+                EmergencyStatus = emergency.EmergencyStatus,
+                EmployeeGuid = model.EmployeeGuid
+            });
 
             if (string.IsNullOrWhiteSpace(emergency.RequesterPhone))
                 return Result.BuildError("Número do solicitante é obrigatório.");
@@ -92,9 +132,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
             var resultSave = _emergencyDAL.Save();
             if (!resultSave.Success)
-                return Result<Emergency>.BuildError(resultSave.Messages);
+                return Result.BuildError(resultSave.Messages);
 
-            return Result<Emergency>.BuildSuccess(emergency, idGerado: emergency.Id);
+            return Result.BuildSuccess(idGerado: emergency.Id);
         }
 
         public override Result Update(EmergencyModel model)
@@ -102,6 +142,29 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 Emergency emergency = _mapper.Map<Emergency>(model);
+                if (emergency.EmergencyHistories == null)
+                    emergency.EmergencyHistories = new List<EmergencyHistory>();
+
+                emergency.EmergencyHistories.Add(new EmergencyHistory
+                {
+                    Date = DateTime.Now,
+                    Description = "Ocorrência em Avaliação",
+                    Emergency = emergency,
+                    EmergencyStatus = emergency.EmergencyStatus,
+                    EmployeeGuid = model.EmployeeGuid
+                });
+
+                var resultAddress = _addressBLL.Register(model.AddressModel);
+                if (!resultAddress.Success)
+                    return Result.BuildError(resultAddress.Messages);
+                emergency.Address = resultAddress.Model;
+
+                foreach (var patient in model.Patients)
+                {
+                    var resultPatient = _patientBLL.Register(patient);
+                    if (!resultPatient.Success)
+                        return Result<Emergency>.BuildError(resultPatient.Messages);
+                }
 
                 Result result = _emergencyValidation.Validate(emergency);
                 if (!result.Success)

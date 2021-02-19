@@ -62,6 +62,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
+        public override Result<List<MemberModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public override Result<Member> Register(MemberModel model)
         {
             try

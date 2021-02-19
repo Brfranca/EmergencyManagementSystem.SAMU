@@ -6,6 +6,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
@@ -55,6 +56,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 return Result<VehiclePositionHistoryModel>.BuildError("Erro ao localizar o registro da posição do veículo.", error);
             }
+        }
+
+        public override Result<List<VehiclePositionHistoryModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result<VehiclePositionHistory> Register(VehiclePositionHistoryModel model)

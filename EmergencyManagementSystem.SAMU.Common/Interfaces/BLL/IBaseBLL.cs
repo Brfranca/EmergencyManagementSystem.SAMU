@@ -1,4 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Common.Models;
+using System.Collections.Generic;
 using X.PagedList;
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
@@ -12,5 +13,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
         Result Delete(TModel model);
         Result<TModel> Find(IFilter filter);
         PagedList<TModel> FindPaginated(IFilter filter);
+        Result<List<TModel>> FindAll(IFilter filter);
     }
 }

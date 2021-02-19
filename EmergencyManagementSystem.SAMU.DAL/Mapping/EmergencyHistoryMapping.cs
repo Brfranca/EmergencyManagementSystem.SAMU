@@ -27,7 +27,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .IsRequired();
 
             builder.HasOne(d => d.Emergency)
-                .WithMany()
+                .WithMany(d => d.EmergencyHistories)
                 .HasForeignKey(d => d.EmergencyId)
                 .OnDelete(DeleteBehavior.Restrict);
 

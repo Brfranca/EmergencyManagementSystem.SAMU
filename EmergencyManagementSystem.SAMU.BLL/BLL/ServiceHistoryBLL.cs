@@ -6,6 +6,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
@@ -55,6 +56,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 return Result<ServiceHistoryModel>.BuildError("Erro ao localizar o veículo empenhado na ocorrência.", error);
             }
+        }
+
+        public override Result<List<ServiceHistoryModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result<ServiceHistory> Register(ServiceHistoryModel model)

@@ -1,10 +1,22 @@
-﻿namespace EmergencyManagementSystem.SAMU.Entities.Enums
+﻿using System.ComponentModel;
+
+namespace EmergencyManagementSystem.SAMU.Entities.Enums
 {
     public enum EmergencyStatus : short
     {
-        Invalido,
+        [Description("Selecione")]
+        Invalid,
+        [Description("Cancelada")]
         Canceled,
+        [Description("Aberta")] //Foi aberta
         Opened,
+        [Description("Em Avaliação")] // Passou para o médico
+        InEvaluation,
+        [Description("Em Atendimento")] //Passou para o RO
+        InService,
+        [Description("Empenhada")] //Foi empenhada
+        Committed,
+        [Description("Fechada")] //Foi Finalizada
         Closed
     }
 }

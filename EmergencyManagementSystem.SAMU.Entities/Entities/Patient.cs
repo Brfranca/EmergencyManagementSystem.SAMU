@@ -12,6 +12,6 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public Gender Gender { get; set; }
         public virtual Emergency Emergency { get; set; }
         public long EmergencyId { get; set; }
-        public ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
+        public virtual ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
     }
 }

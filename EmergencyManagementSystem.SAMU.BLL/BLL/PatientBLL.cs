@@ -62,6 +62,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
+        public override Result<List<PatientModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public override Result<Patient> Register(PatientModel model)
         {
             try
@@ -71,12 +76,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
                 if (!result.Success)
                     return result;
-
-                _patientDAL.Insert(patient);
-
-                var resultSave = _patientDAL.Save();
-                if (!resultSave.Success)
-                    return Result<Patient>.BuildError(resultSave.Messages);
 
                 return Result<Patient>.BuildSuccess(patient);
             }
@@ -97,9 +96,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 if (!result.Success)
                     return result;
 
-                _patientDAL.Update(patient);
-
-                return _patientDAL.Save();
+                return _patientDAL.Update(patient);
             }
             catch (Exception error)
             {

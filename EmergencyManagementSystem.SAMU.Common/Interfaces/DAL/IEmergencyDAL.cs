@@ -10,5 +10,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Interfaces.DAL
     public interface IEmergencyDAL : IBaseDAL<Emergency>
     {
         Emergency Find(EmergencyFilter filter);
+        List<Emergency> FindAll(EmergencyFilter filter);
     }
 }

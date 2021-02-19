@@ -40,6 +40,7 @@ namespace EmergencyManagementSystem.SAMU.API
             {
                 options.UseSqlServer(
                 Configuration.GetConnectionString("Default"));
+                options.UseLazyLoadingProxies();
             }, ServiceLifetime.Scoped);
 
 
@@ -81,8 +82,8 @@ namespace EmergencyManagementSystem.SAMU.API
             {
                 cfg.CreateMap<AddressModel, Address>();
                 cfg.CreateMap<Address, AddressModel>();
-                cfg.CreateMap<EmergencyModel, Emergency>();
-                cfg.CreateMap<Emergency, EmergencyModel>();
+                cfg.CreateMap<EmergencyModel, Emergency>().ForMember(a => a.Address, b => b.MapFrom(c => c.AddressModel));
+                cfg.CreateMap<Emergency, EmergencyModel>().ForMember(a => a.AddressModel, b => b.MapFrom(c => c.Address));
                 cfg.CreateMap<EmergencyRequiredVehicleModel, EmergencyRequiredVehicle>();
                 cfg.CreateMap<EmergencyRequiredVehicle, EmergencyRequiredVehicleModel>();
                 cfg.CreateMap<TeamMemberModel, TeamMember>();

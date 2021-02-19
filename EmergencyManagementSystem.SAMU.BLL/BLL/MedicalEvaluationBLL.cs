@@ -62,6 +62,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
+        public override Result<List<MedicalEvaluationModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public override Result<MedicalEvaluation> Register(MedicalEvaluationModel model)
         {
             try

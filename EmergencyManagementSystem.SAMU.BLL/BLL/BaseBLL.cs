@@ -1,6 +1,7 @@
 ﻿using EmergencyManagementSystem.SAMU.Common.Interfaces;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Models;
+using System.Collections.Generic;
 using System.Linq;
 using X.PagedList;
 
@@ -29,5 +30,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         }
 
         public abstract IQueryable<TModel> ApplyFilterPagination(IQueryable<TEntity> query, IFilter filter);
+
+        public abstract Result<List<TModel>> FindAll(IFilter filter);
     }
 }

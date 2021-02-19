@@ -6,6 +6,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
@@ -54,6 +55,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 return Result<TeamMemberModel>.BuildError("Erro ao localizar o integrante do veículo.", error);
             }
+        }
+
+        public override Result<List<TeamMemberModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
         }
 
         public override Result<TeamMember> Register(TeamMemberModel model)

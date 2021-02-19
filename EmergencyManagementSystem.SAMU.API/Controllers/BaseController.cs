@@ -60,5 +60,11 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
             var result = _baseBLL.Find((IFilter)filter);
             return result;
         }
+
+        [HttpPost("FindAll")]
+        public Result<List<TModel>> FindAll(TFilter filter)
+        {
+            return _baseBLL.FindAll((IFilter)filter);
+        }
     }
 }

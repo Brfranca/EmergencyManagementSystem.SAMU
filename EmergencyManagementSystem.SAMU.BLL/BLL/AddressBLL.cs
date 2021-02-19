@@ -6,6 +6,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
@@ -57,6 +58,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
+        public override Result<List<AddressModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public override Result<Address> Register(AddressModel addressModel)
         {
             try
@@ -68,10 +74,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _addressDAL.Insert(address);
-
-                var resultSave = _addressDAL.Save();
-                if (!resultSave.Success)
-                    return Result<Address>.BuildError(resultSave.Messages);
 
                 return Result<Address>.BuildSuccess(address);
             }

@@ -103,5 +103,10 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             throw new NotImplementedException();
         }
+
+        public override Result<List<EmergencyHistoryModel>> FindAll(IFilter filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
