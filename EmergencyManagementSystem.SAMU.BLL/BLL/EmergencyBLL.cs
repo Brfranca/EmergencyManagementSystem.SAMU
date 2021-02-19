@@ -146,7 +146,18 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
+                //lógica para remover pacientes vazios
+                var patientsRemove = model.Patients.Where
+                    (
+                        d => d.Age == 0
+                        && d.Gender == Entities.Enums.Gender.Invalido
+                        && string.IsNullOrWhiteSpace(d.Name)
+                        && d.Id == 0
+                    ).ToList();
+                patientsRemove.ForEach(d => model.Patients.Remove(d));
+
                 Emergency emergency = _mapper.Map<Emergency>(model);
+
                 if (emergency.EmergencyHistories == null)
                     emergency.EmergencyHistories = new List<EmergencyHistory>();
 
