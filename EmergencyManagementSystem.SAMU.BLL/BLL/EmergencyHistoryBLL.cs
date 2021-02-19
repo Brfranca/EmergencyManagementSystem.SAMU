@@ -8,7 +8,6 @@ using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
@@ -17,15 +16,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         private readonly IMapper _mapper;
         private readonly IEmergencyHistoryDAL _emergencyHistoryDAL;
+        private readonly IEmergencyBLL _emergencyBLL;
         private readonly EmergencyHistoryValidation _emergencyHistoryValidation;
 
-        public EmergencyHistoryBLL(IEmergencyHistoryDAL emergencyHistoryDAL,
-            EmergencyHistoryValidation emergencyHistoryValidation, IMapper mapper)
+        public EmergencyHistoryBLL(IEmergencyHistoryDAL emergencyHistoryDAL, EmergencyHistoryValidation emergencyHistoryValidation, IMapper mapper, IEmergencyBLL emergencyBLL)
             : base(emergencyHistoryDAL)
         {
             _emergencyHistoryDAL = emergencyHistoryDAL;
             _emergencyHistoryValidation = emergencyHistoryValidation;
             _mapper = mapper;
+            _emergencyBLL = emergencyBLL;
         }
 
         public override Result Delete(EmergencyHistoryModel model)
@@ -48,6 +48,10 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 EmergencyHistory emergencyHistory = _mapper.Map<EmergencyHistory>(model);
 
+                var resultEmergency = _emergencyBLL.SimpleUpdate(model.EmergencyModel);
+                if (!resultEmergency.Success)
+                    return Result<EmergencyHistory>.BuildError(resultEmergency.Messages);
+
                 var result = _emergencyHistoryValidation.Validate(emergencyHistory);
                 if (!result.Success)
                     return result;
@@ -62,7 +66,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
             catch (Exception error)
             {
-
                 return Result<EmergencyHistory>.BuildError("Erro no momento de registar o histórico de ocorrência.", error);
             }
         }

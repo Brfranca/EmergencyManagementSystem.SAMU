@@ -3,10 +3,6 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmergencyManagementSystem.SAMU.API.Controllers
 {
@@ -24,6 +20,12 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
         public Result SimpleRegister(EmergencyModel model)
         {
             return _emergencyBLL.SimpleRegister(model);
+        }
+
+        [HttpPost("SimpleUpdate")]
+        public Result SimpleUpdate(EmergencyModel model)
+        {
+            return _emergencyBLL.SimpleUpdate(model);
         }
     }
 }

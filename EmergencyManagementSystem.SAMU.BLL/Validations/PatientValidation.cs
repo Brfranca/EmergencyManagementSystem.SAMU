@@ -14,11 +14,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Favor informar o nome completo.")
+                .WithMessage("Favor informar o nome.")
                 .Length(3, 100)
                 .WithMessage("O nome deve conter entre 3 e 100 caracteres.")
-                .Must(ContainsFullName)
-                .WithMessage("Favor inserir o nome completo.")
                 .Must(IsValidName)
                 .WithMessage("O nome não deve conter números ou caracteres especiais.");
 
@@ -33,7 +31,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o sexo.");
-            //Acredito que seria interessante alterar o requerimento de gênero para sexo, uma vez que não constitui um elemento relevante para avaliação médica (gênero = identidade, sexo = composição biológica)
         }
 
         private bool ContainsFullName(string fullName)

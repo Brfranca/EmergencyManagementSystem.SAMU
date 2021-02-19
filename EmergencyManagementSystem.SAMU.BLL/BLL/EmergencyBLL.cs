@@ -206,5 +206,25 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 return Result<Emergency>.BuildError("Erro ao alterar o registro da ocorrência.", error);
             }
         }
+
+        public Result SimpleUpdate(EmergencyModel model)
+        {
+            try
+            {
+                Emergency emergency = _mapper.Map<Emergency>(model);
+
+                var result = _emergencyValidation.Validate(emergency);
+
+                _emergencyDAL.Update(emergency);
+                if (!result.Success)
+                    return result;
+
+                return Result.BuildSuccess();
+            }
+            catch (Exception error)
+            {
+                return Result.BuildError("Erro ao alterar o registro da ocorrência.", error);
+            }
+        }
     }
 }

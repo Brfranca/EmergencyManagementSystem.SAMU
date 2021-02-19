@@ -1,8 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
 using EmergencyManagementSystem.SAMU.Entities.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.Entities.Entities
 {
