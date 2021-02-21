@@ -2,11 +2,11 @@
 {
     public enum VehiclePosition : short
     {
-        Invalido,
-        J6,
-        J7,
-        J9,
-        J10,
+        Invalid,
+        J9Local,
+        J10Local,
+        J9Hospital,
+        J10Hospital,
         J11,
         J12
     }

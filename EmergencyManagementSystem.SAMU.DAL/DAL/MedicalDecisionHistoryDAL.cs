@@ -14,7 +14,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
         {
         }
 
-        public MedicalDecisionHistory Find(DecisionsMedicalHistoriesFilter filter)
+        public MedicalDecisionHistory Find(MedicalDecisionHistoryFilter filter)
         {
             var query = Set.AsQueryable();
 
@@ -24,7 +24,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
             return query.FirstOrDefault();
         }
 
-        public List<MedicalDecisionHistory> FindAll(DecisionsMedicalHistoriesFilter filter)
+        public List<MedicalDecisionHistory> FindAll(MedicalDecisionHistoryFilter filter)
         {
             var query = Set.AsQueryable();
 

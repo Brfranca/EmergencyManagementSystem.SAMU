@@ -8,7 +8,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Interfaces.DAL
 {
     public interface IMedicalDecisionHistoryDAL : IBaseDAL<MedicalDecisionHistory>
     {
-        MedicalDecisionHistory Find(DecisionsMedicalHistoriesFilter filter);
-        List<MedicalDecisionHistory> FindAll(DecisionsMedicalHistoriesFilter filter);
+        MedicalDecisionHistory Find(MedicalDecisionHistoryFilter filter);
+        List<MedicalDecisionHistory> FindAll(MedicalDecisionHistoryFilter filter);
     }
 }

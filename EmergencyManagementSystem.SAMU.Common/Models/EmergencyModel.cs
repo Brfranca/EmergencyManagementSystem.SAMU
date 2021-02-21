@@ -16,6 +16,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public EmergencyStatus EmergencyStatus { get; set; }
         public List<MedicalEvaluationModel> MedicalEvaluationModels { get; set; }
         public List<EmergencyHistoryModel> EmergencyHistoryModels { get; set; }
+        public virtual ICollection<MedicalDecisionHistoryModel> MedicalDecisionHistoryModels { get; set; }
         public List<PatientModel> PatientModels { get; set; }
         public List<ServiceHistoryModel> ServiceHistoryModels { get; set; }
         public List<EmergencyRequiredVehicleModel> EmergencyRequiredVehicleModels { get; set; }

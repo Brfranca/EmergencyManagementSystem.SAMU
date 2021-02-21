@@ -11,17 +11,17 @@ using System.Linq;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class DecisionsMedicalHistoriesBLL : BaseBLL<MedicalDecisionHistoryModel, MedicalDecisionHistory>, IMedicalDecisionHistoryBLL
+    public class MedicalDecisionHistoryBLL : BaseBLL<MedicalDecisionHistoryModel, MedicalDecisionHistory>, IMedicalDecisionHistoryBLL
     {
-        private readonly IMedicalDecisionHistoryDAL _decisionsMedicalHistoriesDAL;
+        private readonly IMedicalDecisionHistoryDAL _medicalDecisionhistoryDAL;
         private readonly IMapper _mapper;
         private readonly MedicalDecisionHistoryValidation _medicalDecisionValidation;
 
-        public DecisionsMedicalHistoriesBLL(IMedicalDecisionHistoryDAL decisionsMedicalHistoriesDAL, IMapper mapper, MedicalDecisionHistoryValidation medicalDecisionValidation)
-            : base(decisionsMedicalHistoriesDAL)
+        public MedicalDecisionHistoryBLL(IMedicalDecisionHistoryDAL medicalDecisionHistoryDAL, IMapper mapper, MedicalDecisionHistoryValidation medicalDecisionValidation)
+            : base(medicalDecisionHistoryDAL)
         {
             _mapper = mapper;
-            _decisionsMedicalHistoriesDAL = decisionsMedicalHistoriesDAL;
+            _medicalDecisionhistoryDAL = medicalDecisionHistoryDAL;
             _medicalDecisionValidation = medicalDecisionValidation;
         }
 
@@ -40,7 +40,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
-                var decisionMedicalHistory = _decisionsMedicalHistoriesDAL.Find((DecisionsMedicalHistoriesFilter)filter);
+                var decisionMedicalHistory = _medicalDecisionhistoryDAL.Find((MedicalDecisionHistoryFilter)filter);
                 var model = _mapper.Map<MedicalDecisionHistoryModel>(decisionMedicalHistory);
                 return Result<MedicalDecisionHistoryModel>.BuildSuccess(model);
             }
@@ -54,7 +54,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         {
             try
             {
-                List<MedicalDecisionHistory> histories = _decisionsMedicalHistoriesDAL.FindAll((DecisionsMedicalHistoriesFilter)filter);
+                List<MedicalDecisionHistory> histories = _medicalDecisionhistoryDAL.FindAll((MedicalDecisionHistoryFilter)filter);
                 List<MedicalDecisionHistoryModel> models = _mapper.Map<List<MedicalDecisionHistoryModel>>(histories);
                 return Result<List<MedicalDecisionHistoryModel>>.BuildSuccess(models);
             }
@@ -72,9 +72,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             if (!result.Success)
                 return result;
 
-            _decisionsMedicalHistoriesDAL.Insert(history);
+            _medicalDecisionhistoryDAL.Insert(history);
 
-            var resultSave = _decisionsMedicalHistoriesDAL.Save();
+            var resultSave = _medicalDecisionhistoryDAL.Save();
             if (!resultSave.Success)
                 return Result<MedicalDecisionHistory>.BuildError(resultSave.Messages);
 
@@ -89,9 +89,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             if (!result.Success)
                 return result;
 
-            _decisionsMedicalHistoriesDAL.Update(history);
+            _medicalDecisionhistoryDAL.Update(history);
 
-            var resultSave = _decisionsMedicalHistoriesDAL.Save();
+            var resultSave = _medicalDecisionhistoryDAL.Save();
             if (!resultSave.Success)
                 return Result<MedicalDecisionHistory>.BuildError(resultSave.Messages);
 

@@ -78,7 +78,7 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IMemberDAL, MemberDAL>();
             services.AddScoped<MemberValidation>();
             services.AddScoped<MedicalDecisionHistoryValidation>();
-            services.AddScoped<IMedicalDecisionHistoryBLL, DecisionsMedicalHistoriesBLL>();
+            services.AddScoped<IMedicalDecisionHistoryBLL, MedicalDecisionHistoryBLL>();
             services.AddScoped<IMedicalDecisionHistoryDAL, MedicalDecisionHistoryDAL>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
@@ -92,7 +92,8 @@ namespace EmergencyManagementSystem.SAMU.API
                 .ForMember(a => a.EmergencyHistories, d => d.MapFrom(d => d.EmergencyHistoryModels))
                 .ForMember(a => a.Patients, d => d.MapFrom(d => d.PatientModels))
                 .ForMember(a => a.MedicalEvaluations, d => d.MapFrom(d => d.MedicalEvaluationModels))
-                .ForMember(a => a.ServiceHistories, d => d.MapFrom(d => d.ServiceHistoryModels));
+                .ForMember(a => a.ServiceHistories, d => d.MapFrom(d => d.ServiceHistoryModels))
+                .ForMember(a => a.MedicalDecisionHistories, d => d.MapFrom(d => d.MedicalDecisionHistoryModels));
 
                 cfg.CreateMap<Emergency, EmergencyModel>()
                 .ForMember(a => a.AddressModel, b => b.MapFrom(c => c.Address))
@@ -100,7 +101,8 @@ namespace EmergencyManagementSystem.SAMU.API
                 .ForMember(a => a.EmergencyHistoryModels, d => d.MapFrom(d => d.EmergencyHistories))
                 .ForMember(a => a.PatientModels, d => d.MapFrom(d => d.Patients))
                 .ForMember(a => a.MedicalEvaluationModels, d => d.MapFrom(d => d.MedicalEvaluations))
-                .ForMember(a => a.ServiceHistoryModels, d => d.MapFrom(d => d.ServiceHistories));
+                .ForMember(a => a.ServiceHistoryModels, d => d.MapFrom(d => d.ServiceHistories))
+                .ForMember(a => a.MedicalDecisionHistoryModels, d => d.MapFrom(d => d.MedicalDecisionHistories));
 
                 cfg.CreateMap<EmergencyRequiredVehicleModel, EmergencyRequiredVehicle>();
                 cfg.CreateMap<EmergencyRequiredVehicle, EmergencyRequiredVehicleModel>();

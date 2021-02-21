@@ -17,6 +17,7 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public EmergencyStatus EmergencyStatus { get; set; }
         public virtual ICollection<EmergencyRequiredVehicle> EmergencyRequiredVehicles { get; set; }
         public virtual ICollection<MedicalEvaluation> MedicalEvaluations { get; set; }
+        public virtual ICollection<MedicalDecisionHistory> MedicalDecisionHistories { get; set; }
         public virtual ICollection<EmergencyHistory> EmergencyHistories { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<ServiceHistory> ServiceHistories { get; set; }
