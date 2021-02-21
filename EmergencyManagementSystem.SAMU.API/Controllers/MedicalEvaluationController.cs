@@ -14,8 +14,16 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
     [ApiController]
     public class MedicalEvaluationController : BaseController<MedicalEvaluationModel, MedicalEvaluation, MedicalEvaluationFilter>
     {
+        private readonly IMedicalEvaluationBLL _medicalEvaluationBLL;
         public MedicalEvaluationController(IMedicalEvaluationBLL medicalEvaluationBLL) : base(medicalEvaluationBLL)
         {
+            _medicalEvaluationBLL = medicalEvaluationBLL;
+        }
+
+        [HttpPost("RegisterEvaluations")]
+        public Result RegisterEvaluations(List<MedicalEvaluationModel> evaluations)
+        {
+            return _medicalEvaluationBLL.RegisterEvaluations(evaluations);
         }
     }
 }

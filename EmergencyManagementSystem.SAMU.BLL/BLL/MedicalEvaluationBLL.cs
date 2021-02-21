@@ -17,11 +17,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IMapper _mapper;
         private readonly MedicalEvaluationValidation _medicalEvaluationValidation;
         private readonly IMedicalEvaluationDAL _medicalEvaluationDAL;
-
+        private readonly PatientValidation _patientValidation;
+        private readonly IPatientBLL _patientBLL;
         public MedicalEvaluationBLL(IMapper mapper, MedicalEvaluationValidation medicalEvaluationValidation,
-            IMedicalEvaluationDAL medicalEvaluationDAL)
+            IMedicalEvaluationDAL medicalEvaluationDAL, PatientValidation patientValidation, IPatientBLL patientBLL)
             : base(medicalEvaluationDAL)
         {
+            _patientBLL = patientBLL;
+            _patientValidation = patientValidation;
             _mapper = mapper;
             _medicalEvaluationDAL = medicalEvaluationDAL;
             _medicalEvaluationValidation = medicalEvaluationValidation;
@@ -98,6 +101,31 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
                 return Result<MedicalEvaluation>.BuildError("Erro no momento de registar avaliação médica.", error);
             }
+        }
+
+        public Result RegisterEvaluations(List<MedicalEvaluationModel> evaluationsModel)
+        {
+            foreach (var evaluationModel in evaluationsModel)
+            {
+                var evaluation = _mapper.Map<MedicalEvaluation>(evaluationModel);
+                var result = _medicalEvaluationValidation.Validate(evaluation);
+                if (!result.Success)
+                    return result;
+
+                if (evaluation.Patient.Id > 0)
+                {
+                    var resultPatient = _patientBLL.Update(evaluationModel.PatientModel);
+                    evaluation.Patient = resultPatient.Model;
+                }
+                else
+                {
+                    var resultPatient = _patientValidation.Validate(evaluation.Patient);
+                    if (!resultPatient.Success)
+                        return Result.BuildError(resultPatient.Messages);
+                }
+                _medicalEvaluationDAL.Insert(evaluation);
+            }
+            return _medicalEvaluationDAL.Save();
         }
 
         public override Result<MedicalEvaluation> Update(MedicalEvaluationModel model)
