@@ -5,6 +5,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
+using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IAddressBLL _addressBLL;
         private readonly AddressValidation _addressValidation;
         private readonly PatientValidation _patientValidation;
+        private readonly IEmergencyHistoryDAL _emergencyHistoryDAL;
         public EmergencyBLL(IMapper mapper, IEmergencyDAL emergencyDAL,
             EmergencyValidation emergencyValidation, IPatientBLL patientBLL,
-            IAddressBLL addressBLL, AddressValidation addressValidation, PatientValidation patientValidation)
+            IAddressBLL addressBLL, AddressValidation addressValidation,
+            PatientValidation patientValidation, IEmergencyHistoryDAL emergencyHistoryDAL)
             : base(emergencyDAL)
         {
+            _emergencyHistoryDAL = emergencyHistoryDAL;
             _addressValidation = addressValidation;
             _patientValidation = patientValidation;
             _addressBLL = addressBLL;
@@ -158,17 +162,23 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
                 Emergency emergency = _mapper.Map<Emergency>(model);
 
-                if (emergency.EmergencyHistories == null)
-                    emergency.EmergencyHistories = new List<EmergencyHistory>();
+                var history = _emergencyHistoryDAL
+                    .Find(new EmergencyHistoryFilter { EmergencyId = emergency.Id, EmergencyStatus = EmergencyStatus.InEvaluation });
 
-                emergency.EmergencyHistories.Add(new EmergencyHistory
+                if (history == null)
                 {
-                    Date = DateTime.Now,
-                    Description = "Ocorrência em Avaliação",
-                    Emergency = emergency,
-                    EmergencyStatus = emergency.EmergencyStatus,
-                    EmployeeGuid = model.EmployeeGuid
-                });
+                    if (emergency.EmergencyHistories == null)
+                        emergency.EmergencyHistories = new List<EmergencyHistory>();
+
+                    emergency.EmergencyHistories.Add(new EmergencyHistory
+                    {
+                        Date = DateTime.Now,
+                        Description = "Ocorrência em Avaliação",
+                        Emergency = emergency,
+                        EmergencyStatus = emergency.EmergencyStatus,
+                        EmployeeGuid = model.EmployeeGuid
+                    });
+                }
 
                 if ((model?.AddressModel?.Id ?? 0) == 0)
                 {

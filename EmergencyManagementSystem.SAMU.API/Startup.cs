@@ -77,6 +77,8 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IMemberBLL, MemberBLL>();
             services.AddScoped<IMemberDAL, MemberDAL>();
             services.AddScoped<MemberValidation>();
+            services.AddScoped<IDecisionsMedicalHistoriesBLL, DecisionsMedicalHistoriesBLL>();
+            services.AddScoped<IDecisionsMedicalHistoriesDAL, DecisionsMedicalHistoriesDAL>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
             {
