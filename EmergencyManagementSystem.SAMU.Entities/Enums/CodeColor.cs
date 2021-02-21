@@ -2,7 +2,7 @@
 {
     public enum CodeColor : short
     {
-        Invalido,
+        Invalid,
         Red,
         Yellow,
         Green,

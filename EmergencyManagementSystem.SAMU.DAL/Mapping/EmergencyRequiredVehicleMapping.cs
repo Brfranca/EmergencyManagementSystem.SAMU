@@ -1,9 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 {
@@ -35,6 +32,10 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasForeignKey(d => d.EmergencyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Property(d => d.Status)
+                .HasColumnName("Status")
+                .HasColumnType("smallint")
+                .IsRequired();
         }
     }
 }

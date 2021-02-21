@@ -15,14 +15,17 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
     {
         private readonly IMapper _mapper;
         private readonly IEmergencyRequiredVehicleDAL _emergencyRequiredVehicleDAL;
+        private readonly IEmergencyHistoryBLL _emergencyHistoryBLL;
         private readonly EmergencyRequiredVehicleValidation _emergencyRequiredVehicleValidation;
 
-        public EmergencyRequiredVehicleBLL(IMapper mapper, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL, EmergencyRequiredVehicleValidation emergencyDataValidation)
+        public EmergencyRequiredVehicleBLL(IMapper mapper, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL, EmergencyRequiredVehicleValidation emergencyDataValidation,
+            IEmergencyHistoryBLL emergencyHistoryBLL)
             : base(emergencyRequiredVehicleDAL)
         {
             _mapper = mapper;
             _emergencyRequiredVehicleDAL = emergencyRequiredVehicleDAL;
             _emergencyRequiredVehicleValidation = emergencyDataValidation;
+            _emergencyHistoryBLL = emergencyHistoryBLL;
         }
 
         public override IQueryable<EmergencyRequiredVehicleModel> ApplyFilterPagination(IQueryable<EmergencyRequiredVehicle> query, IFilter filter)
@@ -89,6 +92,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public override Result<EmergencyRequiredVehicle> Update(EmergencyRequiredVehicleModel model)
         {
+
             try
             {
                 EmergencyRequiredVehicle emergencyRequiredVehicle = _mapper.Map<EmergencyRequiredVehicle>(model);
@@ -98,6 +102,8 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _emergencyRequiredVehicleDAL.Update(emergencyRequiredVehicle);
+                _emergencyHistoryBLL.Register(model.emergencyHistoryModel);
+
                 var resultSave = _emergencyRequiredVehicleDAL.Save();
                 if (!resultSave.Success)
                     return Result<EmergencyRequiredVehicle>.BuildError(resultSave.Messages);
