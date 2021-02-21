@@ -12,6 +12,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public long EmergencyId { get; set; }
         public CodeColor CodeColor { get; set; }
         public VehicleRequiredStatus Status { get; set; }
-        public EmergencyHistoryModel emergencyHistoryModel { get; set; }
+        public EmergencyHistoryModel EmergencyHistoryModel { get; set; }
     }
 }

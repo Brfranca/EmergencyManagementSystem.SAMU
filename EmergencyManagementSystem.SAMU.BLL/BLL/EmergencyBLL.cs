@@ -247,5 +247,24 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 return Result.BuildError("Erro ao alterar o registro da ocorrência.", error);
             }
         }
+
+        public Result Finish(EmergencyModel model)
+        {
+            var emergency = _emergencyDAL.Find(new EmergencyFilter { Id = model.Id });
+            var anyInProgress = emergency.ServiceHistories.Any(d => d.ServiceHistoryStatus == ServiceHistoryStatus.InProgress);
+            if (anyInProgress)
+                return Result.BuildError("Ocorrência não pode ser finalizada pois possui veículos empenhados.");
+
+            emergency.EmergencyStatus = EmergencyStatus.Closed;
+            emergency.EmergencyRequiredVehicles.ToList()
+                .ForEach(d => d.Status =
+                (d.Status == VehicleRequiredStatus.Opened)
+                ? VehicleRequiredStatus.Canceled
+                : d.Status);
+
+            _emergencyDAL.Update(emergency);
+
+            return _emergencyDAL.Save();
+        }
     }
 }
