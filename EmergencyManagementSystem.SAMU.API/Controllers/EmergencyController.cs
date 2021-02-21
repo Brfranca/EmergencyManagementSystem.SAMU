@@ -27,5 +27,11 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
         {
             return _emergencyBLL.SimpleUpdate(model);
         }
+
+        [HttpPost("Finish")]
+        public Result Finish(EmergencyModel model)
+        {
+            return _emergencyBLL.Finish(model);
+        }
     }
 }

@@ -7,6 +7,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Interfaces.BLL
     {
         Result SimpleRegister(EmergencyModel model);
         Result SimpleUpdate(EmergencyModel model);
-
+        Result Finish(EmergencyModel model);
     }
 }

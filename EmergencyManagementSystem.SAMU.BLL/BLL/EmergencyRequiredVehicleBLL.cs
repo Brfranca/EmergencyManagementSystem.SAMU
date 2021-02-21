@@ -17,11 +17,12 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IEmergencyRequiredVehicleDAL _emergencyRequiredVehicleDAL;
         private readonly IEmergencyHistoryBLL _emergencyHistoryBLL;
         private readonly EmergencyRequiredVehicleValidation _emergencyRequiredVehicleValidation;
-
+        private readonly IEmergencyDAL _emergencyDAL;
         public EmergencyRequiredVehicleBLL(IMapper mapper, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL, EmergencyRequiredVehicleValidation emergencyDataValidation,
-            IEmergencyHistoryBLL emergencyHistoryBLL)
+            IEmergencyHistoryBLL emergencyHistoryBLL, IEmergencyDAL emergencyDAL)
             : base(emergencyRequiredVehicleDAL)
         {
+            _emergencyDAL = emergencyDAL;
             _mapper = mapper;
             _emergencyRequiredVehicleDAL = emergencyRequiredVehicleDAL;
             _emergencyRequiredVehicleValidation = emergencyDataValidation;
@@ -76,13 +77,17 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 if (!result.Success)
                     return result;
 
+                var emergency = _emergencyDAL.Find(new EmergencyFilter { Id = model.EmergencyId });
+                emergency.EmergencyStatus = Entities.Enums.EmergencyStatus.InService;
+                _emergencyDAL.Update(emergency);
+
                 _emergencyRequiredVehicleDAL.Insert(emergencyRequiredVehicle);
 
                 var resultSave = _emergencyRequiredVehicleDAL.Save();
                 if (!resultSave.Success)
                     return Result<EmergencyRequiredVehicle>.BuildError(resultSave.Messages);
 
-                return Result<EmergencyRequiredVehicle>.BuildSuccess(emergencyRequiredVehicle);
+                return Result<EmergencyRequiredVehicle>.BuildSuccess(null);
             }
             catch (Exception error)
             {
@@ -102,7 +107,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _emergencyRequiredVehicleDAL.Update(emergencyRequiredVehicle);
-                _emergencyHistoryBLL.Register(model.emergencyHistoryModel);
+                _emergencyHistoryBLL.Register(model.EmergencyHistoryModel);
 
                 var resultSave = _emergencyRequiredVehicleDAL.Save();
                 if (!resultSave.Success)
