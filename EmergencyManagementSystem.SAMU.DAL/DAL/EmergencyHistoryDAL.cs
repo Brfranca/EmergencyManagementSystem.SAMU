@@ -13,7 +13,18 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
 
         public EmergencyHistory Find(EmergencyHistoryFilter filter)
         {
-            return Set.FirstOrDefault(d => d.Id == filter.Id);
+            var query = Set.AsQueryable();
+
+            if (filter.Id > 0)
+                query = query.Where(d => d.Id == filter.Id);
+
+            if (filter.EmergencyId > 0)
+                query = query.Where(d => d.EmergencyId == filter.EmergencyId);
+
+            if (filter.EmergencyStatus != null && filter.EmergencyStatus != Entities.Enums.EmergencyStatus.Invalid)
+                query = query.Where(d => d.EmergencyStatus == filter.EmergencyStatus);
+
+            return query.FirstOrDefault();
         }
     }
 }
