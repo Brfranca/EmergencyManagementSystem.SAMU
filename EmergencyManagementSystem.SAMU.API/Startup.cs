@@ -85,11 +85,19 @@ namespace EmergencyManagementSystem.SAMU.API
 
                 cfg.CreateMap<EmergencyModel, Emergency>()
                 .ForMember(a => a.Address, b => b.MapFrom(c => c.AddressModel))
-                .ForMember(a => a.EmergencyRequiredVehicles, d => d.MapFrom(d => d.EmergencyRequiredVehicleModels));
+                .ForMember(a => a.EmergencyRequiredVehicles, d => d.MapFrom(d => d.EmergencyRequiredVehicleModels))
+                .ForMember(a => a.EmergencyHistories, d => d.MapFrom(d => d.EmergencyHistoryModels))
+                .ForMember(a => a.Patients, d => d.MapFrom(d => d.PatientModels))
+                .ForMember(a => a.MedicalEvaluations, d => d.MapFrom(d => d.MedicalEvaluationModels))
+                .ForMember(a => a.ServiceHistories, d => d.MapFrom(d => d.ServiceHistoryModels));
 
                 cfg.CreateMap<Emergency, EmergencyModel>()
                 .ForMember(a => a.AddressModel, b => b.MapFrom(c => c.Address))
-                .ForMember(d => d.EmergencyRequiredVehicleModels, d => d.MapFrom(d => d.EmergencyRequiredVehicles));
+                .ForMember(d => d.EmergencyRequiredVehicleModels, d => d.MapFrom(d => d.EmergencyRequiredVehicles))
+                .ForMember(a => a.EmergencyHistoryModels, d => d.MapFrom(d => d.EmergencyHistories))
+                .ForMember(a => a.PatientModels, d => d.MapFrom(d => d.Patients))
+                .ForMember(a => a.MedicalEvaluationModels, d => d.MapFrom(d => d.MedicalEvaluations))
+                .ForMember(a => a.ServiceHistoryModels, d => d.MapFrom(d => d.ServiceHistories));
 
                 cfg.CreateMap<EmergencyRequiredVehicleModel, EmergencyRequiredVehicle>();
                 cfg.CreateMap<EmergencyRequiredVehicle, EmergencyRequiredVehicleModel>();
