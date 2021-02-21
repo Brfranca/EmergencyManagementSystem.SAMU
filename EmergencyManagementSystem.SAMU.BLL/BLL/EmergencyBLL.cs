@@ -87,7 +87,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 Emergency emergency = _mapper.Map<Emergency>(model);
 
-                foreach (var patient in model.Patients)
+                foreach (var patient in model.PatientModels)
                 {
                     var resultPatient = _patientBLL.Register(patient);
                     if (!resultPatient.Success)
@@ -147,14 +147,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             try
             {
                 //lógica para remover pacientes vazios
-                var patientsRemove = model.Patients.Where
+                var patientsRemove = model.PatientModels.Where
                     (
                         d => d.Age == 0
                         && d.Gender == Entities.Enums.Gender.Invalido
                         && string.IsNullOrWhiteSpace(d.Name)
                         && d.Id == 0
                     ).ToList();
-                patientsRemove.ForEach(d => model.Patients.Remove(d));
+                patientsRemove.ForEach(d => model.PatientModels.Remove(d));
 
                 Emergency emergency = _mapper.Map<Emergency>(model);
 
@@ -184,7 +184,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                         return Result<Emergency>.BuildError(resultAddress.Messages);
                 }
 
-                foreach (var patientModel in model.Patients)
+                foreach (var patientModel in model.PatientModels)
                 {
                     if ((patientModel?.Id ?? 0) == 0)
                     {
