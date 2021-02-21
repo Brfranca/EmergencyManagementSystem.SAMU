@@ -105,8 +105,15 @@ namespace EmergencyManagementSystem.SAMU.API
                 cfg.CreateMap<TeamMember, TeamMemberModel>();
                 cfg.CreateMap<Vehicle, VehicleModel>();
                 cfg.CreateMap<VehicleModel, Vehicle>();
-                cfg.CreateMap<ServiceHistory, ServiceHistoryModel>();
-                cfg.CreateMap<ServiceHistoryModel, ServiceHistory>();
+
+                cfg.CreateMap<ServiceHistory, ServiceHistoryModel>()
+                .ForMember( a => a.VehiclePositionHistoryModels, d => d.MapFrom(d => d.VehiclePositionHistories))
+                .ForMember(a => a.VehicleModel, d => d.MapFrom(d => d.Vehicle));
+
+                cfg.CreateMap<ServiceHistoryModel, ServiceHistory>()
+                .ForMember(a => a.VehiclePositionHistories, d => d.MapFrom(d => d.VehiclePositionHistoryModels))
+                .ForMember(a => a.Vehicle, d => d.MapFrom(d => d.VehicleModel));
+
                 cfg.CreateMap<VehiclePositionHistory, VehiclePositionHistoryModel>();
                 cfg.CreateMap<VehiclePositionHistoryModel, VehiclePositionHistory>();
                 cfg.CreateMap<EmergencyHistoryModel, EmergencyHistory>();
