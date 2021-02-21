@@ -1,8 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
@@ -17,8 +14,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.EmergencyStatus)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status da emergência.");
 
@@ -29,6 +24,17 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar a descrição.")
                 .Length(3, 60)
                 .WithMessage("A descrição deve conter entre 3 e 60 caracteres.");
+
+            RuleFor(e => e.EmergencyId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id da ocorrência.");
+
+            RuleFor(e => e.EmployeeGuid)
+                .NotNull()
+                .WithMessage("Favor informar o Guid da funcionário.")
+                .NotEmpty()
+                .WithMessage("Favor informar o Guid da funcionário.");
+
         }
     }
 }

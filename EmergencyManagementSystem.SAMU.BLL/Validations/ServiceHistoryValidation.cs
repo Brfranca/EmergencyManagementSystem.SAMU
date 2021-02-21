@@ -14,8 +14,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.ServiceHistoryStatus)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status da equipe do veículo.");
 
@@ -27,8 +25,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .Length(5, 150)
                 .WithMessage("A descrição deve conter entre 5 e 150 caracteres.");
 
-            //Faltou o limite de caracteres da descrição no mapping (a menos que seja intencional)?
-            //corrigido
+            RuleFor(e => e.VehicleId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id do veículo.");
+
+            RuleFor(e => e.EmergencyId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id da ocorrência.");
         }
     }
 }

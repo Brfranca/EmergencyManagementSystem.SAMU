@@ -14,10 +14,12 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar a data.");
 
             RuleFor(e => e.VehiclePosition)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status do veículo.");
+
+            RuleFor(e => e.ServiceHistoryId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id histórico de atendimento.");
         }
     }
 }

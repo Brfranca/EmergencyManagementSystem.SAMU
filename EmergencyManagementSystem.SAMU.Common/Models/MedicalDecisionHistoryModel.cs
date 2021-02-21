@@ -1,11 +1,9 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.Common.Models
 {
-    public class DecisionsMedicalHistoriesModel
+    public class MedicalDecisionHistoryModel
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }

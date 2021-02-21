@@ -8,22 +8,24 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public MemberValidation()
         {
             RuleFor(e => e.EmployeeStatus)
-                    .Cascade(CascadeMode.Stop)
-                    .NotNull()
-                    .WithMessage("Favor informar o status do funcionário.")
-                    .IsInEnum()
-                    .WithMessage("Status inválido.");
+                .NotEmpty()
+                .WithMessage("Status inválido.");
 
             RuleFor(e => e.StartedWork)
-                    .Cascade(CascadeMode.Stop)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("Favor informar a data e hora do início do plantão do funcionário.");
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Favor informar a data e hora do início do plantão do funcionário.");
 
-            //RuleFor(e => e.Vehicle)
-            //    .NotEmpty()
-            //    .NotNull()
-            //    .WithMessage("Favor informar o veículo.");
+            RuleFor(e => e.VehicleId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id do veículo.");
+
+            RuleFor(e => e.EmployeeGuid)
+                .NotNull()
+                .WithMessage("Favor informar o Guid da funcionário.")
+                .NotEmpty()
+                .WithMessage("Favor informar o Guid da funcionário.");
         }
     }
 }

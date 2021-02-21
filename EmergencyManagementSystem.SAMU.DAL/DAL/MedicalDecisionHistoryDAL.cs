@@ -8,13 +8,13 @@ using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.DAL
 {
-    public class DecisionsMedicalHistoriesDAL : BaseDAL<DecisionsMedicalHistories>, IDecisionsMedicalHistoriesDAL
+    public class MedicalDecisionHistoryDAL : BaseDAL<MedicalDecisionHistory>, IMedicalDecisionHistoryDAL
     {
-        public DecisionsMedicalHistoriesDAL(Context context) : base(context)
+        public MedicalDecisionHistoryDAL(Context context) : base(context)
         {
         }
 
-        public DecisionsMedicalHistories Find(DecisionsMedicalHistoriesFilter filter)
+        public MedicalDecisionHistory Find(DecisionsMedicalHistoriesFilter filter)
         {
             var query = Set.AsQueryable();
 
@@ -24,7 +24,7 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
             return query.FirstOrDefault();
         }
 
-        public List<DecisionsMedicalHistories> FindAll(DecisionsMedicalHistoriesFilter filter)
+        public List<MedicalDecisionHistory> FindAll(DecisionsMedicalHistoriesFilter filter)
         {
             var query = Set.AsQueryable();
 

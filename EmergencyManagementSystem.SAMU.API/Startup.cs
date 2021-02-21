@@ -77,8 +77,9 @@ namespace EmergencyManagementSystem.SAMU.API
             services.AddScoped<IMemberBLL, MemberBLL>();
             services.AddScoped<IMemberDAL, MemberDAL>();
             services.AddScoped<MemberValidation>();
-            services.AddScoped<IDecisionsMedicalHistoriesBLL, DecisionsMedicalHistoriesBLL>();
-            services.AddScoped<IDecisionsMedicalHistoriesDAL, DecisionsMedicalHistoriesDAL>();
+            services.AddScoped<MedicalDecisionHistoryValidation>();
+            services.AddScoped<IMedicalDecisionHistoryBLL, DecisionsMedicalHistoriesBLL>();
+            services.AddScoped<IMedicalDecisionHistoryDAL, MedicalDecisionHistoryDAL>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
             {
@@ -126,6 +127,10 @@ namespace EmergencyManagementSystem.SAMU.API
                 cfg.CreateMap<MedicalEvaluation, MedicalEvaluationModel>().ForMember(d => d.PatientModel, d => d.MapFrom(d => d.Patient));
                 cfg.CreateMap<Member, MemberModel>();//.ForMember(a => a.VehicleModel, b => b.MapFrom(c => c.Vehicle));
                 cfg.CreateMap<MemberModel, Member>();//.ForMember(a => a.Vehicle, b => b.MapFrom(c => c.VehicleModel));
+                cfg.CreateMap<MedicalDecisionHistory, MedicalDecisionHistoryModel>();
+                cfg.CreateMap<MedicalDecisionHistoryModel, MedicalDecisionHistory>();
+
+
             }).CreateMapper();
             services.AddSingleton(mapper);
         }

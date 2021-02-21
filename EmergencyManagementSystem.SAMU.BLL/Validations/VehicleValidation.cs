@@ -8,7 +8,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
         public VehicleValidation()
         {
             RuleFor(e => e.VehiclePlate)
-                .Cascade(CascadeMode.Stop)
                 .MaximumLength(7)
                 .WithMessage("A placa deve conter no máximo 7 caracteres.");
 
@@ -27,20 +26,17 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar o ano.");
 
             RuleFor(e => e.VehicleType)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o tipo de veículo.");
 
             RuleFor(e => e.VehicleStatus)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a status do veículo.");
 
             RuleFor(e => e.OperationCity)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
+                .WithMessage("Favor informar a cidade em que o veículo vai atuar.")
                 .NotNull()
                 .WithMessage("Favor informar a cidade em que o veículo vai atuar.")
                 .Length(3, 40)

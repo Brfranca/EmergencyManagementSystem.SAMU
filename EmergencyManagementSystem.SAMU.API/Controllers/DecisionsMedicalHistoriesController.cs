@@ -13,9 +13,9 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DecisionsMedicalHistoriesController : BaseController<DecisionsMedicalHistoriesModel, DecisionsMedicalHistories, DecisionsMedicalHistoriesFilter>
+    public class DecisionsMedicalHistoriesController : BaseController<MedicalDecisionHistoryModel, MedicalDecisionHistory, DecisionsMedicalHistoriesFilter>
     {
-        public DecisionsMedicalHistoriesController(IDecisionsMedicalHistoriesBLL decisionsMedicalHistoriesBLL)
+        public DecisionsMedicalHistoriesController(IMedicalDecisionHistoryBLL decisionsMedicalHistoriesBLL)
             : base(decisionsMedicalHistoriesBLL)
         {
         }

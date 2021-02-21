@@ -1,9 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
@@ -30,11 +26,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Favor informar o nome completo do chamador.")
+                .WithMessage("Favor informar o nome completo do solicitante.")
                 .Length(3, 100)
-                .WithMessage("O nome do chamador deve conter entre 3 e 100 caracteres.")
-                .Must(ContainsFullName)
-                .WithMessage("Favor inserir o nome completo do solicitante.")
+                .WithMessage("O nome do solicitante deve conter entre 3 e 100 caracteres.")
                 .Must(IsValidName)
                 .WithMessage("O nome do chamador não deve conter números ou caracteres especiais.");
 
@@ -47,21 +41,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Telefone inválido.");
 
             RuleFor(e => e.EmergencyStatus)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o status da emergência.");
+
+            RuleFor(e => e.AddressId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id do endereço.");
         }
 
-        private bool ContainsFullName(string fullName)
-        {
-            var names = fullName.Split(' ').Where(d => !string.IsNullOrWhiteSpace(d)).ToList();
-            if (names.Count <= 1)
-            {
-                return false;
-            }
-            return true;
-        }
 
         private bool IsValidName(string Name)
         {

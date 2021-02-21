@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using EmergencyManagementSystem.SAMU.BLL.Validations;
 using EmergencyManagementSystem.SAMU.Common.Filters;
-using EmergencyManagementSystem.SAMU.Common.Interfaces;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
@@ -8,84 +8,94 @@ using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
-    public class DecisionsMedicalHistoriesBLL : BaseBLL<DecisionsMedicalHistoriesModel, DecisionsMedicalHistories>, IDecisionsMedicalHistoriesBLL
+    public class DecisionsMedicalHistoriesBLL : BaseBLL<MedicalDecisionHistoryModel, MedicalDecisionHistory>, IMedicalDecisionHistoryBLL
     {
-        private readonly IDecisionsMedicalHistoriesDAL _decisionsMedicalHistoriesDAL;
+        private readonly IMedicalDecisionHistoryDAL _decisionsMedicalHistoriesDAL;
         private readonly IMapper _mapper;
-        public DecisionsMedicalHistoriesBLL(IDecisionsMedicalHistoriesDAL decisionsMedicalHistoriesDAL, IMapper mapper)
+        private readonly MedicalDecisionHistoryValidation _medicalDecisionValidation;
+
+        public DecisionsMedicalHistoriesBLL(IMedicalDecisionHistoryDAL decisionsMedicalHistoriesDAL, IMapper mapper, MedicalDecisionHistoryValidation medicalDecisionValidation)
             : base(decisionsMedicalHistoriesDAL)
         {
             _mapper = mapper;
             _decisionsMedicalHistoriesDAL = decisionsMedicalHistoriesDAL;
+            _medicalDecisionValidation = medicalDecisionValidation;
         }
 
-        public override IQueryable<DecisionsMedicalHistoriesModel> ApplyFilterPagination
-            (IQueryable<DecisionsMedicalHistories> query, IFilter filter)
+        public override IQueryable<MedicalDecisionHistoryModel> ApplyFilterPagination
+            (IQueryable<MedicalDecisionHistory> query, IFilter filter)
         {
             throw new NotImplementedException();
         }
 
-        public override Result Delete(DecisionsMedicalHistoriesModel model)
+        public override Result Delete(MedicalDecisionHistoryModel model)
         {
             throw new NotImplementedException();
         }
 
-        public override Result<DecisionsMedicalHistoriesModel> Find(IFilter filter)
+        public override Result<MedicalDecisionHistoryModel> Find(IFilter filter)
         {
             try
             {
                 var decisionMedicalHistory = _decisionsMedicalHistoriesDAL.Find((DecisionsMedicalHistoriesFilter)filter);
-                var model = _mapper.Map<DecisionsMedicalHistoriesModel>(decisionMedicalHistory);
-                return Result<DecisionsMedicalHistoriesModel>.BuildSuccess(model);
+                var model = _mapper.Map<MedicalDecisionHistoryModel>(decisionMedicalHistory);
+                return Result<MedicalDecisionHistoryModel>.BuildSuccess(model);
             }
             catch (Exception error)
             {
-                return Result<DecisionsMedicalHistoriesModel>.BuildError("Erro ao buscar histórico de decisões médicas", error);
+                return Result<MedicalDecisionHistoryModel>.BuildError("Erro ao buscar histórico de decisões médicas", error);
             }
         }
 
-        public override Result<List<DecisionsMedicalHistoriesModel>> FindAll(IFilter filter)
+        public override Result<List<MedicalDecisionHistoryModel>> FindAll(IFilter filter)
         {
             try
             {
-                List<DecisionsMedicalHistories> histories = _decisionsMedicalHistoriesDAL.FindAll((DecisionsMedicalHistoriesFilter)filter);
-                List<DecisionsMedicalHistoriesModel> models = _mapper.Map<List<DecisionsMedicalHistoriesModel>>(histories);
-                return Result<List<DecisionsMedicalHistoriesModel>>.BuildSuccess(models);
+                List<MedicalDecisionHistory> histories = _decisionsMedicalHistoriesDAL.FindAll((DecisionsMedicalHistoriesFilter)filter);
+                List<MedicalDecisionHistoryModel> models = _mapper.Map<List<MedicalDecisionHistoryModel>>(histories);
+                return Result<List<MedicalDecisionHistoryModel>>.BuildSuccess(models);
             }
             catch (Exception error)
             {
-                return Result<List<DecisionsMedicalHistoriesModel>>.BuildError("Erro ao buscar históricos de decisões médicas", error);
+                return Result<List<MedicalDecisionHistoryModel>>.BuildError("Erro ao buscar históricos de decisões médicas", error);
             }
         }
 
-        public override Result<DecisionsMedicalHistories> Register(DecisionsMedicalHistoriesModel model)
+        public override Result<MedicalDecisionHistory> Register(MedicalDecisionHistoryModel model)
         {
-            DecisionsMedicalHistories history = _mapper.Map<DecisionsMedicalHistories>(model);
+            MedicalDecisionHistory history = _mapper.Map<MedicalDecisionHistory>(model);
 
-             _decisionsMedicalHistoriesDAL.Insert(history);
+            var result = _medicalDecisionValidation.Validate(history);
+            if (!result.Success)
+                return result;
+
+            _decisionsMedicalHistoriesDAL.Insert(history);
 
             var resultSave = _decisionsMedicalHistoriesDAL.Save();
             if (!resultSave.Success)
-                return Result<DecisionsMedicalHistories>.BuildError(resultSave.Messages);
+                return Result<MedicalDecisionHistory>.BuildError(resultSave.Messages);
 
-            return Result<DecisionsMedicalHistories>.BuildSuccess(history);
+            return Result<MedicalDecisionHistory>.BuildSuccess(history);
         }
 
-        public override Result<DecisionsMedicalHistories> Update(DecisionsMedicalHistoriesModel model)
+        public override Result<MedicalDecisionHistory> Update(MedicalDecisionHistoryModel model)
         {
-            DecisionsMedicalHistories history = _mapper.Map<DecisionsMedicalHistories>(model);
+            MedicalDecisionHistory history = _mapper.Map<MedicalDecisionHistory>(model);
+
+            var result = _medicalDecisionValidation.Validate(history);
+            if (!result.Success)
+                return result;
 
             _decisionsMedicalHistoriesDAL.Update(history);
 
             var resultSave = _decisionsMedicalHistoriesDAL.Save();
             if (!resultSave.Success)
-                return Result<DecisionsMedicalHistories>.BuildError(resultSave.Messages);
+                return Result<MedicalDecisionHistory>.BuildError(resultSave.Messages);
 
-            return Result<DecisionsMedicalHistories>.BuildSuccess(history);
+            return Result<MedicalDecisionHistory>.BuildSuccess(history);
         }
     }
 }

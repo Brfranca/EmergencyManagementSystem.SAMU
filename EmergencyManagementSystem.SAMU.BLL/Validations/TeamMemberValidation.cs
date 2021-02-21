@@ -7,16 +7,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
     {
         public TeamMemberValidation()
         {
-            RuleFor(e => e.Member)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
+            RuleFor(e => e.MemberId)
                 .NotEmpty()
-                .WithMessage("Favor informar o membro da equipe.");
+                .WithMessage("Favor informar o Id membro da equipe.");
 
-            RuleFor(e => e.ServiceHistory)
-                .Cascade(CascadeMode.Stop)
+            RuleFor(e => e.ServiceHistoryId)
                 .NotNull()
-                .WithMessage("Favor informar o histórico de atendimento.");
+                .WithMessage("Favor informar o Id histórico de atendimento.");
         }
     }
 }

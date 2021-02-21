@@ -1,7 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
@@ -21,16 +19,18 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("O nome não deve conter números ou caracteres especiais.");
 
             RuleFor(e => e.Age)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar a idade.");
 
             RuleFor(e => e.Gender)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o sexo.");
+
+            RuleFor(e => e.EmergencyId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id da ocorrência.");
+
+
         }
 
         private bool IsValidName(string Name)

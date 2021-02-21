@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
-    public class EmergencyRequiredVehicleValidation : BaseValidation<EmergencyRequiredVehicle>
+    public class MedicalDecisionHistoryValidation : BaseValidation<MedicalDecisionHistory>
     {
-        public EmergencyRequiredVehicleValidation()
+        public MedicalDecisionHistoryValidation()
         {
             RuleFor(e => e.Date)
                 .Cascade(CascadeMode.Stop)
@@ -14,9 +14,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
-            RuleFor(e => e.VehicleType)
+            RuleFor(e => e.Description)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .WithMessage("Favor informar a descrição.")
                 .NotEmpty()
-                .WithMessage("Favor informar o tipo de veículo.");
+                .WithMessage("Favor informar a descrição.")
+                .Length(5, 150)
+                .WithMessage("A descrição deve conter entre 5 e 150 caracteres.");
 
             RuleFor(e => e.CodeColor)
                 .NotEmpty()
@@ -26,9 +31,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar o Id da ocorrência.");
 
-            RuleFor(e => e.Status)
+            RuleFor(e => e.EmployeeGuid)
+                .NotNull()
+                .WithMessage("Favor informar o Guid da funcionário.")
                 .NotEmpty()
-                .WithMessage("Favor informar o status.");
+                .WithMessage("Favor informar o Guid da funcionário.");
 
         }
     }

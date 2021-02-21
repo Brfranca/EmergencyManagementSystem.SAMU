@@ -6,9 +6,9 @@ using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.Common.Interfaces.DAL
 {
-    public interface IDecisionsMedicalHistoriesDAL : IBaseDAL<DecisionsMedicalHistories>
+    public interface IMedicalDecisionHistoryDAL : IBaseDAL<MedicalDecisionHistory>
     {
-        DecisionsMedicalHistories Find(DecisionsMedicalHistoriesFilter filter);
-        List<DecisionsMedicalHistories> FindAll(DecisionsMedicalHistoriesFilter filter);
+        MedicalDecisionHistory Find(DecisionsMedicalHistoriesFilter filter);
+        List<MedicalDecisionHistory> FindAll(DecisionsMedicalHistoriesFilter filter);
     }
 }

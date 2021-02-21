@@ -1,8 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
@@ -23,6 +20,21 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar o diagnóstico.")
                 .Length(3, 150)
                 .WithMessage("O diagnóstico deve conter entre 3 e 150 caracteres.");
+
+            RuleFor(e => e.EmergencyId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id da ocorrência.");
+
+            RuleFor(e => e.EmployeeGuid)
+                .NotNull()
+                .WithMessage("Favor informar o Guid da funcionário.")
+                .NotEmpty()
+                .WithMessage("Favor informar o Guid da funcionário.");
+
+
+            RuleFor(e => e.PatientId)
+                .NotEmpty()
+                .WithMessage("Favor informar o Id da paciente.");
         }
     }
 }
