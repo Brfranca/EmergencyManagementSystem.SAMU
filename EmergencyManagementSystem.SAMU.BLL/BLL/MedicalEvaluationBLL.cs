@@ -108,9 +108,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             foreach (var evaluationModel in evaluationsModel)
             {
                 var evaluation = _mapper.Map<MedicalEvaluation>(evaluationModel);
-                var result = _medicalEvaluationValidation.Validate(evaluation);
-                if (!result.Success)
-                    return result;
+               
 
                 if (evaluation.Patient.Id > 0)
                 {
@@ -123,7 +121,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     if (!resultPatient.Success)
                         return Result.BuildError(resultPatient.Messages);
                 }
-                _medicalEvaluationDAL.Insert(evaluation);
+                if(evaluation.Evaluation != null)
+                {
+                    var result = _medicalEvaluationValidation.Validate(evaluation);
+                    if (!result.Success)
+                        return result;
+                    _medicalEvaluationDAL.Insert(evaluation);
+                }
             }
             return _medicalEvaluationDAL.Save();
         }

@@ -18,10 +18,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IEmergencyHistoryDAL _emergencyHistoryDAL;
         private readonly IEmergencyBLL _emergencyBLL;
         private readonly EmergencyHistoryValidation _emergencyHistoryValidation;
+        private readonly IEmergencyDAL _emergencyDAL;
 
-        public EmergencyHistoryBLL(IEmergencyHistoryDAL emergencyHistoryDAL, EmergencyHistoryValidation emergencyHistoryValidation, IMapper mapper, IEmergencyBLL emergencyBLL)
+        public EmergencyHistoryBLL(IEmergencyHistoryDAL emergencyHistoryDAL, EmergencyHistoryValidation emergencyHistoryValidation,
+            IMapper mapper, IEmergencyBLL emergencyBLL, IEmergencyDAL emergencyDAL)
             : base(emergencyHistoryDAL)
         {
+            _emergencyDAL = emergencyDAL;
             _emergencyHistoryDAL = emergencyHistoryDAL;
             _emergencyHistoryValidation = emergencyHistoryValidation;
             _mapper = mapper;
@@ -48,9 +51,13 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 EmergencyHistory emergencyHistory = _mapper.Map<EmergencyHistory>(model);
 
-                var resultEmergency = _emergencyBLL.SimpleUpdate(model.EmergencyModel);
-                if (!resultEmergency.Success)
-                    return Result<EmergencyHistory>.BuildError(resultEmergency.Messages);
+                var emergency = _emergencyDAL.Find(new EmergencyFilter { Id = model.EmergencyId });
+                emergency.EmergencyStatus = model.EmergencyStatus;
+                _emergencyDAL.Update(emergency);
+
+                //var resultEmergency = _emergencyBLL.SimpleUpdate(model.EmergencyModel);
+                //if (!resultEmergency.Success)
+                //    return Result<EmergencyHistory>.BuildError(resultEmergency.Messages);
 
                 var result = _emergencyHistoryValidation.Validate(emergencyHistory);
                 if (!result.Success)

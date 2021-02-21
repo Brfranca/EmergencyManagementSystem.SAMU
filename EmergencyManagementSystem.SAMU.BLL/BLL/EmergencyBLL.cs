@@ -198,6 +198,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 {
                     if ((patientModel?.Id ?? 0) == 0)
                     {
+                        patientModel.EmergencyId = emergency.Id;
                         var resultPatient = _patientBLL.Register(patientModel);
                         if (!resultPatient.Success)
                             return Result<Emergency>.BuildError(resultPatient.Messages);
@@ -205,6 +206,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     else
                     {
                         var patient = emergency.Patients.FirstOrDefault(d => d.Id == patientModel.Id);
+                        patient.EmergencyId = emergency.Id;
                         var resultPatient = _patientValidation.Validate(patient);
                         if (!resultPatient.Success)
                             return Result<Emergency>.BuildError(resultPatient.Messages);

@@ -44,8 +44,8 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar o status da emergência.");
 
-            RuleFor(e => e.AddressId)
-                .NotEmpty()
+            RuleFor(e => e.Address)
+                .NotNull()
                 .WithMessage("Favor informar o Id do endereço.");
         }
 
