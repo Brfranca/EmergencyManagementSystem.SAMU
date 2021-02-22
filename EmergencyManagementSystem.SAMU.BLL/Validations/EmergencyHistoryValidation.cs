@@ -20,6 +20,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
             RuleFor(e => e.Description)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
+                .WithMessage("Favor informar a descrição.")
                 .NotEmpty()
                 .WithMessage("Favor informar a descrição.")
                 .Length(3, 60)
