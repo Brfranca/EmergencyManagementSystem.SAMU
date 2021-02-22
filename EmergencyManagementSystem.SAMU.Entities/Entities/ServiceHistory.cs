@@ -17,6 +17,7 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public string Description { get; set; }
         public virtual ICollection<TeamMember> TeamMembers { get; set; }
         public virtual ICollection<VehiclePositionHistory> VehiclePositionHistories { get; set; }
+        public CodeColor CodeColor { get; set; }
 
     }
 }

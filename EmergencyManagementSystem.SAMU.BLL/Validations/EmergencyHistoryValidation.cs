@@ -23,8 +23,8 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .WithMessage("Favor informar a descrição.")
                 .NotEmpty()
                 .WithMessage("Favor informar a descrição.")
-                .Length(3, 60)
-                .WithMessage("A descrição deve conter entre 3 e 60 caracteres.");
+                .Length(3, 150)
+                .WithMessage("A descrição deve conter entre 3 e 150 caracteres.");
 
             RuleFor(e => e.EmergencyId)
                 .NotEmpty()

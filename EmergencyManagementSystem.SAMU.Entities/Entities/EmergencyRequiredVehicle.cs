@@ -13,5 +13,6 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public long EmergencyId { get; set; }
         public CodeColor CodeColor { get; set; }
         public VehicleRequiredStatus Status { get; set; }
+
     }
 }

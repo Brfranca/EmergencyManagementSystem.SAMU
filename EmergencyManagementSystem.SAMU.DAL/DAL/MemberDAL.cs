@@ -23,6 +23,8 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
 
             if (filterImpl.EmployeeStatus != Entities.Enums.EmployeeStatus.Invalid)
                 query = query.Where(d => d.EmployeeStatus == filterImpl.EmployeeStatus);
+            if (filterImpl.VehicleId > 0)
+                query = query.Where(d => d.VehicleId == filterImpl.VehicleId);
 
             return query.ToList();
         }

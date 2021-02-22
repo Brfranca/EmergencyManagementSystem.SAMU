@@ -5,6 +5,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
+using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +16,20 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
     {
         private readonly IMapper _mapper;
         private readonly IEmergencyRequiredVehicleDAL _emergencyRequiredVehicleDAL;
-        private readonly IEmergencyHistoryBLL _emergencyHistoryBLL;
+        private readonly IEmergencyHistoryDAL _emergencyHistoryDAL;
         private readonly EmergencyRequiredVehicleValidation _emergencyRequiredVehicleValidation;
         private readonly IEmergencyDAL _emergencyDAL;
         private readonly IMedicalDecisionHistoryDAL _medicalDecisionHistoryDAL;
 
         public EmergencyRequiredVehicleBLL(IMapper mapper, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL, EmergencyRequiredVehicleValidation emergencyDataValidation,
-            IEmergencyHistoryBLL emergencyHistoryBLL, IEmergencyDAL emergencyDAL, IMedicalDecisionHistoryDAL medicalDecisionHistoryDAL)
+            IEmergencyHistoryDAL emergencyHistoryDAL, IEmergencyDAL emergencyDAL, IMedicalDecisionHistoryDAL medicalDecisionHistoryDAL)
             : base(emergencyRequiredVehicleDAL)
         {
             _emergencyDAL = emergencyDAL;
             _mapper = mapper;
             _emergencyRequiredVehicleDAL = emergencyRequiredVehicleDAL;
             _emergencyRequiredVehicleValidation = emergencyDataValidation;
-            _emergencyHistoryBLL = emergencyHistoryBLL;
+            _emergencyHistoryDAL = emergencyHistoryDAL;
             _medicalDecisionHistoryDAL = medicalDecisionHistoryDAL;
         }
 
@@ -103,7 +104,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public override Result<EmergencyRequiredVehicle> Update(EmergencyRequiredVehicleModel model)
         {
-
             try
             {
                 EmergencyRequiredVehicle emergencyRequiredVehicle = _mapper.Map<EmergencyRequiredVehicle>(model);
@@ -113,13 +113,20 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 _emergencyRequiredVehicleDAL.Update(emergencyRequiredVehicle);
-                _emergencyHistoryBLL.Register(model.EmergencyHistoryModel);
+
+  
+
+                EmergencyHistory emergencyHistory = _mapper.Map<EmergencyHistory>(model.EmergencyHistoryModel);
+                _emergencyHistoryDAL.Insert(emergencyHistory);
+
+                MedicalDecisionHistory medicalDecision = _mapper.Map<MedicalDecisionHistory>(model.MedicalDecisionHistoryModel);
+                _medicalDecisionHistoryDAL.Insert(medicalDecision);
 
                 var resultSave = _emergencyRequiredVehicleDAL.Save();
                 if (!resultSave.Success)
                     return Result<EmergencyRequiredVehicle>.BuildError(resultSave.Messages);
 
-                return Result<EmergencyRequiredVehicle>.BuildSuccess(emergencyRequiredVehicle);
+                return Result<EmergencyRequiredVehicle>.BuildSuccess(null);
             }
             catch (Exception error)
             {

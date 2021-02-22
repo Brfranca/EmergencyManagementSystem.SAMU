@@ -17,5 +17,7 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public List<TeamMemberModel> TeamMemberModels { get; set; }
         public List<VehiclePositionHistoryModel> VehiclePositionHistoryModels { get; set; }
         public long EmergencyRequiredVehicleId { get; set; }
+        public CodeColor CodeColor { get; set; }
+
     }
 }

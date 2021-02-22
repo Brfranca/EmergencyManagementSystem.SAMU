@@ -103,6 +103,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             {
                 var vehicleRequerid = _emergencyRequiredVehicleDAL.Find(new EmergencyRequiredVehicleFilter { Id = serviceHistoryModel.EmergencyRequiredVehicleId });
                 vehicleRequerid.Status = VehicleRequiredStatus.Committed;
+                vehicleRequerid.Emergency.EmergencyStatus = EmergencyStatus.Committed;
                 _emergencyRequiredVehicleDAL.Update(vehicleRequerid);
 
                 var vehicle = _vehicleDAL.Find(new VehicleFilter { Id = serviceHistoryModel.VehicleId });
