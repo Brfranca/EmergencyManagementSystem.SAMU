@@ -119,11 +119,20 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 };
                 _serviceHistoryDAL.Insert(serviceHistory);
 
-                //var members = _memberDAL.FindAll(new )
+                var members = _memberDAL.FindAll(new MemberFilter { EmployeeStatus = EmployeeStatus.Working, VehicleId = vehicle.Id });
+                members.ForEach(d =>
+                {
+                    var teamMember = new TeamMember
+                    {
+                        MemberId = d.Id,
+                        ServiceHistory = serviceHistory
+                    };
+                    _teamMemberDAL.Insert(teamMember);
+                });
 
-                //_teamMemberDAL.Find(new TeamMemberFilter { })
+                var resultSave = _serviceHistoryDAL.Save();
 
-                return null;
+                return resultSave;
             }
             catch (Exception error)
             {
