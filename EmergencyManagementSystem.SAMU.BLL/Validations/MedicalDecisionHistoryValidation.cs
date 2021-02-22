@@ -37,6 +37,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar o Guid da funcionário.");
 
+            RuleFor(e => e.EmployeeName)
+                .NotNull()
+                .WithMessage("Favor informar o nome do funcionário.")
+                .NotEmpty()
+                .WithMessage("Favor informar o nome do funcionário.");
         }
     }
 }

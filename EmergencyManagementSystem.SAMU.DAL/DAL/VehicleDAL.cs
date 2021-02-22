@@ -1,6 +1,5 @@
 ﻿using EmergencyManagementSystem.SAMU.Common.Filters;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
-using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System.Collections.Generic;

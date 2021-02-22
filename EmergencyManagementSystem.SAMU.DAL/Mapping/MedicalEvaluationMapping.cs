@@ -1,9 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.DAL.Mapping
 {
@@ -40,7 +37,11 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasForeignKey(d => d.PatientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
+            builder.Property(d => d.EmployeeName)
+                .HasColumnName("EmployeeName")
+                .HasColumnType("vachar")
+                .HasMaxLength(60)
+                .IsRequired();
         }
     }
 }

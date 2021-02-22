@@ -18,8 +18,10 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IEmergencyHistoryBLL _emergencyHistoryBLL;
         private readonly EmergencyRequiredVehicleValidation _emergencyRequiredVehicleValidation;
         private readonly IEmergencyDAL _emergencyDAL;
+        private readonly IMedicalDecisionHistoryDAL _medicalDecisionHistoryDAL;
+
         public EmergencyRequiredVehicleBLL(IMapper mapper, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL, EmergencyRequiredVehicleValidation emergencyDataValidation,
-            IEmergencyHistoryBLL emergencyHistoryBLL, IEmergencyDAL emergencyDAL)
+            IEmergencyHistoryBLL emergencyHistoryBLL, IEmergencyDAL emergencyDAL, IMedicalDecisionHistoryDAL medicalDecisionHistoryDAL)
             : base(emergencyRequiredVehicleDAL)
         {
             _emergencyDAL = emergencyDAL;
@@ -27,6 +29,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             _emergencyRequiredVehicleDAL = emergencyRequiredVehicleDAL;
             _emergencyRequiredVehicleValidation = emergencyDataValidation;
             _emergencyHistoryBLL = emergencyHistoryBLL;
+            _medicalDecisionHistoryDAL = medicalDecisionHistoryDAL;
         }
 
         public override IQueryable<EmergencyRequiredVehicleModel> ApplyFilterPagination(IQueryable<EmergencyRequiredVehicle> query, IFilter filter)
@@ -82,6 +85,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 _emergencyDAL.Update(emergency);
 
                 _emergencyRequiredVehicleDAL.Insert(emergencyRequiredVehicle);
+
+                MedicalDecisionHistory medicalDecision = _mapper.Map<MedicalDecisionHistory>(model.MedicalDecisionHistoryModel);
+                _medicalDecisionHistoryDAL.Insert(medicalDecision);
 
                 var resultSave = _emergencyRequiredVehicleDAL.Save();
                 if (!resultSave.Success)

@@ -8,6 +8,7 @@ namespace EmergencyManagementSystem.SAMU.Entities.Entities
         public long Id { get; set; }
         public DateTime Date { get; set; }
         public Guid EmployeeGuid { get; set; }
+        public string EmployeeName { get; set; }
         public virtual Emergency Emergency { get; set; }
         public long EmergencyId { get; set; }
         public string Evaluation { get; set; }

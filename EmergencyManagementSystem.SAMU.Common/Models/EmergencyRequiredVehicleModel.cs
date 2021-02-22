@@ -13,5 +13,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public CodeColor CodeColor { get; set; }
         public VehicleRequiredStatus Status { get; set; }
         public EmergencyHistoryModel EmergencyHistoryModel { get; set; }
+        public MedicalDecisionHistoryModel MedicalDecisionHistoryModel { get; set; }
     }
 }

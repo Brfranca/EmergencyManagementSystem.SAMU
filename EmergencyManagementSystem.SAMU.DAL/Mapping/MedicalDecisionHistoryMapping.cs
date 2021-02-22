@@ -37,6 +37,12 @@ namespace EmergencyManagementSystem.SAMU.DAL.Mapping
                 .HasColumnName("EmergencyId")
                 .HasColumnType("bigint")
                 .IsRequired();
+
+            builder.Property(d => d.EmployeeName)
+                .HasColumnName("EmployeeName")
+                .HasColumnType("vachar")
+                .HasMaxLength(60)
+                .IsRequired();
         }
     }
 }

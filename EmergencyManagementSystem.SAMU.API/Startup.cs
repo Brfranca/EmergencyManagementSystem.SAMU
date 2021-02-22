@@ -127,8 +127,8 @@ namespace EmergencyManagementSystem.SAMU.API
                 cfg.CreateMap<Patient, PatientModel>();
                 cfg.CreateMap<MedicalEvaluationModel, MedicalEvaluation>().ForMember(d => d.Patient, d => d.MapFrom(d => d.PatientModel));
                 cfg.CreateMap<MedicalEvaluation, MedicalEvaluationModel>().ForMember(d => d.PatientModel, d => d.MapFrom(d => d.Patient));
-                cfg.CreateMap<Member, MemberModel>();//.ForMember(a => a.VehicleModel, b => b.MapFrom(c => c.Vehicle));
-                cfg.CreateMap<MemberModel, Member>();//.ForMember(a => a.Vehicle, b => b.MapFrom(c => c.VehicleModel));
+                cfg.CreateMap<Member, MemberModel>();
+                cfg.CreateMap<MemberModel, Member>();
                 cfg.CreateMap<MedicalDecisionHistory, MedicalDecisionHistoryModel>();
                 cfg.CreateMap<MedicalDecisionHistoryModel, MedicalDecisionHistory>();
 

@@ -8,7 +8,6 @@ using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EmergencyManagementSystem.SAMU.BLL.BLL
 {
