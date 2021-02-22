@@ -1,4 +1,6 @@
 ﻿
+using EmergencyManagementSystem.SAMU.Entities.Enums;
+
 namespace EmergencyManagementSystem.SAMU.Common.Filters
 {
     public class VehicleFilter : FilterBase
@@ -8,6 +10,8 @@ namespace EmergencyManagementSystem.SAMU.Common.Filters
         public string VehiclePlate { get; set; }
         public string Codename { get; set; }
         public string OperationCity { get; set; }
-
+        public VehicleType? VehicleType { get; set; }
+        public VehicleStatus? VehicleStatus { get; set; }
+        public Active? Active { get; set; }
     }
 }

@@ -16,6 +16,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Models
         public string Description { get; set; }
         public List<TeamMemberModel> TeamMemberModels { get; set; }
         public List<VehiclePositionHistoryModel> VehiclePositionHistoryModels { get; set; }
-
+        public long EmergencyRequiredVehicleId { get; set; }
     }
 }

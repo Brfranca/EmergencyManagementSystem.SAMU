@@ -70,7 +70,16 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public override Result<List<VehicleModel>> FindAll(IFilter filter)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var vehicles = _vehicleDAL.FindAll((VehicleFilter)filter);
+                var vehiclesModel = _mapper.Map<List<VehicleModel>>(vehicles);
+                return Result<List<VehicleModel>>.BuildSuccess(vehiclesModel);
+            }
+            catch (Exception error)
+            {
+                return Result<List<VehicleModel>>.BuildError("Erro ao localizar o veículo.", error);
+            }
         }
 
         public override Result<Vehicle> Register(VehicleModel model)

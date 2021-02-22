@@ -5,6 +5,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
+using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,19 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IMapper _mapper;
         private readonly IServiceHistoryDAL _serviceHistoryDAL;
         private readonly ServiceHistoryValidation _serviceHistoryValidation;
-
-        public ServiceHistoryBLL(IMapper mapper, IServiceHistoryDAL serviceHistoryDAL, ServiceHistoryValidation serviceHistoryValidation)
+        private readonly IEmergencyRequiredVehicleDAL _emergencyRequiredVehicleDAL;
+        private readonly IVehicleDAL _vehicleDAL;
+        private readonly ITeamMemberDAL _teamMemberDAL;
+        private readonly IMemberDAL _memberDAL;
+        public ServiceHistoryBLL(IMapper mapper, IServiceHistoryDAL serviceHistoryDAL,
+            ServiceHistoryValidation serviceHistoryValidation, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL,
+            IVehicleDAL vehicleDAL, ITeamMemberDAL teamMemberDAL, IMemberDAL memberDAL)
             : base(serviceHistoryDAL)
         {
+            _memberDAL = memberDAL;
+            _teamMemberDAL = teamMemberDAL;
+            _vehicleDAL = vehicleDAL;
+            _emergencyRequiredVehicleDAL = emergencyRequiredVehicleDAL;
             _mapper = mapper;
             _serviceHistoryDAL = serviceHistoryDAL;
             _serviceHistoryValidation = serviceHistoryValidation;
@@ -84,6 +94,40 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             catch (Exception error)
             {
                 return Result<ServiceHistory>.BuildError("Erro no momento de registar o veículo empenhado na ocorrência.", error);
+            }
+        }
+
+        public Result SendVehicle(ServiceHistoryModel serviceHistoryModel)
+        {
+            try
+            {
+                var vehicleRequerid = _emergencyRequiredVehicleDAL.Find(new EmergencyRequiredVehicleFilter { Id = serviceHistoryModel.EmergencyRequiredVehicleId });
+                vehicleRequerid.Status = VehicleRequiredStatus.Committed;
+                _emergencyRequiredVehicleDAL.Update(vehicleRequerid);
+
+                var vehicle = _vehicleDAL.Find(new VehicleFilter { Id = serviceHistoryModel.VehicleId });
+                vehicle.VehicleStatus = VehicleStatus.InService;
+                _vehicleDAL.Update(vehicle);
+
+                var serviceHistory = new ServiceHistory
+                {
+                    EmergencyId = vehicleRequerid.EmergencyId,
+                    Description = "Veículo empenhado",
+                    Date = serviceHistoryModel.Date,
+                    ServiceHistoryStatus = ServiceHistoryStatus.InProgress,
+                    VehicleId = serviceHistoryModel.VehicleId,
+                };
+                _serviceHistoryDAL.Insert(serviceHistory);
+
+                //var members = _memberDAL.FindAll(new )
+
+                //_teamMemberDAL.Find(new TeamMemberFilter { })
+
+                return null;
+            }
+            catch (Exception error)
+            {
+                return Result.BuildError("Erro ao enviar veículo, favor tente novamente.", error);
             }
         }
 

@@ -10,8 +10,16 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
     [ApiController]
     public class  ServiceHistoryController : BaseController<ServiceHistoryModel, ServiceHistory, ServiceHistoryFilter>
     {
+        private readonly IServiceHistoryBLL _serviceHistoryBLL;
         public ServiceHistoryController(IServiceHistoryBLL serviceHistoryBLL) : base(serviceHistoryBLL)
         {
+            _serviceHistoryBLL = serviceHistoryBLL;
+        }
+
+        [HttpPost("SendVehicle")]
+        public Result SendVehicle(ServiceHistoryModel serviceHistoryModel)
+        {
+            return _serviceHistoryBLL.SendVehicle(serviceHistoryModel);
         }
     }
 }
