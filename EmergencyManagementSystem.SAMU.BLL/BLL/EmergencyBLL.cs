@@ -119,6 +119,12 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public Result SimpleRegister(EmergencyModel model)
         {
+            model.RequesterPhone = model.RequesterPhone.Trim().Replace("-", "").Replace("(", "").Replace(")", "");
+            if (!model.RequesterPhone.IsValidPhone())
+            {
+                return Result.BuildError("Favor digitar um telefone válido.");
+            }
+
             Emergency emergency = _mapper.Map<Emergency>(model);
             emergency.Address = null;
             emergency.AddressId = 0;

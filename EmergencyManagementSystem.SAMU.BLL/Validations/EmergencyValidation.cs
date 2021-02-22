@@ -37,7 +37,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Favor informar o telefone do solicitante.")
-                .Must(IsValidPhone)
+                .Must(Extension.IsValidPhone)
                 .WithMessage("Telefone inválido.");
 
             RuleFor(e => e.EmergencyStatus)
@@ -55,9 +55,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
             return Regex.IsMatch(Name, @"^[\p{L} \.\-]+$");
         }
 
-        private bool IsValidPhone(string phone)
+    }
+
+    public static class Extension
+    {
+        public static bool IsValidPhone(this string phone)
         {
             return Regex.IsMatch(phone, @"^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$");
         }
+
     }
 }
