@@ -9,5 +9,6 @@ namespace EmergencyManagementSystem.SAMU.Common.Interfaces.DAL
     public interface IVehicleDAL : IBaseDAL<Vehicle>
     {
         Vehicle Find(VehicleFilter filter);
+        List<Vehicle> FindAll(VehicleFilter filter);
     }
 }

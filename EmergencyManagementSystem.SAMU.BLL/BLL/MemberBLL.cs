@@ -66,7 +66,17 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
         public override Result<List<MemberModel>> FindAll(IFilter filter)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var filterImpl = (MemberFilter)filter;
+                var members = _memberDAL.FindAll(filterImpl);
+                var memberModels = _mapper.Map<List<MemberModel>>(members);
+                return Result<List<MemberModel>>.BuildSuccess(memberModels);
+            }
+            catch (Exception error)
+            {
+                return Result<List<MemberModel>>.BuildError("Erro ao localizar o membro.", error);
+            }
         }
 
         public override Result<Member> Register(MemberModel model)

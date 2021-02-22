@@ -1,5 +1,6 @@
 ﻿using EmergencyManagementSystem.SAMU.Common.Filters;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
+using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,16 @@ namespace EmergencyManagementSystem.SAMU.DAL.DAL
         public Member Find(MemberFilter filter)
         {
             return Set.FirstOrDefault(d => d.Id == filter.Id);
+        }
+
+        public List<Member> FindAll(MemberFilter filterImpl)
+        {
+            var query = Set.AsQueryable();
+
+            if (filterImpl.EmployeeStatus != Entities.Enums.EmployeeStatus.Invalid)
+                query = query.Where(d => d.EmployeeStatus == filterImpl.EmployeeStatus);
+
+            return query.ToList();
         }
     }
 }
