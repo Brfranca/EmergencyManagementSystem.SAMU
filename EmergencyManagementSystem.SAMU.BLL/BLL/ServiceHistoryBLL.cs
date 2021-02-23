@@ -125,6 +125,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     Date = serviceHistoryModel.Date,
                     ServiceHistoryStatus = ServiceHistoryStatus.InProgress,
                     VehicleId = serviceHistoryModel.VehicleId,
+                    CodeColor = vehicleRequerid.CodeColor
                 };
                 _serviceHistoryDAL.Insert(serviceHistory);
 

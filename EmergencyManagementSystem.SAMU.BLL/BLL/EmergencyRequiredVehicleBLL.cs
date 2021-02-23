@@ -82,8 +82,11 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     return result;
 
                 var emergency = _emergencyDAL.Find(new EmergencyFilter { Id = model.EmergencyId });
-                emergency.EmergencyStatus = Entities.Enums.EmergencyStatus.InService;
-                _emergencyDAL.Update(emergency);
+                if (emergency.EmergencyStatus != EmergencyStatus.Committed)
+                {
+                    emergency.EmergencyStatus = EmergencyStatus.InService;
+                    _emergencyDAL.Update(emergency);
+                }
 
                 _emergencyRequiredVehicleDAL.Insert(emergencyRequiredVehicle);
 
