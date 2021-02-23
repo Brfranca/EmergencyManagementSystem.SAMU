@@ -5,11 +5,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
 {
     public class VehiclePositionHistoryValidation : BaseValidation<VehiclePositionHistory>
     {
+
         public VehiclePositionHistoryValidation()
         {
+
             RuleFor(e => e.Date)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
+                .WithMessage("Favor informar a data.")
                 .NotEmpty()
                 .WithMessage("Favor informar a data.");
 
@@ -21,5 +24,6 @@ namespace EmergencyManagementSystem.SAMU.BLL.Validations
                 .NotEmpty()
                 .WithMessage("Favor informar o Id histórico de atendimento.");
         }
+
     }
 }

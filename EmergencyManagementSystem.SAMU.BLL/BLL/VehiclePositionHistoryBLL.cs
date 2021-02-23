@@ -5,6 +5,7 @@ using EmergencyManagementSystem.SAMU.Common.Interfaces.BLL;
 using EmergencyManagementSystem.SAMU.Common.Interfaces.DAL;
 using EmergencyManagementSystem.SAMU.Common.Models;
 using EmergencyManagementSystem.SAMU.Entities.Entities;
+using EmergencyManagementSystem.SAMU.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,95 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                 var result = _vehiclePositionHistoryValidation.Validate(vehiclePositionHistory);
                 if (!result.Success)
                     return result;
+
+                var resultFind = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                {
+                    ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                    VehiclePosition = vehiclePositionHistory.VehiclePosition
+                });
+
+                if ((resultFind?.Id??0) > 0)
+                {
+                    _vehiclePositionHistoryDAL.Update(vehiclePositionHistory);
+                    var resultUpdate = _vehiclePositionHistoryDAL.Save();
+                    if (!resultUpdate.Success)
+                        return Result<VehiclePositionHistory>.BuildError(resultUpdate.Messages);
+                    return Result<VehiclePositionHistory>.BuildSuccess(vehiclePositionHistory);
+                }
+                if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J10Local)
+                {
+                    var resultJ = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                    {
+                        ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                        VehiclePosition = VehiclePosition.J9Local
+                    });
+                    if ((resultJ?.Id??0) == 0)
+                        return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J10 no local da ocorrência é necessário informar o J9.");
+                }
+                if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J9Hospital)
+                {
+                    var resultJ = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                    {
+                        ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                        VehiclePosition = VehiclePosition.J10Local
+                    });
+                    if ((resultJ?.Id ?? 0) == 0)
+                        return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J9 para o hospital é necessário informar o J10 no local da ocorrência.");
+                }
+                if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J10Hospital)
+                {
+                    var resultJ = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                    {
+                        ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                        VehiclePosition = VehiclePosition.J9Hospital
+                    });
+                    if ((resultJ?.Id ?? 0) == 0)
+                        return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J10 no hospital é necessário informar o J9 para o Hospital.");
+                }
+                if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J11)
+                {
+                    var resultJ9H = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                    {
+                        ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                        VehiclePosition = VehiclePosition.J9Hospital
+                    });
+                    if ((resultJ9H?.Id??0) > 0)
+                    {
+                        var resultJ10H = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                        {
+                            ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                            VehiclePosition = VehiclePosition.J10Hospital
+                        });
+                        if ((resultJ10H?.Id??0) == 0)
+                        {
+                            return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J11 é necessário informar o J10 no Hospital.");
+                        }
+                    }
+                    else
+                    {
+                        var resultJ = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                        {
+                            ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                            VehiclePosition = VehiclePosition.J10Local
+                        });
+                        if (resultJ.Id == 0)
+                            return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J11 é necessário informar o J10 no local.");
+                    }
+                    
+                    //VehicleStatus-> liberado
+                }
+                if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J12)
+                {
+                    var resultJ10Local = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                    {
+                        ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
+                        VehiclePosition = VehiclePosition.J11
+                    });
+                    if (resultJ10Local.Id > 0)
+                        return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J12 é necessário informar o J11.");
+                    //Emergency closed _> ver se não tem mais serices history em aberto
+                    //service history pra finalizada
+                }
 
                 _vehiclePositionHistoryDAL.Insert(vehiclePositionHistory);
 
