@@ -133,6 +133,7 @@ namespace EmergencyManagementSystem.SAMU.API
                 cfg.CreateMap<MedicalDecisionHistoryModel, MedicalDecisionHistory>();
 
 
+
             }).CreateMapper();
             services.AddSingleton(mapper);
         }

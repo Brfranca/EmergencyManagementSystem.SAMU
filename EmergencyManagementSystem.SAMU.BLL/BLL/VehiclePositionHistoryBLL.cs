@@ -17,13 +17,18 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IMapper _mapper;
         private readonly IVehiclePositionHistoryDAL _vehiclePositionHistoryDAL;
         private readonly VehiclePositionHistoryValidation _vehiclePositionHistoryValidation;
+        private readonly IVehicleDAL _vehicleDAL;
+        private readonly IServiceHistoryDAL _serviceHistoryDAL;
 
-        public VehiclePositionHistoryBLL(IMapper mapper, IVehiclePositionHistoryDAL vehiclePositionHistoryDAL, VehiclePositionHistoryValidation vehiclePositionHistoryValidation)
+        public VehiclePositionHistoryBLL(IMapper mapper, IVehiclePositionHistoryDAL vehiclePositionHistoryDAL, VehiclePositionHistoryValidation vehiclePositionHistoryValidation,
+            IVehicleDAL vehicleDAL, IServiceHistoryDAL serviceHistoryDAL)
             : base(vehiclePositionHistoryDAL)
         {
             _mapper = mapper;
             _vehiclePositionHistoryDAL = vehiclePositionHistoryDAL;
             _vehiclePositionHistoryValidation = vehiclePositionHistoryValidation;
+            _vehicleDAL = vehicleDAL;
+            _serviceHistoryDAL = serviceHistoryDAL;
         }
 
         public override IQueryable<VehiclePositionHistoryModel> ApplyFilterPagination(IQueryable<VehiclePositionHistory> query, IFilter filter)
@@ -82,11 +87,12 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
 
                 if ((resultFind?.Id??0) > 0)
                 {
-                    _vehiclePositionHistoryDAL.Update(vehiclePositionHistory);
+                    resultFind.Date = vehiclePositionHistory.Date;
+                    _vehiclePositionHistoryDAL.Update(resultFind);
                     var resultUpdate = _vehiclePositionHistoryDAL.Save();
                     if (!resultUpdate.Success)
                         return Result<VehiclePositionHistory>.BuildError(resultUpdate.Messages);
-                    return Result<VehiclePositionHistory>.BuildSuccess(vehiclePositionHistory);
+                    return Result<VehiclePositionHistory>.BuildSuccess(null);
                 }
                 if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J10Local)
                 {
@@ -133,9 +139,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                             VehiclePosition = VehiclePosition.J10Hospital
                         });
                         if ((resultJ10H?.Id??0) == 0)
-                        {
                             return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J11 é necessário informar o J10 no Hospital.");
-                        }
                     }
                     else
                     {
@@ -144,32 +148,42 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                             ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
                             VehiclePosition = VehiclePosition.J10Local
                         });
-                        if (resultJ.Id == 0)
+                        if ((resultJ?.Id ?? 0) == 0)
                             return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J11 é necessário informar o J10 no local.");
                     }
-                    
-                    //VehicleStatus-> liberado
                 }
                 if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J12)
                 {
-                    var resultJ10Local = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
+                    var resultJ = _vehiclePositionHistoryDAL.Find(new VehiclePositionHistoryFilter
                     {
                         ServiceHistoryId = vehiclePositionHistory.ServiceHistoryId,
                         VehiclePosition = VehiclePosition.J11
                     });
-                    if (resultJ10Local.Id > 0)
+                    if ((resultJ?.Id ?? 0) == 0)
                         return Result<VehiclePositionHistory>.BuildError("Para cadastrar o J12 é necessário informar o J11.");
-                    //Emergency closed _> ver se não tem mais serices history em aberto
-                    //service history pra finalizada
                 }
 
                 _vehiclePositionHistoryDAL.Insert(vehiclePositionHistory);
+
+                vehiclePositionHistory.ServiceHistory = _serviceHistoryDAL.Find(new ServiceHistoryFilter { Id = vehiclePositionHistory.ServiceHistoryId });
+                if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J11)
+                {
+                    _vehicleDAL.Find(new VehicleFilter { Id = vehiclePositionHistory.ServiceHistory.VehicleId });
+                    vehiclePositionHistory.ServiceHistory.Vehicle.VehicleStatus = VehicleStatus.Cleared;
+                    _vehicleDAL.Update(vehiclePositionHistory.ServiceHistory.Vehicle);
+                }
+
+                if (vehiclePositionHistory.VehiclePosition == VehiclePosition.J12)
+                {
+                    vehiclePositionHistory.ServiceHistory.ServiceHistoryStatus = ServiceHistoryStatus.Finalized;
+                    _serviceHistoryDAL.Update(vehiclePositionHistory.ServiceHistory);
+                }
 
                 var resultSave = _vehiclePositionHistoryDAL.Save();
                 if (!resultSave.Success)
                     return Result<VehiclePositionHistory>.BuildError(resultSave.Messages);
 
-                return Result<VehiclePositionHistory>.BuildSuccess(vehiclePositionHistory);
+                return Result<VehiclePositionHistory>.BuildSuccess(null);
             }
             catch (Exception error)
             {

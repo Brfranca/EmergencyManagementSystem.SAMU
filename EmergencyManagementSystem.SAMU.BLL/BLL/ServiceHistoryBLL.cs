@@ -21,9 +21,14 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
         private readonly IVehicleDAL _vehicleDAL;
         private readonly ITeamMemberDAL _teamMemberDAL;
         private readonly IMemberDAL _memberDAL;
+        private readonly IEmergencyDAL _emergencyDAL; 
+        private readonly IMedicalDecisionHistoryDAL _medicalDecisionHistoryDAL;
+        private readonly IEmergencyHistoryDAL _emergencyHistoryDAL;
+
         public ServiceHistoryBLL(IMapper mapper, IServiceHistoryDAL serviceHistoryDAL,
             ServiceHistoryValidation serviceHistoryValidation, IEmergencyRequiredVehicleDAL emergencyRequiredVehicleDAL,
-            IVehicleDAL vehicleDAL, ITeamMemberDAL teamMemberDAL, IMemberDAL memberDAL)
+            IVehicleDAL vehicleDAL, ITeamMemberDAL teamMemberDAL, IMemberDAL memberDAL, IEmergencyDAL emergencyDAL, IMedicalDecisionHistoryDAL medicalDecisionHistoryDAL,
+            IEmergencyHistoryDAL emergencyHistoryDAL)
             : base(serviceHistoryDAL)
         {
             _memberDAL = memberDAL;
@@ -33,6 +38,9 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             _mapper = mapper;
             _serviceHistoryDAL = serviceHistoryDAL;
             _serviceHistoryValidation = serviceHistoryValidation;
+            _emergencyDAL = emergencyDAL;
+            _medicalDecisionHistoryDAL = medicalDecisionHistoryDAL;
+            _emergencyHistoryDAL = emergencyHistoryDAL;
         }
 
         public override IQueryable<ServiceHistoryModel> ApplyFilterPagination(IQueryable<ServiceHistory> query, IFilter filter)
@@ -141,22 +149,76 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
             }
         }
 
-        public override Result<ServiceHistory> Update(ServiceHistoryModel model)
+        public Result CancelServiceHistory(ServiceCancellationHistoryModel serviceCancellation)
         {
             try
             {
-                ServiceHistory serviceHistory = _mapper.Map<ServiceHistory>(model);
+                var emergency = _emergencyDAL.Find(new EmergencyFilter { Id = serviceCancellation.EmergencyHistoryModel.EmergencyId });
+                var serviceHistory = _serviceHistoryDAL.Find(new ServiceHistoryFilter { Id = serviceCancellation.ServiceHistoryModel.Id });
 
-                var result = _serviceHistoryValidation.Validate(serviceHistory);
-                if (!result.Success)
-                    return result;
+                EmergencyHistory emergencyHistory = new EmergencyHistory
+                {
+                    Date = serviceCancellation.EmergencyHistoryModel.Date,
+                    EmergencyId = serviceCancellation.EmergencyHistoryModel.EmergencyId,
+                    EmployeeGuid = serviceCancellation.EmergencyHistoryModel.EmployeeGuid,
+                    Description = "Cancelamento de veículo " + serviceCancellation.ServiceHistoryModel.VehicleModel.Codename,
+                    EmergencyStatus = emergency.EmergencyStatus
+                };
 
-                _serviceHistoryDAL.Update(serviceHistory);
+                MedicalDecisionHistory medicalDecision = new MedicalDecisionHistory()
+                {
+                    Date = DateTime.Now,
+                    EmployeeGuid = serviceCancellation.MedicalDecisionHistoryModel.EmployeeGuid,
+                    EmployeeName = serviceCancellation.MedicalDecisionHistoryModel.EmployeeName,
+                    EmergencyId = serviceCancellation.MedicalDecisionHistoryModel.EmergencyId,
+                    Description = "Cancelamento de veículo " + serviceCancellation.ServiceHistoryModel.VehicleModel.Codename,
+                    CodeColor = serviceHistory.CodeColor
+                };
+
+                serviceHistory.ServiceHistoryStatus = ServiceHistoryStatus.Canceled;
+
+                var vehicle = _vehicleDAL.Find(new VehicleFilter { Id = serviceHistory.VehicleId });
+                vehicle.VehicleStatus = VehicleStatus.Cleared;
+                _vehicleDAL.Update(vehicle);
+
+                _medicalDecisionHistoryDAL.Insert(medicalDecision);
+                _emergencyHistoryDAL.Insert(emergencyHistory);
+
                 var resultSave = _serviceHistoryDAL.Save();
                 if (!resultSave.Success)
                     return Result<ServiceHistory>.BuildError(resultSave.Messages);
 
-                return Result<ServiceHistory>.BuildSuccess(serviceHistory);
+                return Result<ServiceHistory>.BuildSuccess(null);
+            }
+            catch (Exception error)
+            {
+                return Result<ServiceHistory>.BuildError("Erro ao alterar o registro do veículo empenhado na ocorrência.", error);
+            }
+        }
+
+        public override Result<ServiceHistory> Update(ServiceHistoryModel model)
+        {
+            try
+            {
+                var serviceFind = _serviceHistoryDAL.Find(new ServiceHistoryFilter { Id = model.Id });
+                serviceFind.ServiceHistoryStatus = model.ServiceHistoryStatus;
+
+                var result = _serviceHistoryValidation.Validate(serviceFind);
+                if (!result.Success)
+                    return result;
+
+                _serviceHistoryDAL.Update(serviceFind);
+                if (serviceFind.ServiceHistoryStatus == ServiceHistoryStatus.Canceled)
+                {
+                    var vehicle = _vehicleDAL.Find(new VehicleFilter { Id = serviceFind.VehicleId });
+                    vehicle.VehicleStatus = VehicleStatus.Cleared;
+                    _vehicleDAL.Update(vehicle);
+                }
+                var resultSave = _serviceHistoryDAL.Save();
+                if (!resultSave.Success)
+                    return Result<ServiceHistory>.BuildError(resultSave.Messages);
+
+                return Result<ServiceHistory>.BuildSuccess(null);
             }
             catch (Exception error)
             {

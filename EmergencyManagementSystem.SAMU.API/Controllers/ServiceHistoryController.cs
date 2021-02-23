@@ -21,5 +21,11 @@ namespace EmergencyManagementSystem.SAMU.API.Controllers
         {
             return _serviceHistoryBLL.SendVehicle(serviceHistoryModel);
         }
+
+        [HttpPost("CancelServiceHistory")]
+        public Result CancelServiceHistory(ServiceCancellationHistoryModel serviceCancellation)
+        {
+            return _serviceHistoryBLL.CancelServiceHistory(serviceCancellation);
+        }
     }
 }
