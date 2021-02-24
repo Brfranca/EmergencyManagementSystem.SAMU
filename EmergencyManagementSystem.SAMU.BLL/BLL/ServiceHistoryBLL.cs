@@ -172,7 +172,7 @@ namespace EmergencyManagementSystem.SAMU.BLL.BLL
                     EmployeeGuid = serviceCancellation.MedicalDecisionHistoryModel.EmployeeGuid,
                     EmployeeName = serviceCancellation.MedicalDecisionHistoryModel.EmployeeName,
                     EmergencyId = serviceCancellation.MedicalDecisionHistoryModel.EmergencyId,
-                    Description = "Cancelamento de veículo " + serviceCancellation.ServiceHistoryModel.VehicleModel.Codename,
+                    Description = "Cancelamento de veículo " + serviceHistory.Vehicle.Codename,
                     CodeColor = serviceHistory.CodeColor
                 };
 
